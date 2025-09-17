@@ -1,0 +1,32 @@
+{
+  "name": "Night of Laughter Event Ticketing",
+  "short_name": "NightOfLaughter",
+  "description": "A responsive event ticketing web app for Night of Laughter with QR code generation and admin QR code scanning functionality.",
+  "version": "1.0.0",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#ff5722",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "scope": "./",
+  "lang": "en",
+  "categories": [
+    "events",
+    "ticketing",
+    "qr-code",
+    "admin",
+    "responsive"
+  ]
+}
