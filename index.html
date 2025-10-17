@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Night of Laughter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    html, body {
+      font-size: 14px;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      margin: 0;
+      background: #f9fafb;
+      color: #333;
+      box-sizing: border-box;
+    }
+    *, *:before, *:after { box-sizing: inherit; }
+    header {
+      background: linear-gradient(90deg, #ff5722, #ff9800);
+      color: #fff;
+      text-align: center;
+      padding: 2em 1em;
+      position: relative;
+    }
+    #heroImg {
+      width: 100%;
+      max-width: 340px;
+      height: 180px;
+      object-fit: contain;
+      background: #eee;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #ff980080;
+      margin: 0 auto 1.2em auto;
+      display: block;
+    }
+    #heroImg.hidden { display: none; }
+    #heroImageAdminBox {
+      margin: 1.5em 0;
+      background: #fff7e4;
+      border-radius: 16px;
+      padding: 1.2em;
+      box-shadow: 0 1px 6px #ffa72622;
+      max-width: 400px;
+    }
+    #heroImagePreview {
+      width: 100%;
+      max-width: 320px;
+      height: 110px;
+      object-fit: contain;
+      background: #eee;
+      border-radius: 12px;
+      margin-bottom: 0.7em;
+      display: block;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+    }
+    nav {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 0.8em;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      font-size: 1em;
+    }
+    nav a {
+      margin: 0 1.2em;
+      text-decoration: none;
+      color: #ff5722;
+      font-weight: 600;
+      transition: color .3s;
+      font-size: 1em;
+    }
+    nav a:hover { color: #e64a19; }
+    section {
+      padding: 2.2em 1em;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h2 {
+      margin-bottom: 1.2em;
+      color: #ff5722;
+      font-size: 1.28em;
+    }
+    .event-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 1.5em;
+      list-style: none;
+      padding: 0;
+    }
+    .event-card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform .2s;
+      font-size: 1em;
+    }
+    .event-card:hover { transform: translateY(-4px); }
+    .event-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display:block;
+    }
+    .event-card h4 {
+      margin: 0.85em;
+      font-size: 1.18em;
+      color: #ff5722;
+    }
+    .event-card p {
+      margin: 0.45em 0.85em;
+      font-size: 1em;
+      color: #555;
+    }
+    form {
+      display: grid;
+      gap: 0.8em;
+      max-width: 420px;
+      margin-top: 1.2em;
+      font-size: 1em;
+    }
+    input, select, button {
+      padding: 0.85em;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    button {
+      background: #ff5722;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+      font-size: 1em;
+    }
+    button:hover { background: #e64a19; }
+    .hidden { display: none; }
+    #paymentModal {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index:999;
+    }
+    #paymentBox {
+      background:#fff;
+      padding:1.7em;
+      border-radius:14px;
+      max-width:320px;
+      width:100%;
+      text-align:center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-size: 1em;
+    }
+    #paymentBox h3 {
+      margin-top: 0;
+      color: #ff5722;
+      font-size: 1.15em;
+    }
+    #logoutBtn {
+      background: #999;
+      margin-bottom: 1.2em;
+      font-size: 1em;
+    }
+    #logoutBtn:hover { background: #777; }
+    #qrTicketModal {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    #qrTicketBox {
+      background: #fff;
+      border-radius: 14px;
+      padding: 2.2em 1.2em 1.2em 1.2em;
+      max-width: 350px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: relative;
+      font-size: 1em;
+    }
+    #qrTicketBox h3 { color: #ff5722; margin-bottom: 0.75em; font-size: 1.15em;}
+    #qrTicketClose {
+      position: absolute; top:0.6em; right:0.7em;
+      background: #eee; border:none; border-radius:50%;
+      width:1.8em; height:1.8em; font-size:1.1em; color:#ff5722; cursor:pointer;
+    }
+    .expand-list { margin: 1em 0; padding: 0; list-style: none; }
+    .expand-list .expand-item {
+      background: #fff; border-radius: 10px; margin-bottom: 0.7em;
+      box-shadow: 0 1px 4px #aaa2;
+      padding: 0;
+      cursor: pointer;
+      transition: background .2s;
+      font-size: 1em;
+    }
+    .expand-list .expand-item:hover { background: #fff7f2; }
+    .expand-list .expand-summary {
+      padding: 1em 1.3em;
+      font-size: 1em;
+      color: #ff5722;
+      font-weight: 600;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .expand-list .expand-details {
+      padding: 0.7em 1.3em 1.1em 1.3em;
+      background: #fffaee;
+      color: #222;
+      font-size: 1em;
+      border-top: 1px solid #ffe0b2;
+    }
+    .expand-list .attended { color: green; font-weight: 700; }
+    .expand-list .not-attended { color: #999; }
+    .admin-stats { margin-bottom:0.85em; font-weight:600; color:#444; font-size: 1em;}
+    .password-toggle {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #888;
+      font-size: 1.15em;
+      background: none;
+      border: none;
+    }
+    #passwordWrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    #loginPassword {
+      width: 100%;
+      padding-right: 2.5em;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+</head>
+<body>
+
+<header>
+  <img id="heroImg" class="hidden" alt="Hero" src="">
+  <h1>Night of Laughter</h1>
+  <p>The Biggest Comedy Event in Zambia</p>
+</header>
+
+<nav>
+  <a href="#events">Events</a>
+  <a href="#tickets">Tickets</a>
+  <a href="#admin">Sign In</a>
+</nav>
+
+<section id="events">
+  <h2>Upcoming Events</h2>
+  <ul class="event-list" id="eventList"></ul>
+</section>
+
+<section id="tickets">
+  <h2>Buy Tickets</h2>
+  <form id="ticketForm">
+    <input type="text" id="buyerName" placeholder="Full Name" required>
+    <input type="email" id="buyerEmail" placeholder="Email" required>
+    <input type="tel" id="buyerPhone" placeholder="Phone Number (for payment)" required>
+    <select id="eventSelect" required></select>
+    <select id="ticketType" required>
+      <option value="">Select Ticket Type</option>
+      <option value="Ordinary">Ordinary</option>
+      <option value="VIP">VIP</option>
+    </select>
+    <input type="number" id="ticketQuantity" placeholder="Quantity" min="1" value="1" required>
+    <button type="submit">Book via WhatsApp</button>
+  </form>
+</section>
+
+<div id="qrTicketModal">
+  <div id="qrTicketBox">
+    <button id="qrTicketClose" title="Close">&times;</button>
+    <h3>Your Ticket QR Code</h3>
+    <canvas id="ticketQR"></canvas>
+    <div style="margin-top:14px;text-align:left; font-size:1em;">
+      <b>Name:</b> <span id="qrTicketName"></span><br>
+      <b>Email:</b> <span id="qrTicketEmail"></span><br>
+      <b>Phone:</b> <span id="qrTicketPhone"></span><br>
+      <b>Event:</b> <span id="qrTicketEvent"></span><br>
+      <b>Type:</b> <span id="qrTicketType"></span><br>
+      <b>Quantity:</b> <span id="qrTicketQty"></span><br>
+      <b>Status:</b> <span id="qrTicketStatus"></span>
+    </div>
+    <div style="margin-top:12px;font-size:0.97em;color:#555;">
+      Screenshot this QR code to use as your event ticket.
+    </div>
+  </div>
+</div>
+
+<section id="admin">
+  <h2>Admin Panel</h2>
+  <div id="loginSection">
+    <input type="text" id="loginEmail" placeholder="Admin Username">
+    <div id="passwordWrapper">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button type="button" id="togglePassword" class="password-toggle" aria-label="Show/Hide password">
+        &#128065;
+      </button>
+    </div>
+    <button id="loginBtn">Login</button>
+    <p id="loginMessage" style="color:red;"></p>
+  </div>
+  <div id="adminSection" class="hidden">
+    <button id="logoutBtn">Logout</button>
+
+    <div id="heroImageAdminBox">
+      <h3>Update Hero Section Picture</h3>
+      <img id="heroImagePreview" src="" alt="Preview" class="hidden">
+      <input type="file" id="heroImageInput" accept="image/*">
+      <button id="saveHeroImgBtn">Save Hero Image</button>
+      <button id="removeHeroImgBtn" style="background:#999;color:#fff;">Remove Custom Image</button>
+      <p id="heroImgMsg" style="color:#ff5722;margin-top:0.4em;"></p>
+    </div>
+
+    <h3>Add Event</h3>
+    <form id="addEventForm">
+      <input type="text" id="eventName" placeholder="Event Name" required>
+      <input type="text" id="eventDate" placeholder="Date" required>
+      <input type="text" id="eventVenue" placeholder="Venue" required>
+      <input type="number" id="ordinaryPrice" placeholder="Ordinary Price" required>
+      <input type="number" id="vipPrice" placeholder="VIP Price" required>
+      <input type="file" id="eventImage" accept="image/*">
+      <button type="submit">Add Event</button>
+    </form>
+
+    <h3>Events</h3>
+    <ul class="admin-event-list" id="adminEventList"></ul>
+
+    <h3>Registered Tickets</h3>
+    <div class="admin-stats">
+      Total Tickets Sold: <span id="statSold">0</span> &nbsp;|&nbsp;
+      Total Attendees: <span id="statAttended">0</span>
+    </div>
+    <input type="text" id="ticketSearch" placeholder="Search buyer by name...">
+    <ul class="expand-list" id="ticketExpandList"></ul>
+  </div>
+</section>
+
+<script>
+  // Hardcoded admin credentials (username: admin, password: NOL10)
+  const ADMIN_USERNAME = "admin";
+  const ADMIN_PASSWORD = "NOL10";
+
+  let adminLoggedIn = false;
+
+  const loginSection = document.getElementById("loginSection");
+  const adminSection = document.getElementById("adminSection");
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const loginMessage = document.getElementById("loginMessage");
+
+  function handleLogin() {
+    const emailVal = document.getElementById("loginEmail").value.trim();
+    const passVal = document.getElementById("loginPassword").value;
+
+    if (emailVal === ADMIN_USERNAME && passVal === ADMIN_PASSWORD) {
+      loginSection.classList.add("hidden");
+      adminSection.classList.remove("hidden");
+      renderTicketsExpandList();
+      updateHeroAdminBox();
+      loginMessage.textContent = "";
+      adminLoggedIn = true;
+    } else {
+      loginMessage.textContent = "Invalid credentials!";
+    }
+  }
+
+  loginBtn.onclick = handleLogin;
+
+  logoutBtn.onclick = () => {
+    loginSection.classList.remove("hidden");
+    adminSection.classList.add("hidden");
+    heroImageInput.value = "";
+    heroImagePreview.classList.add("hidden");
+    heroImgMsg.textContent = "";
+    adminLoggedIn = false;
+  };
+
+  // Password visibility toggle
+  document.getElementById("togglePassword").onclick = function() {
+    const pwd = document.getElementById("loginPassword");
+    if (pwd.type === "password") {
+      pwd.type = "text";
+      this.innerHTML = "&#128064;";
+    } else {
+      pwd.type = "password";
+      this.innerHTML = "&#128065;";
+    }
+  };
+
+  // --- Rest of the app logic remains the same ---
+  let events = JSON.parse(localStorage.getItem("events")) || [];
+  let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+  let currentTicket = null;
+  let selectedMethod = "";
+  let lastScan = "";
+  let qrScannedTicketId = null;
+
+  const eventList = document.getElementById("eventList");
+  const eventSelect = document.getElementById("eventSelect");
+  const adminEventList = document.getElementById("adminEventList");
+  const ticketExpandList = document.getElementById("ticketExpandList");
+  const statSold = document.getElementById("statSold");
+  const statAttended = document.getElementById("statAttended");
+
+  // HERO IMAGE UPDATE MOD: Hero image logic
+  const heroImg = document.getElementById("heroImg");
+  const heroImageInput = document.getElementById("heroImageInput");
+  const heroImagePreview = document.getElementById("heroImagePreview");
+  const saveHeroImgBtn = document.getElementById("saveHeroImgBtn");
+  const removeHeroImgBtn = document.getElementById("removeHeroImgBtn");
+  const heroImgMsg = document.getElementById("heroImgMsg");
+
+  function showHeroImg() {
+    const img = localStorage.getItem("heroImage");
+    if (img) {
+      heroImg.src = img;
+      heroImg.classList.remove("hidden");
+    } else {
+      heroImg.src = "";
+      heroImg.classList.add("hidden");
+    }
+  }
+  showHeroImg();
+
+  function updateHeroAdminBox() {
+    const img = localStorage.getItem("heroImage");
+    if (img) {
+      heroImagePreview.src = img;
+      heroImagePreview.classList.remove("hidden");
+      removeHeroImgBtn.disabled = false;
+    } else {
+      heroImagePreview.src = "";
+      heroImagePreview.classList.add("hidden");
+      removeHeroImgBtn.disabled = true;
+    }
+    heroImgMsg.textContent = "";
+  }
+  heroImageInput.onchange = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      heroImagePreview.src = evt.target.result;
+      heroImagePreview.classList.remove("hidden");
+    };
+    reader.readAsDataURL(file);
+  };
+  saveHeroImgBtn.onclick = function() {
+    const file = heroImageInput.files[0];
+    if (!file) {
+      heroImgMsg.textContent = "Please select an image!";
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      localStorage.setItem("heroImage", evt.target.result);
+      showHeroImg();
+      updateHeroAdminBox();
+      heroImgMsg.textContent = "Hero image updated!";
+      heroImageInput.value = "";
+    };
+    reader.readAsDataURL(file);
+  };
+  removeHeroImgBtn.onclick = function() {
+    localStorage.removeItem("heroImage");
+    showHeroImg();
+    updateHeroAdminBox();
+    heroImgMsg.textContent = "Custom hero image removed. Default shown.";
+    heroImageInput.value = "";
+    heroImagePreview.classList.add("hidden");
+  };
+
+  function renderEvents() {
+    eventList.innerHTML = "";
+    eventSelect.innerHTML = "<option value=''>Select Event</option>";
+    adminEventList.innerHTML = "";
+    events.forEach((e) => {
+      const li = document.createElement("li");
+      li.className = "event-card";
+      li.innerHTML = `
+        <img src="${e.image || "https://via.placeholder.com/300x160"}">
+        <h4>${e.name}</h4>
+        <p>${e.date} | ${e.venue}</p>
+        <p>Ordinary: ZMW ${e.ordinaryPrice} | VIP: ZMW ${e.vipPrice}</p>
+      `;
+      eventList.appendChild(li);
+      const opt = document.createElement("option");
+      opt.value = e.name;
+      opt.textContent = e.name;
+      eventSelect.appendChild(opt);
+      const liAdmin = document.createElement("li");
+      liAdmin.innerHTML = `
+        ${e.name} | ${e.date} | ${e.venue} | 
+        Ordinary: ZMW ${e.ordinaryPrice} | VIP: ZMW ${e.vipPrice} | 
+        Sold: ${tickets.filter(t=>t.event===e.name).length}
+        <button onclick="removeEvent('${e.name}')">Remove</button>
+      `;
+      adminEventList.appendChild(liAdmin);
+    });
+  }
+  renderEvents();
+
+  function removeEvent(eventName) {
+    if(confirm(`Are you sure you want to delete "${eventName}"?`)) {
+      events = events.filter(ev => ev.name !== eventName);
+      localStorage.setItem("events", JSON.stringify(events));
+      renderEvents();
+    }
+  }
+
+  document.getElementById("ticketForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = buyerName.value;
+    const email = buyerEmail.value;
+    const phone = buyerPhone.value;
+    const event = eventSelect.value;
+    const type = ticketType.value;
+    const qty = parseInt(ticketQuantity.value);
+    if (!event || !type) return alert("Please select event and ticket type");
+
+    const selectedEvent = events.find(ev=>ev.name===event);
+    const price = type==="VIP"? selectedEvent.vipPrice : selectedEvent.ordinaryPrice;
+    const total = price * qty;
+
+    // WhatsApp message text
+    const message =
+      `Night of Laughter Ticket Booking:%0A` +
+      `Name: ${encodeURIComponent(name)}%0A` +
+      `Email: ${encodeURIComponent(email)}%0A` +
+      `Phone: ${encodeURIComponent(phone)}%0A` +
+      `Event: ${encodeURIComponent(event)}%0A` +
+      `Type: ${encodeURIComponent(type)}%0A` +
+      `Quantity: ${qty}%0A` +
+      `Total Amount: ZMW ${total}`;
+
+    // WhatsApp API link
+    const whatsappLink = `https://wa.me/260973299759?text=${message}`;
+    window.open(whatsappLink, "_blank");
+
+    // --- Add ticket to localStorage as paid ---
+    const ticketId = 'T_' + Math.random().toString(36).substr(2,9) + '_' + Date.now();
+    const ticket = {
+      id: ticketId,
+      name,
+      email,
+      phone,
+      event,
+      type,
+      quantity: qty,
+      total,
+      status: "Paid via WhatsApp",
+      attended: false
+    };
+    tickets.push(ticket);
+    localStorage.setItem("tickets", JSON.stringify(tickets));
+    renderTicketsExpandList();
+    document.getElementById("ticketForm").reset();
+  });
+
+  // Add event form logic
+  addEventForm.onsubmit=e=>{
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = eventImage.files[0];
+    reader.onload=()=>{
+      events.push({
+        name:eventName.value,
+        date:eventDate.value,
+        venue:eventVenue.value,
+        ordinaryPrice:ordinaryPrice.value,
+        vipPrice:vipPrice.value,
+        image:reader.result
+      });
+      localStorage.setItem("events",JSON.stringify(events));
+      renderEvents();
+      addEventForm.reset();
+    }
+    if(file) reader.readAsDataURL(file); else {
+      events.push({
+        name:eventName.value,
+        date:eventDate.value,
+        venue:eventVenue.value,
+        ordinaryPrice:ordinaryPrice.value,
+        vipPrice:vipPrice.value,
+        image:""
+      });
+      localStorage.setItem("events",JSON.stringify(events));
+      renderEvents();
+      addEventForm.reset();
+    }
+  }
+
+  function toggleAttendance(ticketId){
+    tickets = tickets.map(t => t.id === ticketId ? {...t, attended: !t.attended} : t);
+    localStorage.setItem("tickets",JSON.stringify(tickets));
+    renderTicketsExpandList();
+  }
+  function deleteTicket(ticketId){
+    if(confirm("Are you sure you want to delete this ticket?")){
+      tickets = tickets.filter(t => t.id !== ticketId);
+      localStorage.setItem("tickets",JSON.stringify(tickets));
+      renderTicketsExpandList();
+    }
+  }
+
+  function renderTicketsExpandList(search=""){
+    ticketExpandList.innerHTML = "";
+    let filtered = tickets.filter(t=>t.name.toLowerCase().includes(search.toLowerCase()));
+    statSold.textContent = tickets.length;
+    statAttended.textContent = tickets.filter(t=>t.attended).length;
+    filtered.forEach((t, i) => {
+      let li = document.createElement("li");
+      li.className = "expand-item";
+      let summary = document.createElement("div");
+      summary.className = "expand-summary";
+      summary.innerHTML = `
+        ${t.name}
+        <span class="${t.attended ? 'attended' : 'not-attended'}">
+          ${t.attended ? '✔️ Attended' : 'Not attended'}
+        </span>
+        <span style="font-size:.8em;color:#999;">&#x25BC;</span>
+      `;
+      summary.onclick = () => {
+        let details = li.querySelector(".expand-details");
+        if(details) {
+          details.remove();
+        } else {
+          let d = document.createElement("div");
+          d.className = "expand-details";
+          d.innerHTML = `
+            <b>Email:</b> ${t.email}<br>
+            <b>Phone:</b> ${t.phone}<br>
+            <b>Event:</b> ${t.event}<br>
+            <b>Type:</b> ${t.type}<br>
+            <b>Quantity:</b> ${t.quantity}<br>
+            <b>Status:</b> ${t.status}<br>
+            <b>Ticket ID:</b> ${t.id}<br>
+            <b>Attended:</b> ${t.attended ? '<span style="color:green">Yes</span>' : '<span style="color:red">No</span>'}
+            <br>
+            <button onclick="toggleAttendance('${t.id}')">${t.attended ? "Mark Absent":"Mark Attended"}</button>
+            <button onclick="deleteTicket('${t.id}')">Delete</button>
+          `;
+          li.appendChild(d);
+        }
+      };
+      li.appendChild(summary);
+      ticketExpandList.appendChild(li);
+    });
+  }
+
+  document.getElementById("ticketSearch").oninput=e=>renderTicketsExpandList(e.target.value);
+
+  // Initial admin list rendering
+  renderTicketsExpandList();
+</script>
+</body>
+</html>
