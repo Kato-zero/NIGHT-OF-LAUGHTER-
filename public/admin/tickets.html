@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Tickets</title>
+  <link rel="stylesheet" href="/admin/styles.css">
+</head>
+<body>
+
+<div class="header">
+  <h1>Tickets</h1>
+  <div>
+    <a class="link" href="/admin/dashboard.html">Dashboard</a>
+    <a class="link" href="/admin/events.html">Events</a>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h3>All Tickets</h3>
+    <table class="table" id="tbl">
+      <thead><tr><th>Name</th><th>Phone</th><th>Event</th><th>Price</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+if(!localStorage.getItem('admin_token')) location.href='/admin/login.html';
+
+function auth(){ return { 'Authorization':'Bearer '+localStorage.getItem('admin_token') }; }
+function logout(){ localStorage.removeItem('admin_token'); location.href='/admin/login.html'; }
+
+async function load(){
+  const r = await fetch('/api/admin/tickets',{ headers: auth() });
+  const list = await r.json();
+  const tbody = document.querySelector('#tbl tbody');
+  tbody.innerHTML = '';
+  list.forEach(t=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${t.buyerName||'-'}</td>
+      <td>${t.buyerPhone||'-'}</td>
+      <td>${t.eventName||'-'}</td>
+      <td>K${t.price}</td>
+      <td>${t.status}</td>
+      <td><button class="btn" onclick="markPaid('${t._id}')">Mark Paid</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+async function markPaid(id){
+  await fetch('/api/admin/tickets/'+id+'/mark-paid',{ method:'POST', headers: auth() });
+  load();
+}
+
+load();
+</script>
+</body>
+  </html>
