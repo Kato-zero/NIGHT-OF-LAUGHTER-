@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Verify Ticket</title>
+  <link rel="stylesheet" href="/admin/styles.css">
+  <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+
+<div class="header">
+  <h1>Verify Ticket</h1>
+  <div>
+    <a class="link" href="/admin/dashboard.html">Dashboard</a>
+    <a class="link" href="/admin/tickets.html">Tickets</a>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h3>Scanner</h3>
+    <div id="reader" style="width:100%"></div>
+  </div>
+
+  <div id="result"></div>
+</div>
+
+<script>
+if(!localStorage.getItem('admin_token')) location.href='/admin/login.html';
+function auth(){ return { 'Authorization':'Bearer '+localStorage.getItem('admin_token'), 'Content-Type':'application/json' }; }
+function logout(){ localStorage.removeItem('admin_token'); location.href='/admin/login.html'; }
+
+function onScanSuccess(text){
+  fetch('/api/admin/verify',{
+    method:'POST',
+    headers: auth(),
+    body: JSON.stringify({ ticketId:text })
+  })
+  .then(r=>r.json())
+  .then(j=>{
+    if(j.valid){
+      result.innerHTML = `<div class="card"><h3 style="color:green">VALID</h3><p>${j.ticket.buyerName}</p></div>`;
+    } else {
+      result.innerHTML = `<div class="card"><h3 style="color:red">INVALID</h3><p>${j.reason}</p></div>`;
+    }
+  });
+}
+
+Html5Qrcode.getCameras().then(cameras=>{
+  const camId = cameras[0].id;
+  const qr = new Html5Qrcode("reader");
+  qr.start(camId,{ fps:10, qrbox:250 },onScanSuccess);
+});
+</script>
+
+</body>
+</html>
