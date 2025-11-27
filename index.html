@@ -571,37 +571,70 @@
 
     // Mobile money integration: calls /create-payment on your server
     async function startMobileMoneyPayment(provider, payload) {
-        if(!payload.phone || !payload.price || payload.price <= 0) {
-            alert('Missing phone or invalid price');
+    const BACKEND = "https://night-of-laughter-ticket-backend-1.onrender.com";
+
+    if(!payload.phone || !payload.price || payload.price <= 0) {
+        alert('Missing phone or invalid price');
+        return;
+    }
+
+    const phoneIntl = normalizePhoneToInternational(payload.phone);
+    const statusElId = 'payStatus';
+
+    const statusArea = document.getElementById("confirmDetails");
+    statusArea.insertAdjacentHTML('beforeend', `<p id="${statusElId}">Initiating ${provider.toUpperCase()} payment...</p>`);
+
+    try {
+        const resp = await fetch(`${BACKEND}/create-payment`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                amount: payload.price,
+                phone: phoneIntl,
+                provider: provider,
+                eventName: payload.event,
+                buyerName: payload.name,
+                receiptNum: payload.receiptNum
+            })
+        });
+
+        const j = await resp.json();
+
+        if (!resp.ok) {
+            document.getElementById(statusElId).innerText = `Error initiating payment: ${j.error || j.message}`;
             return;
         }
 
-        const phoneIntl = normalizePhoneToInternational(payload.phone);
-        const statusElId = 'payStatus';
-        // show status area
-        const statusArea = document.getElementById("confirmDetails");
-        statusArea.insertAdjacentHTML('beforeend', `<p id="${statusElId}">Initiating ${provider.toUpperCase()} payment...</p>`);
+        document.getElementById(statusElId).innerText =
+            `Payment initiated. Waiting for confirmation... (Order ${j.orderId})`;
 
-        try {
-            const resp = await fetch('/create-payment', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    amount: payload.price,
-                    phone: phoneIntl,
-                    provider: provider, // "mtn" or "airtel"
-                    eventName: payload.event,
-                    buyerName: payload.name,
-                    receiptNum: payload.receiptNum
-                })
-            });
-            const j = await resp.json();
-            if (!resp.ok) {
-                document.getElementById(statusElId).innerText = `Error initiating payment: ${j.error || j.message || JSON.stringify(j)}`;
-                return;
+        const orderId = j.orderId;
+
+        const interval = setInterval(async () => {
+            const st = await fetch(`${BACKEND}/order/${orderId}`);
+            const statusObj = await st.json();
+
+            if (statusObj.status === 'paid' || statusObj.status === 'failed') {
+                clearInterval(interval);
+
+                if (statusObj.status === 'paid') {
+                    document.getElementById(statusElId).innerText = 'Payment successful — generating ticket...';
+
+                    window.ticketPayload.receiptNum =
+                        statusObj.providerReference || window.ticketPayload.receiptNum;
+
+                    generateAndDownloadTicketImage(() => {
+                        document.getElementById("confirmModal").style.display = "none";
+                    });
+                } else {
+                    document.getElementById(statusElId).innerText = `Payment failed: ${statusObj.message}`;
+                }
             }
-            document.getElementById(statusElId).innerText = `Payment initiated. Waiting for confirmation... (Order ${j.orderId})`;
-
+        }, 3000);
+    } catch (err) {
+        document.getElementById(statusElId).innerText = 'Payment initiation error: ' + err.message;
+    }
+        }
             // Poll order status every 3s
             const orderId = j.orderId;
             const interval = setInterval(async () => {
