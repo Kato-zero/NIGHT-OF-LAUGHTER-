@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Night of Laughter Admin Panel</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+<style>
+  .hidden { display: none; }
+</style>
+</head>
+<body class="bg-blue-50 font-sans">
+
+<!-- LOGIN SECTION -->
+<div id="loginSection" class="flex items-center justify-center h-screen">
+  <div class="bg-white p-8 rounded shadow-lg w-full max-w-sm">
+    <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">Admin Login</h1>
+    <form id="loginForm" class="space-y-4">
+      <input type="text" name="username" placeholder="Username" class="w-full p-2 border rounded" required>
+      <input type="password" name="password" placeholder="Password" class="w-full p-2 border rounded" required>
+      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Login</button>
+    </form>
+    <p id="loginError" class="text-red-500 mt-2"></p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL SECTION -->
+<div id="adminPanel" class="hidden min-h-screen flex flex-col">
+  <!-- Top Navbar -->
+  <nav class="bg-blue-600 text-white p-4 flex justify-between items-center">
+    <h1 class="font-bold text-lg">Night of Laughter Admin</h1>
+    <button id="logoutBtn" class="bg-white text-blue-600 px-3 py-1 rounded hover:bg-gray-200">Logout</button>
+  </nav>
+
+  <div class="flex flex-1">
+    <!-- Sidebar -->
+    <aside class="bg-blue-100 w-64 p-4 space-y-2">
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-200" onclick="showSection('dashboard')">Dashboard</button>
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-200" onclick="showSection('events')">Events</button>
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-200" onclick="showSection('tickets')">Tickets</button>
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-200" onclick="showSection('payments')">Payments</button>
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-200" onclick="showSection('verify')">Verify Ticket</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 overflow-auto">
+      <!-- DASHBOARD -->
+      <div id="dashboard" class="hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-700">Dashboard</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white p-4 rounded shadow text-center">
+            <p>Total Sales Today</p>
+            <p id="salesToday" class="font-bold text-blue-600">0</p>
+          </div>
+          <div class="bg-white p-4 rounded shadow text-center">
+            <p>Total Sales All Time</p>
+            <p id="salesAllTime" class="font-bold text-blue-600">0</p>
+          </div>
+          <div class="bg-white p-4 rounded shadow text-center">
+            <p>Total Tickets Sold</p>
+            <p id="ticketsSold" class="font-bold text-blue-600">0</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow">
+          <h3 class="font-bold mb-2 text-blue-700">Revenue Graph</h3>
+          <canvas id="revenueChart" height="150"></canvas>
+        </div>
+      </div>
+
+      <!-- EVENTS -->
+      <div id="events" class="hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-700">Events</h2>
+        <form id="createEventForm" class="bg-white p-4 rounded shadow mb-6 space-y-3">
+          <input type="text" name="name" placeholder="Event Name" class="w-full p-2 border rounded" required>
+          <input type="date" name="date" class="w-full p-2 border rounded" required>
+          <input type="text" name="venue" placeholder="Venue" class="w-full p-2 border rounded" required>
+          <input type="text" name="ticketTypes" placeholder="Ticket Types (comma-separated)" class="w-full p-2 border rounded" required>
+          <input type="text" name="prices" placeholder="Prices (comma-separated)" class="w-full p-2 border rounded" required>
+          <input type="text" name="poster" placeholder="Poster URL" class="w-full p-2 border rounded">
+          <button type="submit" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Create Event</button>
+        </form>
+        <div id="eventsList" class="space-y-2"></div>
+      </div>
+
+      <!-- TICKETS -->
+      <div id="tickets" class="hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-700">Tickets</h2>
+        <div id="ticketsList" class="space-y-2"></div>
+      </div>
+
+      <!-- PAYMENTS -->
+      <div id="payments" class="hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-700">Payments</h2>
+        <div id="paymentsList" class="space-y-2"></div>
+      </div>
+
+      <!-- VERIFY -->
+      <div id="verify" class="hidden">
+        <h2 class="text-xl font-bold mb-4 text-blue-700">Verify Ticket</h2>
+        <input type="text" id="ticketNumberInput" placeholder="Enter Ticket Number" class="w-full p-2 border rounded mb-2">
+        <button id="verifyBtn" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Verify</button>
+        <p id="verifyResult" class="mt-2 font-bold"></p>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const backendURL = 'https://night-of-laughter-ticket-backend-1.onrender.com';
+let token = localStorage.getItem('token');
+
+// SECTION SWITCHING
+function showSection(sectionId){
+  document.querySelectorAll('main > div').forEach(div => div.classList.add('hidden'));
+  document.getElementById(sectionId).classList.remove('hidden');
+}
+
+// LOGOUT
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('token');
+  location.reload();
+});
+
+// LOGIN FORM
+document.getElementById('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const data = { username: form.username.value, password: form.password.value };
+  const res = await fetch(`${backendURL}/admin/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  const result = await res.json();
+  if(res.ok){
+    localStorage.setItem('token', result.token);
+    token = result.token;
+    document.getElementById('loginSection').classList.add('hidden');
+    document.getElementById('adminPanel').classList.remove('hidden');
+    loadDashboard();
+  } else {
+    document.getElementById('loginError').textContent = result.message;
+  }
+});
+
+// DASHBOARD DATA
+async function loadDashboard(){
+  showSection('dashboard');
+  const res = await fetch(`${backendURL}/admin/tickets`, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  });
+  const tickets = await res.json();
+  document.getElementById('ticketsSold').textContent = tickets.length;
+  let salesAll = 0;
+  let salesToday = 0;
+  const today = new Date().toISOString().split('T')[0];
+  tickets.forEach(t => {
+    salesAll += t.price;
+    if(t.timePurchased.split('T')[0] === today) salesToday += t.price;
+  });
+  document.getElementById('salesAllTime').textContent = salesAll;
+  document.getElementById('salesToday').textContent = salesToday;
+
+  const ctx = document.getElementById('revenueChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: tickets.map(t => t.buyerName),
+      datasets: [{ label: 'Revenue', data: tickets.map(t => t.price), backgroundColor: 'rgba(59,130,246,0.7)' }]
+    }
+  });
+
+  loadEvents();
+  loadTickets();
+  loadPayments();
+}
+
+// EVENTS
+async function loadEvents(){
+  const res = await fetch(`${backendURL}/admin/events`, { headers: { 'Authorization': 'Bearer ' + token } });
+  const events = await res.json();
+  const eventsList = document.getElementById('eventsList');
+  eventsList.innerHTML = '';
+  events.forEach(ev => {
+    eventsList.innerHTML += `<div class="bg-white p-3 rounded shadow">
+      <p class="font-bold text-blue-700">${ev.name} (${ev.status})</p>
+      <p>Date: ${new Date(ev.date).toLocaleDateString()}</p>
+      <p>Venue: ${ev.venue}</p>
+      <p>Ticket Types: ${ev.ticketTypes.join(', ')}</p>
+      <p>Prices: ${ev.prices.join(', ')}</p>
+    </div>`;
+  });
+}
+
+// CREATE EVENT
+document.getElementById('createEventForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value,
+    date: form.date.value,
+    venue: form.venue.value,
+    ticketTypes: form.ticketTypes.value.split(',').map(t => t.trim()),
+    prices: form.prices.value.split(',').map(p => parseFloat(p.trim())),
+    poster: form.poster.value,
+    status: 'published'
+  };
+  await fetch(`${backendURL}/admin/events`, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  form.reset();
+  loadEvents();
+});
+
+// TICKETS
+async function loadTickets(){
+  const res = await fetch(`${backendURL}/admin/tickets`, { headers: { 'Authorization': 'Bearer ' + token } });
+  const tickets = await res.json();
+  const ticketsList = document.getElementById('ticketsList');
+  ticketsList.innerHTML = '';
+  tickets.forEach(t => {
+    ticketsList.innerHTML += `<div class="bg-white p-3 rounded shadow">
+      <p class="font-bold text-blue-700">${t.buyerName} (${t.status})</p>
+      <p>Event: ${t.eventId?.name || 'N/A'}</p>
+      <p>Price: ${t.price}</p>
+      <p>Phone: ${t.buyerPhone}</p>
+    </div>`;
+  });
+}
+
+// PAYMENTS
+async function loadPayments(){
+  const res = await fetch(`${backendURL}/admin/tickets`, { headers: { 'Authorization': 'Bearer ' + token } });
+  const tickets = await res.json();
+  const paymentsList = document.getElementById('paymentsList');
+  paymentsList.innerHTML = '';
+  tickets.forEach(t => {
+    paymentsList.innerHTML += `<div class="bg-white p-3 rounded shadow">
+      <p class="font-bold text-blue-700">${t.buyerName} - ${t.price} (${t.status})</p>
+      <p>Ticket #: ${t.ticketNumber}</p>
+      <p>Event: ${t.eventId?.name || 'N/A'}</p>
+    </div>`;
+  });
+}
+
+// VERIFY TICKET
+document.getElementById('verifyBtn').addEventListener('click', async () => {
+  const ticketNumber = document.getElementById('ticketNumberInput').value;
+  const res = await fetch(`${backendURL}/admin/verify-ticket`, {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ticketNumber })
+  });
+  const result = await res.json();
+  const el = document.getElementById('verifyResult');
+  if(result.status === 'VALID') el.textContent = 'VALID ✅';
+  else if(result.status === 'USED') el.textContent = 'USED ❌';
+  else el.textContent = 'INVALID ❌';
+});
+
+// AUTO LOAD IF LOGGED IN
+if(token){
+  document.getElementById('loginSection').classList.add('hidden');
+  document.getElementById('adminPanel').classList.remove('hidden');
+  loadDashboard();
+}
+</script>
+
+</body>
+</html>
