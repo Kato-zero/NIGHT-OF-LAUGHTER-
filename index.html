@@ -1,751 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIGHT OF LAUGHTER Upcoming Events | Buy Tickets</title>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <style>
-        /* (keep your existing styles unchanged) */
-        :root {
-            --blue: #007bff;
-            --deep-blue: #1176d6;
-            --gray-bg: #f2f2f2;
-            --white: #fff;
-            --black: #333;
-            --offwhite: #f9f9f9;
-            --card-shadow: 0 4px 10px rgba(0,0,0,.11);
-        }
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, Arial, sans-serif;
-            background: var(--gray-bg);
-            color: var(--black);
-        }
-        header{
-            width: 100%;
-            background: var(--white);
-            padding: 15px 5vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            position: fixed;
-            top:0; left:0; z-index: 100;
-        }
-        .header-left { display: flex; align-items: center; }
-        .header-logo { height: 55px; width: auto; }
-        nav {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        nav a {
-            padding: 8px 16px;
-            color: var(--black);
-            font-weight: 600;
-            font-size: 12px;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: background .12s, color .14s;
-        }
-        nav a:hover, nav a:focus {
-            background: #eaeaea;
-            color: var(--blue);
-        }
-        .hero{ 
-            width: 100%; height: 60vh; min-height: 290px;
-            background: url('https://i.postimg.cc/wM34b68W/1763283904035-1.jpg') center/cover no-repeat;
-            display: flex; justify-content: center; align-items: center; text-align: center;
-            padding: 0 7vw; margin-top: 65px;
-        }
-        .hero h1{ color: var(--white); font-size: 2.5rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,.3);}
-        .hero p{ color: #eee; font-size: 1.15rem; margin-bottom: 18px; text-shadow: 0 2px 6px rgba(0,0,0,0.4);}
-        .featured, .events, #testimonialsSection, #contactSection { width: 100%; padding: 2rem 5vw 0 5vw; box-sizing: border-box; }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NIGHT OF LAUGHTER — Buy Tickets</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <style>
+    /* keep your CSS mostly as-is (trimmed here for brevity) */
+    :root{--blue:#007bff;--deep-blue:#1176d6;--gray-bg:#f2f2f2;--white:#fff;--black:#333;--offwhite:#f9f9f9}
+    html,body{margin:0;padding:0;font-family:system-ui,Arial,sans-serif;background:var(--gray-bg);color:var(--black)}
+    header{width:100%;background:var(--white);padding:15px 5vw;display:flex;justify-content:space-between;align-items:center;position:fixed;top:0;left:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
+    .header-logo{height:55px}
+    .hero{width:100%;height:60vh;min-height:290px;background:url('https://i.postimg.cc/wM34b68W/1763283904035-1.jpg') center/cover no-repeat;display:flex;justify-content:center;align-items:center;text-align:center;padding:0 7vw;margin-top:65px}
+    .wrap{max-width:1100px;margin:24px auto;padding:20px}
+    .event-list{display:flex;flex-wrap:wrap;gap:2vw;justify-content:center}
+    .event-card{width:100%;max-width:360px;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.08);margin:24px;display:flex;flex-direction:column}
+    .event-thumb{width:100%;aspect-ratio:1/1;background:#eee;display:flex;align-items:center;justify-content:center}
+    .event-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .event-content{padding:14px;display:flex;flex-direction:column;gap:8px}
+    .price-box{margin-top:8px;padding:10px;background:var(--offwhite);border-radius:8px;font-size:0.95em}
+    .btn{padding:10px 12px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700}
+    .btn.secondary{background:#444}
+    .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;justify-content:center;align-items:center}
+    .modal-content{background:#fff;padding:18px;border-radius:12px;width:95%;max-width:440px;position:relative}
+    .close{position:absolute;right:12px;top:8px;font-size:26px;cursor:pointer}
+    .field{display:flex;flex-direction:column;margin-bottom:8px}
+    input,select,textarea{padding:9px;border-radius:8px;border:1px solid #ddd;font-size:14px}
+    footer{padding:20px;text-align:center;color:#ccc;background:#222;margin-top:30px}
+    @media(max-width:700px){.event-card{margin:12px 0}}
+  </style>
 
-        .featured h2, .events h2, #testimonialsSection h2, #contactSection h2 {
-            font-size: 1.6rem; margin-bottom: 20px;
-        }
-        .event-list { display: flex; flex-wrap: wrap; gap: 2vw; justify-content: center; }
-
-        .event-card {
-            width: 100%;
-            max-width: 370px;
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            margin: 36px 0;
-            display: flex;
-            flex-direction: column;
-            transition: box-shadow .13s;
-        }
-        .event-card:hover { box-shadow: 0 4px 16px rgba(17,118,214,0.11);}
-        .event-thumb {
-            width: 100%;
-            aspect-ratio: 1 / 1; /* Square shape */
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #ebebeb;
-        }
-        .event-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            /* Remove hardcoded height, use aspect-ratio for square thumbnail */
-        }
-        .event-content {
-            padding: 15px;
-            flex: 1;
-            line-height: 1.6;
-            display: flex; flex-direction: column; justify-content: flex-start;
-        }
-        .event-title{
-            font-size: 1.2rem; font-weight: bold; margin-bottom: 6px;
-        }
-        .info-label{ font-weight: bold;}
-        .price-box {
-            margin-top: 8px;
-            padding: 10px;
-            background: var(--offwhite);
-            border-radius: 8px;
-            font-size: 0.97em;
-        }
-        .btn-row{
-            display: flex; flex-wrap: wrap; justify-content: space-between; align-items:center; margin-top: 14px; gap:12px;
-        }
-        .btn {
-            flex: 1 1 46%;
-            padding: 11px 0;
-            background: var(--blue);
-            color: var(--white);
-            text-align: center;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: background .11s, opacity .11s;
-            font-size: 1rem;
-            min-width: 120px;
-        }
-        .btn.info{ background: #444; }
-        .btn:hover, .btn:focus { opacity:0.93;}
-
-        #testimonialsSection, #contactSection {
-            padding: 2rem 5vw;
-            background: var(--white);
-            margin-top: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        }
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.62);
-            justify-content: center; align-items: center;
-            z-index: 3000;
-            overflow: auto;
-        }
-        .modal-content {
-            background: var(--white);
-            padding: 18px;
-            width: 95vw; max-width: 410px;
-            border-radius: 15px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 9px 32px rgba(17,118,214,0.13);
-        }
-        .ticket-banner {
-            width: 100%;
-            height: 140px;
-            object-fit: contain;
-            border-radius: 10px;
-            background: #eaeaea;
-            margin-bottom: 12px;
-            display: block;
-        }
-        .btn-primary {
-            background: var(--blue);
-            padding: 10px 20px;
-            color: var(--white);
-            border-radius: 6px;
-            border: none;
-            margin-top: 10px;
-            cursor: pointer;
-            font-size: 1.05rem;
-            font-weight: 600;
-        }
-        .btn-secondary {
-            background: #ddd;
-            padding: 10px 20px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            margin-top:8px;
-        }
-        .close {
-            position: absolute;
-            top: 10px; right: 18px;
-            color: #444; font-size: 2.2rem; font-weight: bold; cursor: pointer;
-        }
-        .receipt-modal-colorful {
-            background: var(--white);
-            border-radius:8px;
-            margin:6px 0;
-            overflow:hidden;
-            border: 2px solid var(--deep-blue);
-            max-width: 340px;
-            margin-left: auto; margin-right: auto;
-        }
-        .receipt-modal-colorful h3 {
-            margin:0;
-        }
-        .receipt-modal-colorful .qr-container {
-            text-align:center; margin-top:10px;
-        }
-        #ticketModal .modal-content form {
-          margin: 0; padding: 0;
-        }
-        #ticketModal .field-group {
-          display: flex; flex-direction: column; align-items: flex-start;
-        }
-        #ticketModal label {
-          font-size: 15px; font-weight: bold; margin-bottom: 5px; color: #333;
-        }
-        #ticketModal input, #ticketModal select {
-          width: 100%;
-          padding: 9px 10px;
-          border-radius: 7px;
-          border: 1px solid #aaa;
-          font-size: 15px;
-          margin-bottom: 0px;
-          background: #f9fafd;
-          box-sizing: border-box;
-        }
-        #ticketModal input:focus, #ticketModal select:focus {
-          border: 1.5px solid var(--deep-blue);
-          outline: none;
-          background: #eefaff;
-        }
-        #ticketModal .btn-primary { width: 100%; font-size: 1rem;}
-
-        footer{
-            background: #222;
-            padding: 20px 7vw;
-            color: #ccc;
-            text-align: center;
-            margin-top: 50px;
-            font-size: 0.95em;
-        }
-
-        /* RESPONSIVE */
-        @media screen and (max-width: 900px) {
-            .featured, .events, #testimonialsSection, #contactSection, footer, header { padding-left: 3vw; padding-right: 3vw;}
-        }
-        @media screen and (max-width: 600px) {
-            header { flex-direction: column; align-items: flex-start; padding: 12px 3vw; }
-            .header-logo { height: 42px;}
-            nav { margin-top: 10px; gap: 4px;}
-            .hero {
-                min-height: 170px; height: 40vh; padding: 0 2vw;margin-top: 52px;
-            }
-            .hero h1{ font-size:1.37rem;}
-            .hero p{ font-size: 1rem;}
-            .event-card{ max-width:98vw; margin:24px 0;}
-            .event-thumb { aspect-ratio: 1 / 1; }
-            .event-thumb img{ width: 100%; height: 100%; }
-            .modal-content{ max-width:97vw;}
-        }
-        @media screen and (max-width: 400px) {
-            footer, header { padding-left: 1vw; padding-right: 1vw;}
-        }
-    </style>
-    <!-- Defer QR library for faster paint -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <!-- QR library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <img src="logo.png" alt="Night of Laughter Logo" class="header-logo" loading="lazy">
-        </div>
-        <nav id="navMenu">
-            <a href="#featuredSection">Featured Events</a>
-            <a href="#eventsSection">Upcoming Events</a>
-            <a href="#testimonialsSection">Testimonials</a>
-            <a href="#contactSection">Contact</a>
-        </nav>
-    </header>
-    <section class="hero">
-        <div>
-            <h1>NIGHT OF LAUGHTER</h1>
-            <p>Instant digital tickets. No queues. No stress.</p>
-        </div>
+  <header>
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="logo.png" alt="logo" class="header-logo" />
+      <strong>NIGHT OF LAUGHTER</strong>
+    </div>
+    <nav>
+      <a href="#featured">Featured</a>
+      <a href="#upcoming">Events</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="wrap" style="margin-top:120px">
+    <section id="featured"></section>
+
+    <section id="upcoming">
+      <h2>Upcoming Events</h2>
+      <div id="eventsList" class="event-list"></div>
+      <div id="eventsEmpty" style="display:none;color:#666">No events available right now.</div>
     </section>
-    <section class="featured" id="featuredSection"></section>
-    <section class="events" id="eventsSection"></section>
-    <!-- About Section for Night of Laughter -->
-<section id="about" class="py-16 px-6 bg-gray-50">
-  <div class="container mx-auto max-w-4xl text-center">
-    <h1 class="text-4xl font-bold mb-6 text-gray-900">About Night of Laughter</h1>
-    <p class="text-lg text-gray-700 mb-4">
-      Night of Laughter is Zambia’s premier comedy platform, showcasing the country’s top stand-up comedians, content creators, and writers. Since its inception, it has grown into the leading comedy event in Zambia, bringing laughter, joy, and unforgettable entertainment to audiences nationwide.
-    </p>
-    <p class="text-md text-gray-600 mb-4">
-      Over the years, Night of Laughter has hosted several major events, including:
-    </p>
-    <ul class="text-md text-gray-600 mb-6 list-disc list-inside">
-      <li>ZED Laugh Festival Lusaka 2025</li>
-      <li>Night of Laughter: Comedy Night 2024</li>
-      <li>Stand-Up Showcase Lusaka 2023</li>
-      <li>Night of Laughter Regional Tour 2023</li>
-      <li>Comedy Stars Live: Lusaka Edition 2022</li>
-    </ul>
-    <p class="text-md text-gray-600 mb-4">
-      Night of Laughter has featured Zambia’s top comedians, including <strong>Chingliz, Ba Emma, Smoke, Juss, Rhema, Bob Nkosha</strong>, and has welcomed renowned regional performers such as <strong>Thenjiwe, Thapelo, Napoleon</strong>.
-    </p>
-    <p class="text-md text-gray-600 mb-6">
-      Night of Laughter continues to celebrate Zambia’s comedy talent and provide a platform for both established and emerging performers. Join us for an experience full of humor, entertainment, and unforgettable moments.
-    </p>
+  </main>
+
+  <!-- BUY TICKET MODAL -->
+  <div id="ticketModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content" id="ticketModalContent">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalEventName">Event</h3>
+      <img id="modalEventImage" src="" alt="" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:10px" loading="lazy">
+      <form id="ticketForm">
+        <div class="field">
+          <label for="buyerName">Name</label>
+          <input id="buyerName" required />
+        </div>
+        <div class="field">
+          <label for="buyerPhone">Phone</label>
+          <input id="buyerPhone" required placeholder="0971234567 or 260971234567" />
+        </div>
+        <div class="field">
+          <label for="ticketType">Ticket Type</label>
+          <select id="ticketType"></select>
+        </div>
+        <div class="field">
+          <label for="ticketPrice">Price (ZMW)</label>
+          <input id="ticketPrice" type="number" required readonly />
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button type="button" id="payMtn" class="btn">Pay with MTN</button>
+          <button type="button" id="payAirtel" class="btn" style="background:#0b7a3b">Pay with Airtel</button>
+        </div>
+
+        <div style="margin-top:10px">
+          <button type="button" id="whatsappBook" class="btn" style="background:#25D366">Book via WhatsApp</button>
+          <button type="button" onclick="closeModal()" class="btn secondary" style="margin-left:8px">Cancel</button>
+        </div>
+
+        <p id="paymentStatus" style="margin-top:8px;color:#333;font-weight:600"></p>
+      </form>
+    </div>
   </div>
-</section>
 
-<!-- SEO Meta Tags -->
-<meta name="description" content="Night of Laughter is Zambia’s premier comedy platform featuring top stand-up comedians like Chingliz, Ba Emma, Smoke, and Juss. Major events include ZED Laugh Festival and Night of Laughter Comedy Night.">
-<meta name="keywords" content="Night of Laughter, Zambia comedy event, stand-up comedy Zambia, ZED Laugh Festival, comedy shows Lusaka, top Zambian comedians, Chingliz, Ba Emma, Smoke, Juss">
-<meta name="author" content="Night of Laughter Event Team">
-    <section id="testimonialsSection">
-        <h2>Testimonials</h2>
-        <p>Coming soon: Audiences share their NIGHT OF LAUGHTER experiences!</p>
-    </section>
-    <section id="contactSection">
-        <h2>Contact</h2>
-        <p>Email: info@nightoflaughter.com<br>Phone: +260-973299759</p>
-    </section>
-    <!-- TICKET MODALS -->
-    <div id="ticketModal" class="modal">
-        <div class="modal-content">
-            <span class="close" tabindex="0" aria-label="Close popup" onclick="closeModal()" onkeydown="if(event.key==='Enter'){closeModal();}">&times;</span>
-            <img id="ticketBanner" src="" class="ticket-banner" alt="Event ticket image" loading="lazy" />
-            <h2 id="eventNameDisplay" style="margin:18px 0 9px 0;"></h2>
-            <form id="ticketForm" autocomplete="off" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;" onsubmit="event.preventDefault(); showConfirmModal();">
-              <div class="field-group">
-                <label for="buyerName">Name</label>
-                <input type="text" id="buyerName" placeholder="Your Full Name" autocomplete="name" required>
-              </div>
-              <div class="field-group">
-                <label for="buyerPhone">Phone Number</label>
-                <input type="tel" id="buyerPhone" placeholder="e.g. 0971234567" autocomplete="tel" required>
-              </div>
-              <div class="field-group">
-                <label for="ticketType">Ticket Type</label>
-                <select id="ticketType">
-                  <option value="VIP single">VIP single</option>
-                  <option value="VIP double">VIP double</option>
-                  <option value="Ordinary single">Ordinary single</option>
-                  <option value="Ordinary double">Ordinary double</option>
-                </select>
-              </div>
-              <button type="submit" class="btn-primary" style="margin-top:14px;">
-                Continue
-              </button>
-            </form>
-        </div>
+  <!-- TICKET RESULT -->
+  <div id="ticketResultModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeTicketResult()">&times;</span>
+      <h3>Your ticket</h3>
+      <div id="ticketQRArea" style="text-align:center;margin:12px 0"></div>
+      <a id="downloadTicket" class="btn" download="ticket.png">Download Ticket</a>
     </div>
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <h2>Confirm Your Ticket</h2>
-            <div id="confirmDetails"></div>
+  </div>
 
-            <!-- Lipila payment buttons: MTN and Airtel -->
-            <div style="display:flex;gap:10px;flex-direction:column;margin-top:12px;">
-              <button id="payMtnBtn" class="btn-primary">Pay with MTN MoMo</button>
-              <button id="payAirtelBtn" class="btn-primary" style="background:#0b7a3b">Pay with Airtel Money</button>
-              <button id="whatsappBookBtn" class="btn-primary" style="display:block;background:#25D366">Book via WhatsApp</button>
-              <button onclick="closeConfirmModal()" class="btn-secondary">Cancel</button>
-            </div>
-        </div>
-    </div>
-    <div id="ticketResult" class="modal">
-        <div class="modal-content">
-            <h2>Your Ticket is Ready</h2>
-            <canvas id="ticketCanvas" width="400" height="600" style="border:1px solid #000"></canvas>
-            <a id="downloadLink" class="btn-primary" download="ticket.png">Download Ticket</a>
-        </div>
-    </div>
-    <footer>
-        NIGHT OF LAUGHTER© 2025 • All Rights Reserved
-    </footer>
-    <script>
-    // Responsive fast-loading optimizations:
-    // 1. Only show images if they exist, use loading="lazy" on them.
-    // 2. Only load QRCodeJS when needed (defer).
-
-    <div id="events"></div>
+  <footer id="contact">NIGHT OF LAUGHTER © 2025</footer>
 
 <script>
-const API_URL = "https://night-of-laughter-ticket-backend-1.onrender.com/api/events";
+/* ---------- CONFIG ---------- */
+const API_BASE = "https://night-of-laughter-ticket-backend-1.onrender.com"; // change here if needed
+const EVENTS_URL = `${API_BASE}/api/events`;
+const CREATE_PAYMENT_URL = `${API_BASE}/api/create-payment`;
+const ORDER_STATUS_URL = id => `${API_BASE}/api/order/${id}`; // backend: GET /api/order/:id
+
+/* ---------- STATE ---------- */
 let events = [];
+let currentEvent = null;
+let currentTicketPayload = null;
 
-// Toggle description visibility
-function toggleDescription(id) {
-    const desc = document.getElementById(id);
-    if (desc) {
-        desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
-    }
+/* ---------- HELPERS ---------- */
+function el(sel){ return document.querySelector(sel); }
+function escapetext(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+
+function normalizePhoneToInternational(input){
+  if(!input) return '';
+  let s = input.trim().replace(/[\s\-]/g,'');
+  if(s.startsWith('+')) s = s.slice(1);
+  if(/^0\d{8,9}$/.test(s)) return '260' + s.slice(1);
+  if(/^\d{9,12}$/.test(s) && s.startsWith('260')) return s;
+  if(/^\d{9}$/.test(s)) return '260' + s;
+  return s;
 }
 
-// Render events on the page
-function renderEvents() {
-    const container = document.getElementById("events");
-    container.innerHTML = "";
-
-    events.forEach((event, index) => {
-        const div = document.createElement("div");
-        div.classList.add("event-item");
-        div.innerHTML = `
-            <h3>${event.title}</h3>
-            <p>${event.date}</p>
-            <button onclick="toggleDescription('desc-${index}')">Toggle Description</button>
-            <p id="desc-${index}" style="display:none;">${event.description}</p>
-        `;
-        container.appendChild(div);
-    });
+/* ---------- RENDERING ---------- */
+function renderEventCard(ev){
+  const img = ev.posterUrl || ev.image || 'https://via.placeholder.com/400x400';
+  const priceText = ev.price ? `ZMW ${ev.price}` : 'Price TBA';
+  return `
+    <div class="event-card" role="article">
+      <div class="event-thumb"><img src="${escapetext(img)}" alt="${escapetext(ev.name)}"></div>
+      <div class="event-content">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:800">${escapetext(ev.name)}</div>
+          <div style="font-size:0.9rem;color:#666">${escapetext(ev.date || '')}</div>
+        </div>
+        <div style="font-size:0.95rem;color:#333">${escapetext(ev.venue || '')}</div>
+        <div class="price-box">${priceText}</div>
+        <div class="btn-row" style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn" onclick="openBuyModal('${ev._id}')">Buy Ticket</button>
+          <button class="btn secondary" onclick="openMore('${ev._id}')">More Info</button>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
-// Fetch events from MongoDB backend
-document.addEventListener('DOMContentLoaded', async function() {
-    try {
-        const res = await fetch(API_URL);
-        events = await res.json();
-        renderEvents();
-    } catch (err) {
-        console.error("Error fetching events:", err);
-    }
-});
-</script>
+function renderEvents(){
+  const list = el('#eventsList');
+  if(!events.length){
+    el('#eventsEmpty').style.display = 'block';
+    list.innerHTML = '';
+    return;
+  }
+  el('#eventsEmpty').style.display = 'none';
+  list.innerHTML = events.map(renderEventCard).join('');
+}
+
+/* ---------- DATA ---------- */
+async function fetchEvents(){
+  try {
+    const r = await fetch(EVENTS_URL);
+    if(!r.ok) throw new Error('Failed to fetch events: ' + r.status);
+    events = await r.json();
+    renderEvents();
+  } catch (err){
+    console.error(err);
+    el('#eventsList').innerHTML = `<div style="color:#a00">Error loading events. See console.</div>`;
+  }
+}
+
+/* ---------- UI ACTIONS ---------- */
+function openMore(id){
+  const ev = events.find(e=>e._id === id);
+  if(!ev) return alert('Event not found');
+  alert(`${ev.name}\n\n${ev.desc || ''}\n\nVenue: ${ev.venue}\nDate: ${ev.date}\nPrice: ${ev.price || 'TBA'}`);
+}
+
+function openBuyModal(id){
+  const ev = events.find(e=>e._id === id);
+  if(!ev) return alert('Event not found');
+  currentEvent = ev;
+  el('#modalEventName').textContent = ev.name;
+  el('#modalEventImage').src = ev.posterUrl || ev.image || 'https://via.placeholder.com/400x400';
+  el('#ticketPrice').value = ev.price || 0;
+  // populate ticket types (if you used ticketTypes in model you can adapt)
+  const ticketTypeSelect = el('#ticketType');
+  ticketTypeSelect.innerHTML = '';
+  // default single option
+  ticketTypeSelect.appendChild(new Option('Standard', 'standard'));
+  // open modal
+  el('#ticketModal').style.display = 'flex';
+  el('#buyerName').focus();
+  el('#paymentStatus').textContent = '';
+}
+
+function closeModal(){
+  el('#ticketModal').style.display = 'none';
+}
+
+/* ---------- PAYMENT FLOW ---------- */
+async function startPayment(provider){
+  if(!currentEvent) return alert('No event selected');
+  const name = el('#buyerName').value.trim();
+  const phoneRaw = el('#buyerPhone').value.trim();
+  const phone = normalizePhoneToInternational(phoneRaw);
+  const price = Number(el('#ticketPrice').value) || 0;
+  if(!name || !phone) return alert('Please enter name and phone');
+  if(!price || price <= 0) return alert('Invalid ticket price');
+
+  // create payload
+  const payload = {
+    amount: price,
+    phone,
+    provider: provider === 'mtn' ? 'MTN' : 'AirtelMoney',
+    eventId: currentEvent._id,
+    eventName: currentEvent.name,
+    buyerName: name
+  };
+
+  el('#paymentStatus').textContent = 'Initiating payment...';
+
+  try {
+    const resp = await fetch(CREATE_PAYMENT_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
     });
-    function renderEventCard(ev, idx, isFeatured = false) {
-        const moreId = isFeatured ? "featuredDesc" : `desc_${idx}`;
-        return `<div class="event-card">
-            <div class="event-thumb">
-                <img src="${ev.image || 'https://via.placeholder.com/400x400'}" loading="lazy" alt="Event Banner">
-            </div>
-            <div class="event-content">
-                <div class="event-title">${ev.name || "Event Name"}</div>
-                <div><span class="info-label">Date:</span> ${ev.date || "TBA"}</div>
-                <div><span class="info-label">Time:</span> ${ev.time || "TBA"}</div>
-                <div><span class="info-label">Venue:</span> ${ev.venue || "TBA"}</div>
-                <div class="price-box">
-                    <div><b>Prices:</b></div>
-                    <div>VIP: K${ev.vip_single || "-"} (Double: K${ev.vip_double || "-"})</div>
-                    <div>Ordinary: K${ev.ordinary_single || "-"} (Double: K${ev.ordinary_double || "-"})</div>
-                </div>
-                <div class="btn-row">
-                    <button class="btn" onclick="openBuyTicket('${ev.name}','${ev.image}')">Buy Ticket</button>
-                    <button class="btn info" onclick="toggleDescription('${moreId}')">More Info</button>
-                </div>
-                <div id="${moreId}" style="display:none;margin-top:10px;">
-                  <p>${ev.desc || ""}</p>
-                </div>
-            </div>
-        </div>`;
+    const j = await resp.json();
+    if(!resp.ok){
+      el('#paymentStatus').textContent = 'Payment failed: ' + (j.error || j.message || JSON.stringify(j));
+      console.error('create-payment error', j);
+      return;
     }
-    function renderEvents() {
-        const featured = events.find(ev => ev.type && ev.type.toLowerCase().trim() === "featured");
-        document.getElementById("featuredSection").innerHTML = featured ? renderEventCard(featured, 0, true) : '';
-        const upcoming = events.filter(ev => ev.type && ev.type.toLowerCase().trim() === "upcoming");
-        document.getElementById("eventsSection").innerHTML =
-            `<h2>Upcoming Events</h2>
-            <div class="event-list">
-            ${upcoming.map((ev, idx) => renderEventCard(ev, idx)).join('')}
-            </div>`;
+
+    // We created a ticket record; backend returns orderId (ticket id)
+    const orderId = j.orderId || j.id || j._id || null;
+    if(!orderId) {
+      el('#paymentStatus').textContent = 'Payment started but no order id returned. Check admin.';
+      return;
     }
-    function openBuyTicket(eventName, image) {
-        document.getElementById("ticketModal").style.display = "flex";
-        document.getElementById("eventNameDisplay").textContent = eventName;
-        document.getElementById("ticketBanner").src = image;
-        document.getElementById("buyerName").value = "";
-        document.getElementById("buyerPhone").value = "";
-        document.getElementById("ticketType").value = "VIP single";
-        document.getElementById("ticketModal").dataset.event = eventName;
-        document.getElementById("ticketModal").dataset.image = image;
-        document.getElementById("buyerName").focus();
-    }
-    function closeModal() {
-        document.getElementById("ticketModal").style.display = "none";
-    }
-    function generateAndDownloadTicketImage(callback) {
-        let canvas = document.createElement("canvas");
-        canvas.width = 400;
-        canvas.height = 600;
-        let ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#f3f7fb";
-        ctx.fillRect(0, 0, 400, 600);
-        ctx.fillStyle = "#1176d6";
-        ctx.font = "bold 22px Arial";
-        ctx.fillText("EVENT TICKET", 125, 40);
-        ctx.fillStyle = "#1c6ef2";
-        ctx.font = "bold 17px Arial";
-        ctx.fillText("Receipt: " + window.ticketPayload.receiptNum, 20, 80);
-        ctx.fillStyle = "#333";
-        ctx.font = "16px Arial";
-        ctx.fillText("Event: " + window.ticketPayload.event, 20, 120);
-        ctx.fillText("Name: " + window.ticketPayload.name, 20, 150);
-        ctx.fillText("Phone: " + window.ticketPayload.phone, 20, 180);
-        ctx.fillText("Ticket Type: " + window.ticketPayload.type, 20, 210);
-        ctx.fillText("Price: K" + window.ticketPayload.price, 20, 240);
-        // QR code:
-        let tmpQr = document.createElement('div');
-        new window.QRCode(tmpQr, {
-            text: JSON.stringify(window.ticketPayload),
-            width: 90, height: 90,
-            colorDark : "#1c6ef2", colorLight : "#fff", correctLevel : QRCode.CorrectLevel.H
-        });
-        let qrImg = tmpQr.querySelector('img');
-        if (qrImg) {
-            let image = new window.Image();
-            image.onload = function() {
-                ctx.drawImage(image, 270, 260, 90, 90);
-                triggerDownload(canvas);
-                if (callback) callback();
-            };
-            image.src = qrImg.src;
+
+    el('#paymentStatus').textContent = 'Payment initiated. Waiting for confirmation... (Order: ' + orderId + ')';
+
+    // poll order status
+    const poll = setInterval(async ()=>{
+      try {
+        const s = await fetch(ORDER_STATUS_URL(orderId));
+        if(!s.ok) return;
+        const st = await s.json();
+        // st.status expected: pending, paid, failed
+        if(st.status === 'paid' || (st.providerStatus && /paid|success|completed/i.test(st.providerStatus))){
+          clearInterval(poll);
+          el('#paymentStatus').textContent = 'Payment confirmed — generating ticket...';
+          // prepare ticket payload for QR + image
+          currentTicketPayload = {
+            event: currentEvent.name,
+            name,
+            phone,
+            type: el('#ticketType').value,
+            price,
+            receiptNum: st.receiptNum || st.providerReference || ('NOL-' + Date.now())
+          };
+          // show ticket result modal + generate QR
+          showTicketResult(currentTicketPayload);
+          closeModal();
+        } else if(st.status === 'failed' || (st.providerStatus && /fail|rejected|cancel/i.test(st.providerStatus))){
+          clearInterval(poll);
+          el('#paymentStatus').textContent = 'Payment failed or cancelled';
         } else {
-            triggerDownload(canvas);
-            if (callback) callback();
+          // still pending
+          el('#paymentStatus').textContent = 'Waiting for payment... (status: ' + (st.status || 'pending') + ')';
         }
-    }
-    function triggerDownload(canvas) {
-        let link = document.createElement('a');
-        link.download = "ticket.png";
-        link.href = canvas.toDataURL("image/png");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-    function bookViaWhatsapp(payload) {
-        const message = encodeURIComponent(
-            `Hello! With the below details I would like to book this ticket:\n` +
-            `Event: ${payload.event}\n` +
-            `Name: ${payload.name}\n` +
-            `Phone: ${payload.phone}\n` +
-            `Ticket Type: ${payload.type}\n` +
-            `Price: K${payload.price}\n` +
-            `Receipt No: ${payload.receiptNum}\n\n` +
-            `Please let me know the next steps.`
-        );
-        const whatsappNumber = "+260973299759";
-        window.open(`https://wa.me/${whatsappNumber}?text=${message}`,'_blank');
-        generateAndDownloadTicketImage();
-    }
-    function showConfirmModal() {
-        let name = buyerName.value.trim();
-        let phone = buyerPhone.value.trim();
-        let type = ticketType.value;
-        let eventName = document.getElementById("ticketModal").dataset.event;
-        // Find event in the list
-        let ev = events.find(ev => ev.name === eventName);
-        let price = 0;
-        if (ev) {
-            if(type === "VIP single" && ev.vip_single) price = ev.vip_single;
-            else if(type === "VIP double" && ev.vip_double) price = ev.vip_double;
-            else if(type === "Ordinary single" && ev.ordinary_single) price = ev.ordinary_single;
-            else if(type === "Ordinary double" && ev.ordinary_double) price = ev.ordinary_double;
-        } else {
-            price = ticketPrices[type] || 0;
-        }
-        let receiptNum = 'NOL-' + new Date().toISOString().slice(0,10).replace(/-/g,"") + '-' + Math.floor(1000 + Math.random() * 9000);
-        window.ticketPayload = { event: eventName, name, phone, type, price, receiptNum };
-        document.getElementById("confirmDetails").innerHTML = `
-          <div class="receipt-modal-colorful">
-            <h3 style="background:#1176d6;color:#fff;padding:5px 0;border-radius:6px 6px 0 0;">EVENT RECEIPT</h3>
-            <div style="padding:10px;text-align:left;background:#f3f7fb">
-              <strong>Event:</strong> <span style="color:#1c6ef2;">${eventName}</span><br>
-              <strong>Name:</strong> ${name}<br>
-              <strong>Phone:</strong> ${phone}<br>
-              <strong>Ticket Type:</strong> <span style="color:#e26d0b;font-weight:bold;">${type}</span><br>
-              <strong>Price:</strong> <span style="color:#f40;font-weight:bold;">K${price}</span><br>
-              <strong>Receipt No:</strong> <span style="color:#009966;">${receiptNum}</span>
-            </div>
-            <div id="ticketQR" class="qr-container"></div>
-          </div>
-        `;
-        setTimeout(() => {
-            let qr = document.getElementById("ticketQR");
-            qr.innerHTML = "";
-            new window.QRCode(qr, {
-                text: JSON.stringify(window.ticketPayload),
-                width: 128, height: 128,
-                colorDark : "#1c6ef2", colorLight : "#fff", correctLevel : window.QRCode.CorrectLevel.H
-            });
-        }, 320);
-        closeModal();
-        document.getElementById("confirmModal").style.display = "flex";
-        document.getElementById('whatsappBookBtn').onclick = function() {
-            bookViaWhatsapp(window.ticketPayload);
-        };
+      } catch (err){
+        console.error('poll error', err);
+      }
+    }, 3000);
 
-        // connect payment buttons
-        document.getElementById('payMtnBtn').onclick = function() {
-            startMobileMoneyPayment('mtn', window.ticketPayload);
-        };
-        document.getElementById('payAirtelBtn').onclick = function() {
-            startMobileMoneyPayment('airtel', window.ticketPayload);
-        };
-    }
-    function closeConfirmModal() {
-        document.getElementById("confirmModal").style.display = "none";
-    }
+  } catch (err){
+    console.error('startPayment error', err);
+    el('#paymentStatus').textContent = 'Payment initiation error: ' + err.message;
+  }
+}
 
-    // helper: normalize Zambian phone numbers into international format accepted by Lipila
-    function normalizePhoneToInternational(input) {
-        let s = input.trim();
-        // remove spaces, dashes
-        s = s.replace(/[\s\-]/g, '');
-        if (s.startsWith('+')) s = s.slice(1);
-        // Common Zambia formats:
-        // 0971234567 -> 260971234567
-        // 971234567  -> 260971234567
-        // 260971234567 -> keep
-        if (/^0\d{8,9}$/.test(s)) { // starts with 0
-            return '260' + s.slice(1);
-        }
-        if (/^9\d{8}$/.test(s)) { // missing leading 0
-            return '260' + s;
-        }
-        if (/^260\d{8,9}$/.test(s)) {
-            return s;
-        }
-        // fallback: return as-is
-        return s;
-    }
+/* ---------- TICKET RESULT ---------- */
+function showTicketResult(payload){
+  el('#ticketQRArea').innerHTML = '';
+  new QRCode(el('#ticketQRArea'), {
+    text: JSON.stringify(payload),
+    width: 200, height: 200,
+    colorDark: "#1c6ef2", colorLight: "#fff"
+  });
+  el('#ticketResultModal').style.display = 'flex';
 
-    // Mobile money integration: calls /create-payment on your server
-    async function startMobileMoneyPayment(provider, payload) {
-    const BACKEND = "https://night-of-laughter-ticket-backend-1.onrender.com";
+  // Create downloadable image
+  const downloadBtn = el('#downloadTicket');
+  downloadBtn.onclick = () => {
+    generateTicketImage(payload, (dataUrl)=>{
+      downloadBtn.href = dataUrl;
+    });
+  };
+}
 
-    if(!payload.phone || !payload.price || payload.price <= 0) {
-        alert('Missing phone or invalid price');
-        return;
-    }
+/* Generate a simple ticket image on a canvas and call callback with dataURL */
+function generateTicketImage(payload, cb){
+  const canvas = document.createElement('canvas');
+  canvas.width = 600; canvas.height = 900;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = '#1176d6'; ctx.fillRect(0,0,canvas.width,120);
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 26px Arial'; ctx.fillText('NIGHT OF LAUGHTER', 20, 70);
+  ctx.fillStyle = '#333'; ctx.font = '18px Arial';
+  ctx.fillText('Event: ' + payload.event, 20, 150);
+  ctx.fillText('Name: ' + payload.name, 20, 180);
+  ctx.fillText('Phone: ' + payload.phone, 20, 210);
+  ctx.fillText('Type: ' + payload.type, 20, 240);
+  ctx.fillText('Price: ZMW ' + payload.price, 20, 270);
+  ctx.fillText('Receipt: ' + payload.receiptNum, 20, 300);
 
-    const phoneIntl = normalizePhoneToInternational(payload.phone);
-    const statusElId = 'payStatus';
-
-    const statusArea = document.getElementById("confirmDetails");
-    statusArea.insertAdjacentHTML('beforeend', `<p id="${statusElId}">Initiating ${provider.toUpperCase()} payment...</p>`);
-
-    try {
-        const resp = await fetch(`${BACKEND}/create-payment`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                amount: payload.price,
-                phone: phoneIntl,
-                provider: provider,
-                eventName: payload.event,
-                buyerName: payload.name,
-                receiptNum: payload.receiptNum
-            })
-        });
-
-        const j = await resp.json();
-
-        if (!resp.ok) {
-            document.getElementById(statusElId).innerText = `Error initiating payment: ${j.error || j.message}`;
-            return;
-        }
-
-        document.getElementById(statusElId).innerText =
-            `Payment initiated. Waiting for confirmation... (Order ${j.orderId})`;
-
-        const orderId = j.orderId;
-
-        const interval = setInterval(async () => {
-            const st = await fetch(`${BACKEND}/order/${orderId}`);
-            const statusObj = await st.json();
-
-            if (statusObj.status === 'paid' || statusObj.status === 'failed') {
-                clearInterval(interval);
-
-                if (statusObj.status === 'paid') {
-                    document.getElementById(statusElId).innerText = 'Payment successful — generating ticket...';
-
-                    window.ticketPayload.receiptNum =
-                        statusObj.providerReference || window.ticketPayload.receiptNum;
-
-                    generateAndDownloadTicketImage(() => {
-                        document.getElementById("confirmModal").style.display = "none";
-                    });
-                } else {
-                    document.getElementById(statusElId).innerText = `Payment failed: ${statusObj.message}`;
-                }
-            }
-        }, 3000);
-    } catch (err) {
-        document.getElementById(statusElId).innerText = 'Payment initiation error: ' + err.message;
-    }
-        }
-            // Poll order status every 3s
-            const orderId = j.orderId;
-            const interval = setInterval(async () => {
-                const st = await fetch('/order/' + orderId);
-                const statusObj = await st.json();
-                if (statusObj.status && (statusObj.status === 'paid' || statusObj.status === 'failed')) {
-                    clearInterval(interval);
-                    if (statusObj.status === 'paid') {
-                        document.getElementById(statusElId).innerText = 'Payment successful — generating ticket...';
-                        // use providerReference or receiptNum as desired
-                        window.ticketPayload.receiptNum = statusObj.providerReference || window.ticketPayload.receiptNum;
-                        // generate ticket image and trigger download
-                        generateAndDownloadTicketImage(() => {
-                            document.getElementById("confirmModal").style.display = "none";
-                        });
-                    } else {
-                        document.getElementById(statusElId).innerText = 'Payment failed or rejected. Please try again or use WhatsApp booking.';
-                    }
-                } else {
-                    console.log('polling order', statusObj.status);
-                }
-            }, 3000);
-
-        } catch (err) {
-            console.error('payment error', err);
-            document.getElementById(statusElId).innerText = 'Payment initiation error: ' + err.message;
-        }
-    }
-
-    const ticketPrices = {
-        "VIP single": 500,
-        "VIP double": 800,
-        "Ordinary single": 300,
-        "Ordinary double": 500
+  // draw QR in a temp div then transfer to image
+  const tmp = document.createElement('div');
+  tmp.style.display = 'none';
+  document.body.appendChild(tmp);
+  new QRCode(tmp, { text: JSON.stringify(payload), width: 180, height: 180 });
+  const img = tmp.querySelector('img') || tmp.querySelector('canvas');
+  if(img){
+    const qrImg = new Image();
+    qrImg.onload = function(){
+      ctx.drawImage(qrImg, canvas.width - 220, 320, 180, 180);
+      const dataUrl = canvas.toDataURL('image/png');
+      document.body.removeChild(tmp);
+      if(cb) cb(dataUrl);
     };
+    qrImg.src = img.src;
+  } else {
+    const dataUrl = canvas.toDataURL('image/png');
+    document.body.removeChild(tmp);
+    if(cb) cb(dataUrl);
+  }
+}
 
-    window.onclick = function(event) {
-        ['ticketModal', 'confirmModal', 'ticketResult'].forEach(function(id) {
-            var modal = document.getElementById(id);
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        });
-    }
-    // Accessibility for Esc to close modal
-    window.addEventListener('keydown', function(e){
-        if(e.key === "Escape") {
-            ['ticketModal', 'confirmModal', 'ticketResult'].forEach(function(id) {
-                const modal = document.getElementById(id);
-                if(modal && modal.style.display == "flex") modal.style.display = "none";
-            });
-        }
+function closeTicketResult(){
+  el('#ticketResultModal').style.display = 'none';
+}
+
+/* ---------- BUTTON HOOKS ---------- */
+document.addEventListener('DOMContentLoaded', ()=>{
+  // load events
+  fetchEvents();
+
+  // payment buttons
+  el('#payMtn').addEventListener('click', ()=> startPayment('mtn'));
+  el('#payAirtel').addEventListener('click', ()=> startPayment('airtel'));
+  el('#whatsappBook').addEventListener('click', ()=>{
+    // open whatsapp with payload
+    const name = el('#buyerName').value.trim(), phone = el('#buyerPhone').value.trim(), type = el('#ticketType').value;
+    const price = el('#ticketPrice').value;
+    if(!name || !phone) return alert('Enter name and phone to book via WhatsApp');
+    const payload = { event: currentEvent?.name || '', name, phone, type, price, receiptNum: 'NOL-' + Date.now() };
+    const msg = encodeURIComponent(
+      `Booking request\nEvent: ${payload.event}\nName: ${payload.name}\nPhone: ${payload.phone}\nType: ${payload.type}\nPrice: ${payload.price}\nReceipt: ${payload.receiptNum}`
+    );
+    window.open(`https://wa.me/260973299759?text=${msg}`, '_blank');
+  });
+
+  // close modals on background click
+  window.addEventListener('click', (e)=>{
+    ['ticketModal','ticketResultModal'].forEach(id=>{
+      const m = el('#'+id);
+      if(m && e.target === m) m.style.display = 'none';
     });
-    </script>
+  });
+});
+
+/* ---------- EXPORT (for debugging) ---------- */
+window._nol = { API_BASE, EVENTS_URL, CREATE_PAYMENT_URL, ORDER_STATUS_URL };
+</script>
 </body>
-</html>
+    </html>
