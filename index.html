@@ -356,22 +356,49 @@
     // 1. Only show images if they exist, use loading="lazy" on them.
     // 2. Only load QRCodeJS when needed (defer).
 
-    const SHEETDB_API = "https://sheetdb.io/api/v1/owneanfeuzae9";
-    let events = [];
-    function toggleDescription(id) {
-        var desc = document.getElementById(id);
-        if(desc) {
-            desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
-        }
+    <div id="events"></div>
+
+<script>
+const API_URL = "https://night-of-laughter-ticket-backend-1.onrender.com/api/events";
+let events = [];
+
+// Toggle description visibility
+function toggleDescription(id) {
+    const desc = document.getElementById(id);
+    if (desc) {
+        desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
     }
-    // Load data as soon as possible without blocking paint
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch(SHEETDB_API)
-          .then(res => res.json())
-          .then(data => {
-            events = data;
-            renderEvents();
-          });
+}
+
+// Render events on the page
+function renderEvents() {
+    const container = document.getElementById("events");
+    container.innerHTML = "";
+
+    events.forEach((event, index) => {
+        const div = document.createElement("div");
+        div.classList.add("event-item");
+        div.innerHTML = `
+            <h3>${event.title}</h3>
+            <p>${event.date}</p>
+            <button onclick="toggleDescription('desc-${index}')">Toggle Description</button>
+            <p id="desc-${index}" style="display:none;">${event.description}</p>
+        `;
+        container.appendChild(div);
+    });
+}
+
+// Fetch events from MongoDB backend
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const res = await fetch(API_URL);
+        events = await res.json();
+        renderEvents();
+    } catch (err) {
+        console.error("Error fetching events:", err);
+    }
+});
+</script>
     });
     function renderEventCard(ev, idx, isFeatured = false) {
         const moreId = isFeatured ? "featuredDesc" : `desc_${idx}`;
