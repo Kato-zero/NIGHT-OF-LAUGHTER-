@@ -1,53 +1,37 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   
   try {
-    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEETS_EVENTS_ID);
+    // Direct public Google Sheets API
+    const response = await fetch(
+      'https://docs.google.com/spreadsheets/d/1NHbVsoRWNzcns8LZSIDF0LCTRfKae4loel0hoJEW79Q/gviz/tq?tqx=out:json'
+    );
     
-    // FIX: Handle the \n issue
-    let privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY;
+    const text = await response.text();
+    const json = JSON.parse(text.substring(47).slice(0, -2));
     
-    // If \n is missing, add them back
-    if (privateKey && !privateKey.includes('\\n')) {
-      // Replace actual newlines with \n
-      privateKey = privateKey.replace(/\n/g, '\\n');
-    }
-    
-    await doc.useServiceAccountAuth({
-      client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      private_key: privateKey.replace(/\\n/g, '\n'),
-    });
-    
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-    const rows = await sheet.getRows();
-    
-    const events = rows
-      .filter(row => row.get('Status') === 'active')
-      .map(row => ({
-        name: row.get('Name') || '',
-        date: row.get('Date') || 'TBA',
-        time: row.get('Time') || 'TBA',
-        venue: row.get('Venue') || 'TBA',
-        image: row.get('Image') || 'https://via.placeholder.com/400x400',
-        type: row.get('Type') || 'upcoming',
-        vip_single: parseInt(row.get('VIP Single')) || 0,
-        vip_double: parseInt(row.get('VIP Double')) || 0,
-        ordinary_single: parseInt(row.get('Ordinary Single')) || 0,
-        ordinary_double: parseInt(row.get('Ordinary Double')) || 0,
-        desc: row.get('Description') || ''
-      }));
+    const events = json.table.rows.map(row => {
+      const cells = row.c;
+      return {
+        name: cells[0]?.v || '',
+        date: cells[1]?.v || 'TBA',
+        time: cells[2]?.v || 'TBA',
+        venue: cells[3]?.v || 'TBA',
+        image: cells[4]?.v || 'https://via.placeholder.com/400x400',
+        type: cells[5]?.v || 'upcoming',
+        vip_single: parseInt(cells[6]?.v) || 0,
+        vip_double: parseInt(cells[7]?.v) || 0,
+        ordinary_single: parseInt(cells[8]?.v) || 0,
+        ordinary_double: parseInt(cells[9]?.v) || 0,
+        desc: cells[10]?.v || '',
+        status: cells[11]?.v || 'active'
+      };
+    }).filter(event => event.status.toLowerCase() === 'active');
     
     res.json(events);
     
   } catch (error) {
     console.error('Google Sheets error:', error);
-    res.status(500).json({ 
-      error: 'Failed to fetch events',
-      details: error.message,
-      hint: 'Check private key formatting. Ensure \\n are preserved.'
-    });
+    res.status(500).json({ error: 'Failed to fetch events' });
   }
 };
