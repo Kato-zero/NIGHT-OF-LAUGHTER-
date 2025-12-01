@@ -1,33 +1,57 @@
-// api/events.js
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*'); // optional for frontend
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+
+module.exports = async (req, res) => {
+  // Enable CORS (allow frontend to call this API)
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
   try {
-    const response = await fetch("https://sheetdb.io/api/v1/owneanfeuzae9"); // replace with your SheetDB URL
-    const data = await response.json();
-
-    // Optional: filter or map like your original function
-    const events = data
-      .filter(row => row.Status === 'active')
-      .map((row, index) => ({
-        id: index + 1,
-        name: row.Name || '',
-        date: row.Date || 'TBA',
-        time: row.Time || 'TBA',
-        venue: row.Venue || 'TBA',
-        image: row.Image || 'https://via.placeholder.com/400x400',
-        type: row.Type || 'upcoming',
-        vip_single: parseInt(row['VIP Single']) || 0,
-        vip_double: parseInt(row['VIP Double']) || 0,
-        ordinary_single: parseInt(row['Ordinary Single']) || 0,
-        ordinary_double: parseInt(row['Ordinary Double']) || 0,
-        desc: row.Description || ''
+    // 1. Connect to Google Sheets
+    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEETS_EVENTS_ID);
+    
+    // 2. Authenticate with service account
+    await doc.useServiceAccountAuth({
+      client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+      private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    });
+    
+    // 3. Load document info
+    await doc.loadInfo();
+    
+    // 4. Get first sheet
+    const sheet = doc.sheetsByIndex[0];
+    const rows = await sheet.getRows();
+    
+    // 5. Process rows into events
+    const events = rows
+      .filter(row => row.get('Status') && row.get('Status').toLowerCase() === 'active')
+      .map(row => ({
+        name: row.get('Name') || '',
+        date: row.get('Date') || 'TBA',
+        time: row.get('Time') || 'TBA',
+        venue: row.get('Venue') || 'TBA',
+        image: row.get('Image') || 'https://via.placeholder.com/400x400',
+        type: row.get('Type') || 'upcoming',
+        vip_single: parseInt(row.get('VIP Single')) || 0,
+        vip_double: parseInt(row.get('VIP Double')) || 0,
+        ordinary_single: parseInt(row.get('Ordinary Single')) || 0,
+        ordinary_double: parseInt(row.get('Ordinary Double')) || 0,
+        desc: row.get('Description') || ''
       }));
-
-    res.status(200).json(events);
-
+    
+    // 6. Send events as JSON
+    res.json(events);
+    
   } catch (error) {
-    console.error('SheetDB error:', error);
-    res.status(500).json({ error: 'Failed to fetch events' });
+    console.error('Google Sheets error:', error);
+    res.status(500).json({ 
+      error: 'Failed to fetch events',
+      details: error.message 
+    });
   }
-        }
+};
