@@ -1,17 +1,20 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-
-module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+// api/create-payment.js
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
+
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { amount, phone, provider, eventName, buyerName, receiptNum } = req.body;
 
+  if (!amount || !phone || !eventName || !buyerName) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
   try {
-    // 1. Call Lipila
+    // 1️⃣ Call Lipila
     const lipilaResponse = await fetch(`${process.env.LIPILA_API_BASE}/payments`, {
       method: 'POST',
       headers: {
@@ -28,32 +31,33 @@ module.exports = async (req, res) => {
 
     const lipilaData = await lipilaResponse.json();
 
-    // 2. Store in Google Sheets
-    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEETS_PAYMENTS_ID);
-    
-    await doc.useServiceAccountAuth({
-      client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    });
-    
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-    
-    await sheet.addRow({
-      'OrderID': lipilaData.id,
-      'Event': eventName,
-      'BuyerName': buyerName,
-      'Phone': phone,
-      'Amount': amount,
-      'TicketType': 'VIP single',
-      'Status': 'pending',
-      'ReceiptNum': receiptNum,
-      'Provider': provider,
-      'Created': new Date().toISOString(),
-      'Updated': new Date().toISOString()
+    // 2️⃣ Store payment in SheetDB
+    const SHEETDB_URL = process.env.SHEETDB_PAYMENTS_URL; // your SheetDB payments URL
+
+    const sheetResponse = await fetch(SHEETDB_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        data: {
+          OrderID: lipilaData.id,
+          Event: eventName,
+          BuyerName: buyerName,
+          Phone: phone,
+          Amount: amount,
+          TicketType: 'VIP single',  // optional: adjust as needed
+          Status: 'pending',
+          ReceiptNum: receiptNum || '',
+          Provider: provider || '',
+          Created: new Date().toISOString(),
+          Updated: new Date().toISOString()
+        }
+      })
     });
 
-    res.json({
+    const sheetData = await sheetResponse.json();
+
+    // 3️⃣ Respond to frontend
+    res.status(200).json({
       orderId: lipilaData.id,
       status: 'pending'
     });
@@ -62,4 +66,4 @@ module.exports = async (req, res) => {
     console.error('Payment error:', error);
     res.status(500).json({ error: 'Payment failed to initiate' });
   }
-};
+          }
