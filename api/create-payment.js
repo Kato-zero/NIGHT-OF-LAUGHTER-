@@ -9,47 +9,48 @@ module.exports = async (req, res) => {
   const { amount, phone, provider, eventName, buyerName, receiptNum } = req.body;
 
   try {
-    // Get Lipila API base from environment
     const LIPILA_BASE = process.env.LIPILA_API_BASE;
     const LIPILA_ENDPOINT = `${LIPILA_BASE}/collections/mobile-money`;
     
-    // Get callback URL
+    // Your domain (Vercel auto-detect)
     const baseUrl = `https://${req.headers.host}`;
     
-    // Convert provider to Lipila format
+    // Convert provider
     const lipilaProvider = provider === 'mtn' ? 'MtnMoney' : 'AirtelMoney';
     
-    // Format phone number (260XXXXXXXXX)
     const formattedPhone = normalizePhoneToInternational(phone);
     
-    // Create unique reference ID
     const referenceId = 'NOL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-    
+
     console.log('📱 Creating Lipila payment:', {
       endpoint: LIPILA_ENDPOINT,
       amount,
       phone: formattedPhone,
       provider: lipilaProvider,
       referenceId,
-      callbackUrl: `${baseUrl}/api/payment-callback`
+
+      // ✅ YOUR CALLBACK URL GOES HERE
+      callbackUrl: `${baseUrl}/api/lipila-callback`
     });
 
-    // 1. Call Lipila API
+    // Call Lipila API
     const lipilaResponse = await fetch(LIPILA_ENDPOINT, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
         'x-api-key': process.env.LIPILA_API_KEY,
-        'callbackUrl': `${baseUrl}/api/payment-callback`
+
+        // ✅ Callback passed in header
+        'callbackUrl': `${baseUrl}/api/lipila-callback`
       },
       body: JSON.stringify({
-        referenceId: referenceId,
+        referenceId,
         amount: parseInt(amount),
         narration: `Night of Laughter: ${eventName}`,
         accountNumber: formattedPhone,
         currency: 'ZMW',
-        email: '', // Optional - could use buyer email if you collect it
+        email: '',
         paymentType: lipilaProvider
       })
     });
@@ -65,29 +66,27 @@ module.exports = async (req, res) => {
     } catch (e) {
       throw new Error(`Invalid JSON response: ${responseText}`);
     }
-    
+
     if (!lipilaResponse.ok) {
       throw new Error(`Lipila API error ${lipilaResponse.status}: ${JSON.stringify(lipilaData)}`);
     }
-    
-    // 2. Return success response
+
     res.json({
       success: true,
       orderId: lipilaData.identifier || lipilaData.referenceId,
       referenceId: lipilaData.referenceId,
       status: lipilaData.status || 'Pending',
       message: lipilaData.message || 'Payment initiated successfully',
-      instructions: `Check your phone for ${lipilaProvider} USSD prompt. Enter PIN to complete.`,
+      instructions: `Check your phone for ${lipilaProvider} prompt. Enter PIN to complete.`,
       provider: lipilaProvider,
-      amount: amount,
+      amount,
       phone: formattedPhone,
       timestamp: new Date().toISOString()
     });
 
   } catch (error) {
     console.error('💥 Payment processing error:', error);
-    
-    // Fallback response
+
     res.status(500).json({
       success: false,
       error: error.message,
@@ -99,21 +98,14 @@ module.exports = async (req, res) => {
   }
 };
 
-// Helper function from your frontend
 function normalizePhoneToInternational(phone) {
   let s = phone.toString().trim();
   s = s.replace(/[\s\-]/g, '');
   if (s.startsWith('+')) s = s.slice(1);
-  
-  // Format: 260XXXXXXXXX
-  if (/^0\d{9}$/.test(s)) {
-    return '260' + s.slice(1);
-  }
-  if (/^260\d{9}$/.test(s)) {
-    return s;
-  }
-  if (/^9\d{8}$/.test(s)) {
-    return '260' + s;
-  }
+
+  if (/^0\d{9}$/.test(s)) return '260' + s.slice(1);
+  if (/^260\d{9}$/.test(s)) return s;
+  if (/^9\d{8}$/.test(s)) return '260' + s;
+
   return s;
-}
+      }
