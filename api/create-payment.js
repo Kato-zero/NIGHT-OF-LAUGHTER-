@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
 
   try {
     // Get Lipila API base from environment
-    const LIPILA_BASE = process.env.LIPILA_API_BASE || 'https://api.lipila.co.zm/api/v1';
+    const LIPILA_BASE = process.env.LIPILA_API_BASE;
     const LIPILA_ENDPOINT = `${LIPILA_BASE}/collections/mobile-money`;
     
     // Get callback URL
@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
     });
 
     // 1. Call Lipila API
-    const lipilaResponse = await fetch(LIPILA_API_KEY, {
+    const lipilaResponse = await fetch(LIPILA_ENDPOINT, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
