@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     const lipilaResponse = await fetch('https://lipila-uat.hobbiton.app/transactions/mobile-money', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.LIPILA_API_KEY}`,
+        'Authorization': `Bearer lsk_019ab490-99b7-72c7-8bfa-23cce0bacf68,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
