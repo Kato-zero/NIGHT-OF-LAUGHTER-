@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
     const baseUrl = req.headers.origin || `https://${req.headers.host}`;
     
     // 3. Call Lipila API to create payment
-    const lipilaResponse = await fetch('https://blz.lipila.io/payments', {
+    const lipilaResponse = await fetch('https://lipila-uat.hobbiton.app/transactions/mobile-money', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${process.env.LIPILA_API_KEY}`,
