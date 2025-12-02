@@ -6,10 +6,7 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
-  // Handle preflight
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -23,8 +20,7 @@ module.exports = async (req, res) => {
     const baseUrl = req.headers.origin || `https://${req.headers.host}`;
     
     // 3. Call Lipila API to create payment
-    const lipilaResponse = await fetch('https://lipila-uat.hobbiton.app/transactions/mobile-money', {
-      method: 'POST',
+    const lipilaResponse = await fetch('https://lipila-uat.hobbiton.app/transactions/mobile-money', 
       headers: {
         'Authorization': `Bearer lsk_019ab490-99b7-72c7-8bfa-23cce0bacf68,
         'Content-Type': 'application/json'
