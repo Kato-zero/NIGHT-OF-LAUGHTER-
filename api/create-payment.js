@@ -1,90 +1,119 @@
-export async function POST(req) {
+module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  const { amount, phone, provider, eventName, buyerName, receiptNum } = req.body;
+
   try {
-    const body = await req.json();
-
-    // --- REQUIRED FIELDS ---
-    const apiKey = process.env.LIPILA_SECRET_KEY;
-    if (!apiKey) {
-      console.error("❌ Missing LIPILA_SECRET_KEY");
-      return Response.json({ error: "Server missing API key" }, { status: 500 });
-    }
-
-    if (!body.phone || !body.amount || !body.provider) {
-      return Response.json(
-        { error: "Missing required fields: phone, amount, provider" },
-        { status: 400 }
-      );
-    }
-
-    // Normalize phone: remove "+" and spaces
-    const phone = body.phone.replace(/\D/g, ""); // keep digits only
-
-    // --- BUILD PAYLOAD FOR LIPILA ---
-    const payload = {
-      currency: "ZMW",
-      amount: Number(body.amount),
-      accountNumber: phone,
-      fullName: body.buyerName || "Unknown Buyer",
-      phoneNumber: phone,
-      email: body.email || "no-email@payment.app",
-      externalId: body.receiptNum || `order-${Date.now()}`,
-      narration: `Payment for ${body.eventName || "Event"}`,
-      provider: body.provider   // MTN | AIRTEL | ZAMTEL
-    };
-
-    console.log("🔵 Sending to Lipila:", payload);
-
-    // --- SEND TO LIPILA ---
-    const lipilaResp = await fetch(
-      "https://lipila-uat.hobbiton.app/transactions/mobile-money",
-      {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      }
-    );
-
-    let lipilaJson;
-    try {
-      lipilaJson = await lipilaResp.json();
-    } catch {
-      return Response.json(
-        { error: "Invalid JSON response from Lipila" },
-        { status: 500 }
-      );
-    }
-
-    console.log("🟢 Lipila Response:", lipilaJson);
-
-    // --- HANDLE LIPILA FAILURE ---
-    if (!lipilaResp.ok) {
-      return Response.json(
-        {
-          error: lipilaJson.message || "Lipila rejected the request",
-          details: lipilaJson
-        },
-        { status: 400 }
-      );
-    }
-
-    // --- SUCCESS RESPONSE ---
-    const orderId =
-      lipilaJson.transactionId ||
-      lipilaJson.externalId ||
-      lipilaJson.id ||
-      null;
-
-    return Response.json({
-      success: true,
-      orderId,
-      lipila: lipilaJson
+    // Get Lipila API base from environment
+    const LIPILA_BASE = process.env.LIPILA_API_BASE || 'https://api.lipila.co.zm/api/v1';
+    const LIPILA_ENDPOINT = `${LIPILA_BASE}/collections/mobile-money`;
+    
+    // Get callback URL
+    const baseUrl = `https://${req.headers.host}`;
+    
+    // Convert provider to Lipila format
+    const lipilaProvider = provider === 'mtn' ? 'MtnMoney' : 'AirtelMoney';
+    
+    // Format phone number (260XXXXXXXXX)
+    const formattedPhone = normalizePhoneToInternational(phone);
+    
+    // Create unique reference ID
+    const referenceId = 'NOL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+    
+    console.log('📱 Creating Lipila payment:', {
+      endpoint: LIPILA_ENDPOINT,
+      amount,
+      phone: formattedPhone,
+      provider: lipilaProvider,
+      referenceId,
+      callbackUrl: `${baseUrl}/api/payment-callback`
     });
 
-  } catch (err) {
-    console.error("❌ Server Error:", err);
-    return Response.json({ error: err.message }, { status: 500 });
+    // 1. Call Lipila API
+    const lipilaResponse = await fetch(LIPILA_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.LIPILA_API_KEY,
+        'callbackUrl': `${baseUrl}/api/payment-callback`
+      },
+      body: JSON.stringify({
+        referenceId: referenceId,
+        amount: parseInt(amount),
+        narration: `Night of Laughter: ${eventName}`,
+        accountNumber: formattedPhone,
+        currency: 'ZMW',
+        email: '', // Optional - could use buyer email if you collect it
+        paymentType: lipilaProvider
+      })
+    });
+
+    console.log(`📊 Lipila response status: ${lipilaResponse.status}`);
+    
+    const responseText = await lipilaResponse.text();
+    console.log(`📄 Lipila response: ${responseText}`);
+    
+    let lipilaData;
+    try {
+      lipilaData = JSON.parse(responseText);
+    } catch (e) {
+      throw new Error(`Invalid JSON response: ${responseText}`);
+    }
+    
+    if (!lipilaResponse.ok) {
+      throw new Error(`Lipila API error ${lipilaResponse.status}: ${JSON.stringify(lipilaData)}`);
+    }
+    
+    // 2. Return success response
+    res.json({
+      success: true,
+      orderId: lipilaData.identifier || lipilaData.referenceId,
+      referenceId: lipilaData.referenceId,
+      status: lipilaData.status || 'Pending',
+      message: lipilaData.message || 'Payment initiated successfully',
+      instructions: `Check your phone for ${lipilaProvider} USSD prompt. Enter PIN to complete.`,
+      provider: lipilaProvider,
+      amount: amount,
+      phone: formattedPhone,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('💥 Payment processing error:', error);
+    
+    // Fallback response
+    res.status(500).json({
+      success: false,
+      error: error.message,
+      fallbackInstructions: `Send K${amount} to 0973 299 759 (Ref: ${receiptNum})`,
+      whatsappLink: `https://wa.me/260973299759?text=${encodeURIComponent(
+        `Payment: ${eventName}\nName: ${buyerName}\nRef: ${receiptNum}\nAmount: K${amount}`
+      )}`
+    });
   }
+};
+
+// Helper function from your frontend
+function normalizePhoneToInternational(phone) {
+  let s = phone.toString().trim();
+  s = s.replace(/[\s\-]/g, '');
+  if (s.startsWith('+')) s = s.slice(1);
+  
+  // Format: 260XXXXXXXXX
+  if (/^0\d{9}$/.test(s)) {
+    return '260' + s.slice(1);
+  }
+  if (/^260\d{9}$/.test(s)) {
+    return s;
+  }
+  if (/^9\d{8}$/.test(s)) {
+    return '260' + s;
+  }
+  return s;
 }
