@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
     });
 
     // 1. Call Lipila API
-    const lipilaResponse = await fetch(LIPILA_ENDPOINT, {
+    const lipilaResponse = await fetch(LIPILA_API_KEY, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
