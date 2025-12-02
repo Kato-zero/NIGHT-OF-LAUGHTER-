@@ -1,83 +1,90 @@
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-
-module.exports = async (req, res) => {
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
-
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
+export async function POST(req) {
   try {
-    // 1. Get data from frontend
-    const { amount, phone, provider, eventName, buyerName, receiptNum } = req.body;
-    
-    // 2. Get current domain (for callback URL)
-    const baseUrl = req.headers.origin || `https://${req.headers.host}`;
-    
-    // 3. Call Lipila API to create payment
-    const lipilaResponse = await fetch('https://lipila-uat.hobbiton.app/transactions/mobile-money', 
-      headers: {
-        'Authorization': `Bearer lsk_019ab490-99b7-72c7-8bfa-23cce0bacf68,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        amount: parseInt(amount),
-        phone: phone,
-        currency: 'ZMW',
-        callback_url: `${baseUrl}/api/payment-callback`
-      })
-    });
+    const body = await req.json();
 
-    // 4. Check if Lipila request succeeded
-    if (!lipilaResponse.ok) {
-      const errorText = await lipilaResponse.text();
-      throw new Error(`Lipila API error: ${lipilaResponse.status} - ${errorText}`);
+    // --- REQUIRED FIELDS ---
+    const apiKey = process.env.LIPILA_SECRET_KEY;
+    if (!apiKey) {
+      console.error("❌ Missing LIPILA_SECRET_KEY");
+      return Response.json({ error: "Server missing API key" }, { status: 500 });
     }
 
-    const lipilaData = await lipilaResponse.json();
+    if (!body.phone || !body.amount || !body.provider) {
+      return Response.json(
+        { error: "Missing required fields: phone, amount, provider" },
+        { status: 400 }
+      );
+    }
 
-    // 5. Store payment record in Google Sheets
-    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEETS_PAYMENTS_ID);
-    
-    await doc.useServiceAccountAuth({
-      client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    });
-    
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-    
-    await sheet.addRow({
-      'OrderID': lipilaData.id,
-      'Event': eventName,
-      'BuyerName': buyerName,
-      'Phone': phone,
-      'Amount': amount,
-      'TicketType': 'VIP single', // Will be updated based on selection
-      'Status': 'pending',
-      'ReceiptNum': receiptNum,
-      'Provider': provider,
-      'Created': new Date().toISOString(),
-      'Updated': new Date().toISOString()
+    // Normalize phone: remove "+" and spaces
+    const phone = body.phone.replace(/\D/g, ""); // keep digits only
+
+    // --- BUILD PAYLOAD FOR LIPILA ---
+    const payload = {
+      currency: "ZMW",
+      amount: Number(body.amount),
+      accountNumber: phone,
+      fullName: body.buyerName || "Unknown Buyer",
+      phoneNumber: phone,
+      email: body.email || "no-email@payment.app",
+      externalId: body.receiptNum || `order-${Date.now()}`,
+      narration: `Payment for ${body.eventName || "Event"}`,
+      provider: body.provider   // MTN | AIRTEL | ZAMTEL
+    };
+
+    console.log("🔵 Sending to Lipila:", payload);
+
+    // --- SEND TO LIPILA ---
+    const lipilaResp = await fetch(
+      "https://lipila-uat.hobbiton.app/transactions/mobile-money",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }
+    );
+
+    let lipilaJson;
+    try {
+      lipilaJson = await lipilaResp.json();
+    } catch {
+      return Response.json(
+        { error: "Invalid JSON response from Lipila" },
+        { status: 500 }
+      );
+    }
+
+    console.log("🟢 Lipila Response:", lipilaJson);
+
+    // --- HANDLE LIPILA FAILURE ---
+    if (!lipilaResp.ok) {
+      return Response.json(
+        {
+          error: lipilaJson.message || "Lipila rejected the request",
+          details: lipilaJson
+        },
+        { status: 400 }
+      );
+    }
+
+    // --- SUCCESS RESPONSE ---
+    const orderId =
+      lipilaJson.transactionId ||
+      lipilaJson.externalId ||
+      lipilaJson.id ||
+      null;
+
+    return Response.json({
+      success: true,
+      orderId,
+      lipila: lipilaJson
     });
 
-    // 6. Return success to frontend
-    res.json({
-      orderId: lipilaData.id,
-      status: 'pending',
-      message: 'Payment initiated successfully'
-    });
-
-  } catch (error) {
-    console.error('Payment processing error:', error);
-    res.status(500).json({ 
-      error: 'Payment failed to initiate',
-      details: error.message 
-    });
+  } catch (err) {
+    console.error("❌ Server Error:", err);
+    return Response.json({ error: err.message }, { status: 500 });
   }
-};
+}
