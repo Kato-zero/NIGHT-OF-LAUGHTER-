@@ -389,7 +389,7 @@
     
     <script>
     // CHANGED: Use local API endpoint for Vercel
-    const API_URL = "/api/events";
+    const API_URL = "https://night-of-laughter-feh2f0hkp-mark-s-projects-6c648ffb.vercel.app";
     let events = [];
     const ticketPrices = {
         "VIP single": 500,
@@ -669,7 +669,7 @@
         paymentPayload.provider = provider;
 
         try {
-            const resp = await fetch(`/api/create-payment`, {
+            const resp = await fetch(`/api/create-payment`), {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(paymentPayload)
