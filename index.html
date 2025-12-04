@@ -461,7 +461,7 @@
     // Fetch events from Vercel API (Google Sheets backend)
     document.addEventListener('DOMContentLoaded', async function() {
     try {
-        const res = await fetch(`${api}/events`);  // Correct fetch format
+        const res = await fetch("https://night-of-laughter.com/api/events"); // Correct fetch format
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
         }
