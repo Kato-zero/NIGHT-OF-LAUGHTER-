@@ -680,145 +680,143 @@
             if (result.success) {
                 const statusDiv = document.getElementById(statusElId);
                 
-                if (result.status === 'Pending') {
-                    statusDiv.innerHTML = `
-                        <div style="text-align: center;">
-                            <div style="color: #25D366; font-size: 40px; margin: 10px 0;">✓</div>
-                            <p style="color: #1176d6; font-weight: bold; margin: 5px 0;">
-                                Payment Initiated!
-                            </p>
-                            <p style="margin: 5px 0; font-size: 14px;">
-                                Check your phone for <strong>${result.provider}</strong> USSD prompt
-                            </p>
-                            <p style="margin: 5px 0; font-size: 12px; color: #666;">
-                                Reference: ${result.referenceId}<br>
-                                Amount: K${result.amount}
-                            </p>
-                            <div style="margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 6px;">
-                                <p style="margin: 0; font-size: 13px; color: #2e7d32;">
-                                    💡 <strong>Tip:</strong> If prompt doesn't appear in 30 seconds,<br>
-                                    dial <strong>*115#</strong> and follow instructions
-                                </p>
-                            </div>
-                        </div>`;
-                    
-                    // Start polling for payment status
-                    startPaymentPolling(result.orderId, result.referenceId, paymentPayload);
-                    
-                } else {
-                    // Direct success (unlikely for mobile money)
-                    statusDiv.innerHTML = `
-                        <p style="color: #25D366; font-weight: bold;">
-                            ✅ ${result.message}
-                        </p>`;
-                    generateAndDownloadTicketImage();
-                }
-            } else {
-                // Fallback to manual payment
-                document.getElementById(statusElId).innerHTML = `
-                    <div style="color: #d32f2f;">
-                        <p><strong>⚠️ Payment System Offline</strong></p>
-                        <p>${result.error || 'Please send payment manually:'}</p>
-                        <div style="background: #fff3cd; padding: 10px; border-radius: 6px; margin-top: 10px;">
-                            <p style="margin: 0; font-size: 14px;">
-                                <strong>Send K${payload.price} to:</strong><br>
-                                • <strong>MTN/Airtel:</strong> 0973 299 759<br>
-                                • <strong>Reference:</strong> ${payload.receiptNum}<br>
-                                • <strong>WhatsApp:</strong> 
-                                <a href="${result.whatsappLink || 'https://wa.me/260973299759'}" 
-                                   target="_blank" 
-                                   style="color: #25D366; text-decoration: none;">
-                                    Click to confirm
-                                </a>
-                            </p>
-                        </div>
-                    </div>`;
-                generateAndDownloadTicketImage();
-            }
-            
-        } catch (err) {
-            document.getElementById(statusElId).innerHTML = `
-                <div style="color: #d32f2f;">
-                    <p><strong>❌ Network Error</strong></p>
-                    <p>Please complete payment manually:</p>
-                    <div style="background: #ffebee; padding: 10px; border-radius: 6px;">
-                        <p style="margin: 0;">
-                            1. Send K${payload.price} to <strong>0973 299 759</strong><br>
-                            2. Use reference: <strong>${payload.receiptNum}</strong><br>
-                            3. Ticket has been downloaded
-                        </p>
-                    </div>
-                </div>`;
-            generateAndDownloadTicketImage();
-        }
-    }
+if (result.status === 'Pending') {
+  statusDiv.innerHTML = `
+    <div style="text-align: center;">
+      <div style="color: #25D366; font-size: 40px; margin: 10px 0;">✓</div>
+      <p style="color: #1176d6; font-weight: bold; margin: 5px 0;">
+        Payment Initiated!
+      </p>
+      <p style="margin: 5px 0; font-size: 14px;">
+        Check your phone for a <strong>${result.provider || 'Mobile Money'}</strong> prompt
+      </p>
+      <p style="margin: 5px 0; font-size: 12px; color: #666;">
+        Reference: ${result.referenceId || 'N/A'}<br>
+        Amount: K${result.amount || '—'}
+      </p>
+      <div style="margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 6px;">
+        <p style="margin: 0; font-size: 13px; color: #2e7d32;">
+          💡 <strong>Tip:</strong> If the prompt doesn't appear in 30 seconds,<br>
+          check your mobile money menu manually or dial your provider’s USSD code
+        </p>
+      </div>
+    </div>`;
+}
+ // Start polling for payment status
+startPaymentPolling(result.orderId, result.referenceId, paymentPayload);
 
-    // Poll for payment status
-    function startPaymentPolling(orderId, referenceId, payload) {
-        let attempts = 0;
-        const maxAttempts = 40; // ~2 minutes
-        
-        const poll = setInterval(async () => {
-            attempts++;
-            
-            try {
-                // Call your own endpoint to check payment status
-                // You'll need to create this endpoint
-                const statusRes = await fetch(`/api/check-payment?reference=${referenceId}`);
-                
-                if (statusRes.ok) {
-                    const statusData = await statusRes.json();
-                    
-                    if (statusData.status === 'Success' || statusData.status === 'Paid') {
-                        clearInterval(poll);
-                        document.getElementById('payStatus').innerHTML = `
-                            <div style="text-align: center;">
-                                <div style="color: #4caf50; font-size: 40px; margin: 10px 0;">🎉</div>
-                                <p style="color: #4caf50; font-weight: bold;">
-                                    Payment Confirmed!
-                                </p>
-                                <p>Generating your ticket...</p>
-                            </div>`;
-                        
-                        // Update receipt number with Lipila reference
-                        window.ticketPayload.receiptNum = referenceId;
-                        generateAndDownloadTicketImage(() => {
-                            setTimeout(() => {
-                                document.getElementById("confirmModal").style.display = "none";
-                            }, 2000);
-                        });
-                        
-                    } else if (statusData.status === 'Failed') {
-                        clearInterval(poll);
-                        document.getElementById('payStatus').innerHTML += `
-                            <div style="color: #d32f2f; margin-top: 10px;">
-                                <p><strong>Payment Failed:</strong> ${statusData.message}</p>
-                                <button onclick="retryPayment('${payload.provider}', ${JSON.stringify(payload).replace(/'/g, "\\'")})" 
-                                        style="background: #ff5722; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
-                                    Try Again
-                                </button>
-                            </div>`;
-                    }
-                }
-                
-                if (attempts >= maxAttempts) {
-                    clearInterval(poll);
-                    document.getElementById('payStatus').innerHTML += `
-                        <div style="color: #ff9800; margin-top: 10px;">
-                            <p><strong>Still waiting...</strong></p>
-                            <p>Ticket has been generated. If payment doesn't complete, contact support.</p>
-                        </div>`;
-                    generateAndDownloadTicketImage();
-                }
-                
-            } catch (err) {
-                if (attempts >= maxAttempts) {
-                    clearInterval(poll);
-                    generateAndDownloadTicketImage();
-                }
-            }
-        }, 3000); // Check every 3 seconds
+} else {
+  // Direct success (rare for mobile money)
+  statusDiv.innerHTML = `
+    <p style="color: #25D366; font-weight: bold;">
+      ✅ ${result.message}
+    </p>`;
+  generateAndDownloadTicketImage();
+}
+
+} else {
+  // Fallback to manual payment
+  document.getElementById(statusElId).innerHTML = `
+    <div style="color: #d32f2f;">
+      <p><strong>⚠️ Payment System Offline</strong></p>
+      <p>${result.error || 'Please send payment manually:'}</p>
+      <div style="background: #fff3cd; padding: 10px; border-radius: 6px; margin-top: 10px;">
+        <p style="margin: 0; font-size: 14px;">
+          <strong>Send K${payload.price} to:</strong><br>
+          • <strong>Mobile Money Number:</strong> 0973 299 759<br>
+          • <strong>Reference:</strong> ${payload.receiptNum}<br>
+          • <strong>WhatsApp:</strong> 
+          <a href="${result.whatsappLink || 'https://wa.me/260973299759'}" 
+             target="_blank" 
+             style="color: #25D366; text-decoration: none;">
+            Click to confirm
+          </a>
+        </p>
+      </div>
+    </div>`;
+  generateAndDownloadTicketImage();
+}
+
+} catch (err) {
+  document.getElementById(statusElId).innerHTML = `
+    <div style="color: #d32f2f;">
+      <p><strong>❌ Network Error</strong></p>
+      <p>Please complete payment manually:</p>
+      <div style="background: #ffebee; padding: 10px; border-radius: 6px;">
+        <p style="margin: 0;">
+          1. Send K${payload.price} to <strong>0973 299 759</strong><br>
+          2. Use reference: <strong>${payload.receiptNum}</strong><br>
+          3. Ticket has been downloaded
+        </p>
+      </div>
+    </div>`;
+  generateAndDownloadTicketImage();
+}
+
+// Poll for payment status
+function startPaymentPolling(orderId, referenceId, payload) {
+  let attempts = 0;
+  const maxAttempts = 40; // ~2 minutes
+
+  const poll = setInterval(async () => {
+    attempts++;
+
+    try {
+      const statusRes = await fetch(`/api/check-payment?reference=${referenceId}`);
+
+      if (statusRes.ok) {
+        const statusData = await statusRes.json();
+
+        if (statusData.status === 'Success' || statusData.status === 'Paid') {
+          clearInterval(poll);
+          document.getElementById('payStatus').innerHTML = `
+            <div style="text-align: center;">
+              <div style="color: #4caf50; font-size: 40px; margin: 10px 0;">🎉</div>
+              <p style="color: #4caf50; font-weight: bold;">
+                Payment Confirmed!
+              </p>
+              <p>Generating your ticket...</p>
+            </div>`;
+
+          // Update receipt number with confirmed reference
+          window.ticketPayload.receiptNum = referenceId;
+          generateAndDownloadTicketImage(() => {
+            setTimeout(() => {
+              document.getElementById("confirmModal").style.display = "none";
+            }, 2000);
+          });
+
+        } else if (statusData.status === 'Failed') {
+          clearInterval(poll);
+          document.getElementById('payStatus').innerHTML += `
+            <div style="color: #d32f2f; margin-top: 10px;">
+              <p><strong>Payment Failed:</strong> ${statusData.message}</p>
+              <button onclick="retryPayment('${payload.provider}', ${JSON.stringify(payload).replace(/'/g, "\\'")})" 
+                      style="background: #ff5722; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
+                Try Again
+              </button>
+            </div>`;
+        }
+      }
+
+      if (attempts >= maxAttempts) {
+        clearInterval(poll);
+        document.getElementById('payStatus').innerHTML += `
+          <div style="color: #ff9800; margin-top: 10px;">
+            <p><strong>Still waiting...</strong></p>
+            <p>Ticket has been generated. If payment doesn't complete, contact support.</p>
+          </div>`;
+        generateAndDownloadTicketImage();
+      }
+
+    } catch (err) {
+      if (attempts >= maxAttempts) {
+        clearInterval(poll);
+        generateAndDownloadTicketImage();
+      }
     }
+  }, 3000); // Check every 3 seconds
+}
 
     window.onclick = function(event) {
         ['ticketModal', 'confirmModal', 'ticketResult'].forEach(function(id) {
@@ -838,10 +836,10 @@
             });
         }
     });
-    // OPTIONAL: Helper for retry from polling UI
-    function retryPayment(provider, payload){
-        startMobileMoneyPayment(provider, typeof payload=='string' ? JSON.parse(payload) : payload);
-    }
+  function retryPayment(provider, payload) {
+  const parsedPayload = typeof payload === 'string' ? JSON.parse(payload) : payload;
+  startMobileMoneyPayment(provider, parsedPayload);
+}
     </script>
 </body>
 </html>
