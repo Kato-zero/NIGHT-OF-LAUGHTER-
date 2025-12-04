@@ -1,84 +1,59 @@
+const fetch = require('node-fetch');
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
+
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { amount, phone, provider, eventName, buyerName, receiptNum } = req.body;
+  const { amount, phone, eventName, buyerName, receiptNum } = req.body;
 
   try {
-    const LIPILA_BASE = process.env.LIPILA_API_BASE;
-    const LIPILA_ENDPOINT = `${LIPILA_BASE}/collections/mobile-money`;
-    
-    // Your domain (Vercel auto-detect)
-    const baseUrl = `https://${req.headers.host}`;
-    
-    // Convert provider
-    const lipilaProvider = provider === 'mtn' ? 'MtnMoney' : 'AirtelMoney';
-    
     const formattedPhone = normalizePhoneToInternational(phone);
-    
     const referenceId = 'NOL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
 
-    console.log('📱 Creating Lipila payment:', {
-      endpoint: LIPILA_ENDPOINT,
+    const MUNI_ENDPOINT = 'https://api.moneyunify.one/payments/request';
+    const AUTH_ID = process.env.MONEYUNIFY_AUTH_ID; // Set this in your environment
+
+    console.log('📱 Creating MoneyUnify payment:', {
+      endpoint: MUNI_ENDPOINT,
       amount,
       phone: formattedPhone,
-      provider: lipilaProvider,
-      referenceId,
-
-      // ✅ YOUR CALLBACK URL GOES HERE
-      callbackUrl: `${baseUrl}/api/lipila-callback`
+      referenceId
     });
 
-    // Call Lipila API
-    const lipilaResponse = await fetch(LIPILA_ENDPOINT, {
+    const muniResponse = await fetch(MUNI_ENDPOINT, {
       method: 'POST',
       headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.LIPILA_API_KEY,
-
-        // ✅ Callback passed in header
-        'callbackUrl': `${baseUrl}/api/lipila-callback`
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
       },
-      body: JSON.stringify({
-        referenceId,
-        amount: parseInt(amount),
-        narration: `Night of Laughter: ${eventName}`,
-        accountNumber: formattedPhone,
-        currency: 'ZMW',
-        email: '',
-        paymentType: lipilaProvider
+      body: new URLSearchParams({
+        from_payer: formattedPhone,
+        amount: amount.toString(),
+        auth_id: AUTH_ID
       })
     });
 
-    console.log(`📊 Lipila response status: ${lipilaResponse.status}`);
-    
-    const responseText = await lipilaResponse.text();
-    console.log(`📄 Lipila response: ${responseText}`);
-    
-    let lipilaData;
-    try {
-      lipilaData = JSON.parse(responseText);
-    } catch (e) {
-      throw new Error(`Invalid JSON response: ${responseText}`);
-    }
+    const muniData = await muniResponse.json();
 
-    if (!lipilaResponse.ok) {
-      throw new Error(`Lipila API error ${lipilaResponse.status}: ${JSON.stringify(lipilaData)}`);
+    console.log(`📊 MoneyUnify response status: ${muniResponse.status}`);
+    console.log(`📄 MoneyUnify response:`, muniData);
+
+    if (!muniResponse.ok || !muniData.success) {
+      throw new Error(`MoneyUnify API error: ${muniData.message || 'Unknown error'}`);
     }
 
     res.json({
       success: true,
-      orderId: lipilaData.identifier || lipilaData.referenceId,
-      referenceId: lipilaData.referenceId,
-      status: lipilaData.status || 'Pending',
-      message: lipilaData.message || 'Payment initiated successfully',
-      instructions: `Check your phone for ${lipilaProvider} prompt. Enter PIN to complete.`,
-      provider: lipilaProvider,
+      orderId: muniData.identifier || referenceId,
+      referenceId,
+      status: muniData.status || 'Pending',
+      message: muniData.message || 'Payment initiated successfully',
+      instructions: `Check your phone for payment prompt. Enter PIN to complete.`,
+      provider: 'MoneyUnify',
       amount,
       phone: formattedPhone,
       timestamp: new Date().toISOString()
@@ -108,4 +83,4 @@ function normalizePhoneToInternational(phone) {
   if (/^9\d{8}$/.test(s)) return '260' + s;
 
   return s;
-      }
+}
