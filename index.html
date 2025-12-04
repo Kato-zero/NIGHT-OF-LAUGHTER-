@@ -669,11 +669,11 @@
         paymentPayload.provider = provider;
 
         try {
-            const resp = await fetch(`/api/create-payment`), {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(paymentPayload)
-            });
+           const resp = await fetch(`/api/create-payment`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(paymentPayload)
+});
             
             const result = await resp.json();
             
