@@ -7,7 +7,8 @@
     "start": "vercel dev"
   },
   "dependencies": {
-    "google-spreadsheet": "^4.1.0"
+    "google-spreadsheet": "^4.1.0",
+    "node-fetch": "^2.6.7"
   },
   "engines": {
     "node": ">=14.0.0"
