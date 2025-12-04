@@ -460,21 +460,23 @@
 
     // Fetch events from Vercel API (Google Sheets backend)
     document.addEventListener('DOMContentLoaded', async function() {
-        try {
-            const res = await fetch(API_URL);
-            if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            events = await res.json();
-            renderEvents();
-        } catch (err) {
-            console.error("Error fetching events:", err);
-            // Show error message
-            document.getElementById("featuredSection").innerHTML = 
-                `<h2>Events</h2><p>Unable to load events. Please try again later.</p>`;
-            document.getElementById("eventsSection").innerHTML = "";
+    try {
+        const res = await fetch(`${api}/events`);  // Correct fetch format
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
         }
-    });
+
+        const events = await res.json();
+        renderEvents(events); // send data to renderer
+
+    } catch (err) {
+        console.error("Error fetching events:", err);
+
+        document.getElementById("featuredSection").innerHTML = 
+            `<h2>Events</h2><p>Unable to load events. Please try again later.</p>`;
+        document.getElementById("eventsSection").innerHTML = "";
+    }
+});
 
     function openBuyTicket(eventName, image) {
         document.getElementById("ticketModal").style.display = "flex";
