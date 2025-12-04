@@ -1,16 +1,15 @@
 {
-  "name": "night-of-laughter-tickets",
+  "name": "night-of-laughter",
   "version": "1.0.0",
-  "description": "Night of Laughter Ticket Sales Platform",
-  "main": "index.html",
-  "scripts": {
-    "start": "vercel dev"
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": "20.x"
   },
   "dependencies": {
-    "google-spreadsheet": "^4.1.0",
-    "node-fetch": "^2.6.7"
+    "google-spreadsheet": "^4.1.0"
   },
-  "engines": {
-    "node": ">=14.0.0"
+  "scripts": {
+    "start": "node index.js"
   }
 }
