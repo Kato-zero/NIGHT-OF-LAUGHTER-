@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     const referenceId = 'NOL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
 
     const MUNI_ENDPOINT = 'https://api.moneyunify.one/payments/request';
-    const AUTH_ID = process.env.MONEYUNIFY_AUTH_ID; // Set this in your environment
+    const AUTH_ID = process.env.MONEYUNIFY_AUTH_ID;
 
     console.log('📱 Creating MoneyUnify payment:', {
       endpoint: MUNI_ENDPOINT,
@@ -42,20 +42,22 @@ module.exports = async (req, res) => {
     console.log(`📊 MoneyUnify response status: ${muniResponse.status}`);
     console.log(`📄 MoneyUnify response:`, muniData);
 
-    if (!muniResponse.ok || !muniData.success) {
-      throw new Error(`MoneyUnify API error: ${muniData.message || 'Unknown error'}`);
+    if (muniData.isError || !muniResponse.ok) {
+      throw new Error(muniData.message || 'Unknown error from MoneyUnify');
     }
+
+    const txn = muniData.data;
 
     res.json({
       success: true,
-      orderId: muniData.identifier || referenceId,
       referenceId,
-      status: muniData.status || 'Pending',
-      message: muniData.message || 'Payment initiated successfully',
-      instructions: `Check your phone for payment prompt. Enter PIN to complete.`,
-      provider: 'MoneyUnify',
-      amount,
-      phone: formattedPhone,
+      transactionId: txn.transaction_id,
+      status: txn.status,
+      amount: txn.amount,
+      charges: txn.charges,
+      phone: txn.from_payer,
+      message: muniData.message,
+      instructions: `Check your phone for a payment prompt. Enter your PIN to complete the transaction.`,
       timestamp: new Date().toISOString()
     });
 
