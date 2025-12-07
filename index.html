@@ -804,123 +804,168 @@ Please send me the payment details.`;
         }
         
         // Close modal and redirect to payment link
-        closePaymentModal();
-        window.open(paymentLink, '_blank');
+<script>
+/* ================================
+   CONFIG
+================================ */
+const SHEETDB_EVENTS = "https://sheetdb.io/api/v1/nry7jy0x23z4g";
+const API_BASE = "https://night-of-laughter.vercel.app"; // your Vercel backend base URL
+
+let events = [];
+
+/* ================================
+   FETCH EVENTS FROM SHEETDB
+================================ */
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const res = await fetch(SHEETDB_EVENTS);
+        events = await res.json();
+
+        renderEvents();
+    } catch (err) {
+        console.error("Error loading events:", err);
+        document.getElementById("eventsSection").innerHTML =
+            `<p>Unable to load events. Try again later.</p>`;
     }
-    
-    // Modal controls
-    function closeModal() {
-        document.getElementById("ticketModal").style.display = "none";
+});
+
+/* ================================
+   RENDER EVENTS
+================================ */
+function renderEvents() {
+    const featured = events.find(e => (e.type || "").toLowerCase() === "featured");
+
+    if (featured) {
+        document.getElementById("featuredSection").innerHTML = `
+            <h2>Featured Event</h2>
+            <div class="event-list">${renderEventCard(featured)}</div>
+        `;
     }
-    
-    function closePaymentModal() {
-        document.getElementById("paymentModal").style.display = "none";
-    }
-    
-    // Fetch events from SheetDB
-    async function fetchEventsFromSheetDB() {
-        try {
-            console.log("Fetching events from SheetDB...");
-            
-            const response = await fetch(SHEETDB_API_URL);
-            
-            if (!response.ok) {
-                throw new Error(`SheetDB API error: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            console.log("Events fetched successfully:", data);
-            
-            if (!data || data.length === 0) {
-                console.warn("No events found in SheetDB");
-                return getSampleEvents();
-            }
-            
-            return data;
-            
-        } catch (error) {
-            console.error("Error fetching events from SheetDB:", error);
-            
-            // Fallback to sample data
-            return getSampleEvents();
-        }
-    }
-    
-    // Sample events for fallback
-    function getSampleEvents() {
-        return [
-            {
-                name: "ZED Laugh Festival 2025",
-                type: "featured",
-                date: "March 15, 2025",
-                time: "6:00 PM",
-                venue: "Lusaka Playhouse",
-                image: "https://i.postimg.cc/28FNfrwW/1764496645079.jpg",
-                description: "The biggest comedy festival in Zambia featuring top comedians from across the region.",
-                vip_single: "500",
-                vip_double: "800",
-                ordinary_single: "300",
-                ordinary_double: "500",
-                payment_link_vip_single: "https://flutterwave.com/pay/nol-vip-single",
-                payment_link_vip_double: "https://flutterwave.com/pay/nol-vip-double",
-                payment_link_ordinary_single: "https://flutterwave.com/pay/nol-ordinary-single",
-                payment_link_ordinary_double: "https://flutterwave.com/pay/nol-ordinary-double"
-            },
-            {
-                name: "Comedy Night Special",
-                type: "upcoming",
-                date: "April 5, 2025",
-                time: "7:30 PM",
-                venue: "Mulungushi Conference Center",
-                image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=400&h=400&fit=crop",
-                description: "An exclusive night of laughter with Zambia's finest comedians.",
-                vip_single: "450",
-                vip_double: "750",
-                ordinary_single: "250",
-                ordinary_double: "450",
-                payment_link_vip_single: "https://flutterwave.com/pay/comedy-vip-single",
-                payment_link_vip_double: "https://flutterwave.com/pay/comedy-vip-double",
-                payment_link_ordinary_single: "https://flutterwave.com/pay/comedy-ordinary-single",
-                payment_link_ordinary_double: "https://flutterwave.com/pay/comedy-ordinary-double"
-            }
-        ];
-    }
-    
-    // Initialize the application
-    document.addEventListener('DOMContentLoaded', async function() {
-        // Load events from SheetDB
-        try {
-            const eventsData = await fetchEventsFromSheetDB();
-            renderEvents(eventsData);
-        } catch (error) {
-            console.error("Failed to load events:", error);
-            document.getElementById("featuredSection").innerHTML = `
-                <h2>Events</h2>
-                <p style="color: #666; text-align: center; padding: 40px 0;">
-                    Unable to load events. Please check back later.
-                </p>
-            `;
-            document.getElementById("eventsSection").innerHTML = "";
-        }
-        
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target === document.getElementById("ticketModal")) {
-                closeModal();
-            }
-            if (event.target === document.getElementById("paymentModal")) {
-                closePaymentModal();
-            }
-        };
-        
-        // Close modals with Escape key
-        window.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") {
-                closeModal();
-                closePaymentModal();
-            }
-        });
+
+    const upcoming = events.filter(e => (e.type || "").toLowerCase() === "upcoming");
+
+    document.getElementById("eventsSection").innerHTML = `
+        <h2>Upcoming Events</h2>
+        <div class="event-list">
+            ${upcoming.map(ev => renderEventCard(ev)).join("")}
+        </div>
+    `;
+}
+
+function renderEventCard(ev) {
+    return `
+    <div class="event-card">
+        <div class="event-thumb">
+            <img src="${ev.image || ""}">
+        </div>
+        <div class="event-content">
+            <div class="event-title">${ev.name}</div>
+            <div><b>Date:</b> ${ev.date}</div>
+            <div><b>Time:</b> ${ev.time}</div>
+            <div><b>Venue:</b> ${ev.venue}</div>
+            <div class="price-box">
+                <b>Prices:</b><br>
+                VIP: K${ev.vip_single} (Double: K${ev.vip_double})<br>
+                Ordinary: K${ev.ordinary_single} (Double: K${ev.ordinary_double})
+            </div>
+
+            <div class="btn-row">
+                <button class="btn" onclick="openBuyTicket('${ev.name}','${ev.image}')">Buy Ticket</button>
+                <button class="btn info" onclick="toggleDescription('${ev.name}')">More Info</button>
+            </div>
+
+            <div id="${ev.name}" style="display:none;margin-top:10px;">
+                ${ev.desc || ""}
+            </div>
+        </div>
+    </div>`;
+}
+
+function toggleDescription(id) {
+    const d = document.getElementById(id);
+    d.style.display = d.style.display === "block" ? "none" : "block";
+}
+
+/* ================================
+   BUY TICKET FLOW
+================================ */
+function openBuyTicket(eventName, image) {
+    document.getElementById("ticketModal").dataset.event = eventName;
+    document.getElementById("ticketModal").dataset.image = image;
+
+    document.getElementById("eventNameDisplay").innerText = eventName;
+    document.getElementById("ticketBanner").src = image;
+
+    document.getElementById("ticketModal").style.display = "flex";
+}
+
+/* ================================
+   CONFIRM DETAILS
+================================ */
+function showConfirmModal() {
+    const name = buyerName.value.trim();
+    const phone = buyerPhone.value.trim();
+    const ticketType = ticketTypeSelect.value;
+
+    const eventName = ticketModal.dataset.event;
+
+    const ev = events.find(e => e.name === eventName);
+
+    let price = 0;
+    if (ticketType === "VIP single") price = ev.vip_single;
+    if (ticketType === "VIP double") price = ev.vip_double;
+    if (ticketType === "Ordinary single") price = ev.ordinary_single;
+    if (ticketType === "Ordinary double") price = ev.ordinary_double;
+
+    const receipt = "NOL-" + Date.now();
+
+    window.ticketPayload = { name, phone, ticketType, eventName, price, receipt };
+
+    confirmDetails.innerHTML = `
+        <p><b>Event:</b> ${eventName}</p>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Ticket:</b> ${ticketType}</p>
+        <p><b>Price:</b> K${price}</p>
+        <p><b>Receipt:</b> ${receipt}</p>
+
+        <button class="btn-primary" onclick="payNow()">PAY NOW</button>
+    `;
+
+    ticketModal.style.display = "none";
+    confirmModal.style.display = "flex";
+}
+
+/* ================================
+   PAYMENT REDIRECT
+================================ */
+async function payNow() {
+    const payload = window.ticketPayload;
+
+    // Ask Vercel to build the payment URL
+    const res = await fetch(`${API_BASE}/api/create-payment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
     });
-    </script>
+
+    const data = await res.json();
+
+    window.location.href = data.pay_url;
+}
+
+/* ================================
+   POLL PAYMENT STATUS
+================================ */
+async function checkPayment(ref) {
+    const res = await fetch(`${API_BASE}/api/check-payment?ref=` + ref);
+    const data = await res.json();
+
+    if (data.status === "paid") {
+        generateAndDownloadTicketImage();
+        confirmModal.style.display = "none";
+    }
+}
+</script>
 </body>
 </html>
