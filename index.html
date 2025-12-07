@@ -5,884 +5,259 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NIGHT OF LAUGHTER Upcoming Events | Buy Tickets</title>
     <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Night of Laughter is Zambia's premier comedy platform featuring top stand-up comedians like Chingliz, Ba Emma, Smoke, Juss, Rhema, and Bob Nkosha. Buy instant digital tickets for featured and upcoming comedy events in Lusaka and beyond.">
-    <meta name="keywords" content="Night of Laughter, Zambia comedy event, stand-up comedy Zambia, ZED Laugh Festival, comedy shows Lusaka, Chingliz, Ba Emma, Smoke, Juss">
+    <meta name="description" content="Night of Laughter is Zambia's premier comedy platform featuring top stand-up comedians. Buy instant digital tickets.">
+    <meta name="keywords" content="Night of Laughter, Zambia comedy event, stand-up comedy Zambia">
     <meta name="author" content="Night of Laughter Event Team">
     <style>
-        /* (keep your existing styles unchanged) */
-        :root {
-            --blue: #007bff;
-            --deep-blue: #1176d6;
-            --gray-bg: #f2f2f2;
-            --white: #fff;
-            --black: #333;
-            --offwhite: #f9f9f9;
-            --card-shadow: 0 4px 10px rgba(0,0,0,.11);
-        }
-        html, body {
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, Arial, sans-serif;
-            background: var(--gray-bg);
-            color: var(--black);
-        }
-        header{
-            width: 100%;
-            background: var(--white);
-            padding: 15px 5vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            position: fixed;
-            top:0; left:0; z-index: 100;
-        }
-        .header-left { display: flex; align-items: center; }
-        .header-logo { height: 105px; width: auto; }
-        nav {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        nav a {
-            padding: 8px 16px;
-            color: var(--black);
-            font-weight: 600;
-            font-size: 12px;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: background .12s, color .14s;
-        }
-        nav a:hover, nav a:focus {
-            background: #eaeaea;
-            color: var(--blue);
-        }
-        .hero{ 
-            width: 100%; height: 60vh; min-height: 290px;
-            background: url('https://i.postimg.cc/28FNfrwW/1764496645079.jpg') center/cover no-repeat;
-            display: flex; justify-content: center; align-items: center; text-align: center;
-            padding: 0 7vw; margin-top: 65px;
-        }
-        .hero h1{ color: var(--white); font-size: 2.5rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,.3);}
-        .hero p{ color: #eee; font-size: 1.15rem; margin-bottom: 18px; text-shadow: 0 2px 6px rgba(0,0,0,0.4);}
-        .featured, .events, #testimonialsSection, #contactSection { width: 100%; padding: 2rem 5vw 0 5vw; box-sizing: border-box; }
-
-        .featured h2, .events h2, #testimonialsSection h2, #contactSection h2 {
-            font-size: 1.6rem; margin-bottom: 20px;
-        }
-        .event-list { display: flex; flex-wrap: wrap; gap: 2vw; justify-content: center; }
-
-        .event-card {
-            width: 100%;
-            max-width: 370px;
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            margin: 36px 0;
-            display: flex;
-            flex-direction: column;
-            transition: box-shadow .13s;
-        }
-        .event-card:hover { box-shadow: 0 4px 16px rgba(17,118,214,0.11);}
-        .event-thumb {
-            width: 100%;
-            aspect-ratio: 1 / 1; /* Square shape */
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #ebebeb;
-        }
-        .event-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        .event-content {
-            padding: 15px;
-            flex: 1;
-            line-height: 1.6;
-            display: flex; flex-direction: column; justify-content: flex-start;
-        }
-        .event-title{
-            font-size: 1.2rem; font-weight: bold; margin-bottom: 6px;
-        }
-        .info-label{ font-weight: bold;}
-        .price-box {
-            margin-top: 8px;
-            padding: 10px;
-            background: var(--offwhite);
-            border-radius: 8px;
-            font-size: 0.97em;
-        }
-        .btn-row{
-            display: flex; flex-wrap: wrap; justify-content: space-between; align-items:center; margin-top: 14px; gap:12px;
-        }
-        .btn {
-            flex: 1 1 46%;
-            padding: 11px 0;
-            background: var(--blue);
-            color: var(--white);
-            text-align: center;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: background .11s, opacity .11s;
-            font-size: 1rem;
-            min-width: 120px;
-        }
-        .btn.info{ background: #444; }
-        .btn:hover, .btn:focus { opacity:0.93;}
-
-        #testimonialsSection, #contactSection {
-            padding: 2rem 5vw;
-            background: var(--white);
-            margin-top: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        }
-        
-        /* Payment Selection Modal */
-        .payment-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .payment-option-btn {
-            padding: 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-        
-        .payment-option-btn:hover {
-            border-color: var(--blue);
-            background: #f8fafc;
-        }
-        
-        .payment-option-btn.whatsapp {
-            background: #25D366;
-            color: white;
-            border-color: #25D366;
-        }
-        
-        .payment-option-btn.whatsapp:hover {
-            background: #1da851;
-            border-color: #1da851;
-        }
-        
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.62);
-            justify-content: center; align-items: center;
-            z-index: 3000;
-            overflow: auto;
-        }
-        .modal-content {
-            background: var(--white);
-            padding: 18px;
-            width: 95vw; max-width: 410px;
-            border-radius: 15px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 9px 32px rgba(17,118,214,0.13);
-        }
-        .ticket-banner {
-            width: 100%;
-            height: 140px;
-            object-fit: contain;
-            border-radius: 10px;
-            background: #eaeaea;
-            margin-bottom: 12px;
-            display: block;
-        }
-        .btn-primary {
-            background: var(--blue);
-            padding: 10px 20px;
-            color: var(--white);
-            border-radius: 6px;
-            border: none;
-            margin-top: 10px;
-            cursor: pointer;
-            font-size: 1.05rem;
-            font-weight: 600;
-        }
-        .btn-secondary {
-            background: #ddd;
-            padding: 10px 20px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            margin-top:8px;
-        }
-        .close {
-            position: absolute;
-            top: 10px; right: 18px;
-            color: #444; font-size: 2.2rem; font-weight: bold; cursor: pointer;
-        }
-        .receipt-modal-colorful {
-            background: var(--white);
-            border-radius:8px;
-            margin:6px 0;
-            overflow:hidden;
-            border: 2px solid var(--deep-blue);
-            max-width: 340px;
-            margin-left: auto; margin-right: auto;
-        }
-        .receipt-modal-colorful h3 {
-            margin:0;
-        }
-        .receipt-modal-colorful .qr-container {
-            text-align:center; margin-top:10px;
-        }
-        #ticketModal .modal-content form {
-          margin: 0; padding: 0;
-        }
-        #ticketModal .field-group {
-          display: flex; flex-direction: column; align-items: flex-start;
-        }
-        #ticketModal label {
-          font-size: 15px; font-weight: bold; margin-bottom: 5px; color: #333;
-        }
-        #ticketModal input, #ticketModal select {
-          width: 100%;
-          padding: 9px 10px;
-          border-radius: 7px;
-          border: 1px solid #aaa;
-          font-size: 15px;
-          margin-bottom: 0px;
-          background: #f9fafd;
-          box-sizing: border-box;
-        }
-        #ticketModal input:focus, #ticketModal select:focus {
-          border: 1.5px solid var(--deep-blue);
-          outline: none;
-          background: #eefaff;
-        }
-        #ticketModal .btn-primary { width: 100%; font-size: 1rem;}
-
-        footer{
-            background: #222;
-            padding: 20px 7vw;
-            color: #ccc;
-            text-align: center;
-            margin-top: 50px;
-            font-size: 0.95em;
-        }
-
-        /* RESPONSIVE */
-        @media screen and (max-width: 900px) {
-            .featured, .events, #testimonialsSection, #contactSection, footer, header { padding-left: 3vw; padding-right: 3vw;}
-        }
-        @media screen and (max-width: 600px) {
-            header { flex-direction: column; align-items: flex-start; padding: 12px 3vw; }
-            .header-logo { height: 42px;}
-            nav { margin-top: 10px; gap: 4px;}
-            .hero {
-                min-height: 170px; height: 40vh; padding: 0 2vw;margin-top: 52px;
-            }
-            .hero h1{ font-size:1.37rem;}
-            .hero p{ font-size: 1rem;}
-            .event-card{ max-width:98vw; margin:24px 0;}
-            .event-thumb { aspect-ratio: 1 / 1; }
-            .event-thumb img{ width: 100%; height: 100%; }
-            .modal-content{ max-width:97vw;}
-        }
-        @media screen and (max-width: 400px) {
-            footer, header { padding-left: 1vw; padding-right: 1vw;}
-        }
-        
-        /* Loader Styles */
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--blue);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        :root { --blue:#007bff; --deep-blue:#1176d6; --gray-bg:#f2f2f2; --white:#fff; --black:#333; --offwhite:#f9f9f9; --card-shadow:0 4px 10px rgba(0,0,0,.11);}
+        html,body{margin:0;padding:0;font-family:system-ui, Arial,sans-serif;background:var(--gray-bg);color:var(--black);}
+        header{width:100%;background:var(--white);padding:15px 5vw;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.08);position:fixed;top:0;z-index:100;}
+        .header-left{display:flex;align-items:center;}
+        .header-logo{height:105px;width:auto;}
+        nav{display:flex;gap:8px;flex-wrap:wrap;}
+        nav a{padding:8px 16px;color:var(--black);font-weight:600;font-size:12px;text-decoration:none;border-radius:8px;transition:background .12s,color .14s;}
+        nav a:hover,nav a:focus{background:#eaeaea;color:var(--blue);}
+        .hero{width:100%;height:60vh;min-height:290px;background:url('https://i.postimg.cc/28FNfrwW/1764496645079.jpg') center/cover no-repeat;display:flex;justify-content:center;align-items:center;text-align:center;padding:0 7vw;margin-top:65px;}
+        .hero h1{color:var(--white);font-size:2.5rem;margin-bottom:10px;text-shadow:0 2px 10px rgba(0,0,0,.3);}
+        .hero p{color:#eee;font-size:1.15rem;margin-bottom:18px;text-shadow:0 2px 6px rgba(0,0,0,0.4);}
+        .featured,.events,#testimonialsSection,#contactSection{width:100%;padding:2rem 5vw 0 5vw;box-sizing:border-box;}
+        .featured h2,.events h2,#testimonialsSection h2,#contactSection h2{font-size:1.6rem;margin-bottom:20px;}
+        .event-list{display:flex;flex-wrap:wrap;gap:2vw;justify-content:center;}
+        .event-card{width:100%;max-width:370px;background:var(--white);border-radius:12px;overflow:hidden;box-shadow:var(--card-shadow);margin:36px 0;display:flex;flex-direction:column;transition:box-shadow .13s;}
+        .event-card:hover{box-shadow:0 4px 16px rgba(17,118,214,0.11);}
+        .event-thumb{width:100%;aspect-ratio:1/1;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#ebebeb;}
+        .event-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+        .event-content{padding:15px;flex:1;line-height:1.6;display:flex;flex-direction:column;justify-content:flex-start;}
+        .event-title{font-size:1.2rem;font-weight:bold;margin-bottom:6px;}
+        .info-label{font-weight:bold;}
+        .price-box{margin-top:8px;padding:10px;background:var(--offwhite);border-radius:8px;font-size:0.97em;}
+        .btn-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:14px;gap:12px;}
+        .btn{flex:1 1 46%;padding:11px 0;background:var(--blue);color:var(--white);text-align:center;border-radius:6px;text-decoration:none;font-weight:bold;cursor:pointer;border:none;transition:background .11s,opacity .11s;font-size:1rem;min-width:120px;}
+        .btn.info{background:#444;}
+        .btn:hover,.btn:focus{opacity:0.93;}
+        #testimonialsSection,#contactSection{padding:2rem 5vw;background:var(--white);margin-top:40px;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,0.04);}
+        .payment-options{display:flex;flex-direction:column;gap:10px;margin-top:20px;}
+        .payment-option-btn{padding:12px;border:2px solid #e5e7eb;border-radius:8px;background:white;cursor:pointer;transition:all 0.3s;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;font-weight:600;}
+        .payment-option-btn:hover{border-color:var(--blue);background:#f8fafc;}
+        .payment-option-btn.whatsapp{background:#25D366;color:white;border-color:#25D366;}
+        .payment-option-btn.whatsapp:hover{background:#1da851;border-color:#1da851;}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.62);justify-content:center;align-items:center;z-index:3000;overflow:auto;}
+        .modal-content{background:var(--white);padding:18px;width:95vw;max-width:410px;border-radius:15px;text-align:center;position:relative;box-shadow:0 9px 32px rgba(17,118,214,0.13);}
+        .ticket-banner{width:100%;height:140px;object-fit:contain;border-radius:10px;background:#eaeaea;margin-bottom:12px;display:block;}
+        .btn-primary{background:var(--blue);padding:10px 20px;color:var(--white);border-radius:6px;border:none;margin-top:10px;cursor:pointer;font-size:1.05rem;font-weight:600;}
+        .btn-secondary{background:#ddd;padding:10px 20px;border-radius:6px;border:none;cursor:pointer;margin-top:8px;}
+        .close{position:absolute;top:10px;right:18px;color:#444;font-size:2.2rem;font-weight:bold;cursor:pointer;}
+        #ticketModal .field-group{display:flex;flex-direction:column;align-items:flex-start;}
+        #ticketModal label{font-size:15px;font-weight:bold;margin-bottom:5px;color:#333;}
+        #ticketModal input,#ticketModal select{width:100%;padding:9px 10px;border-radius:7px;border:1px solid #aaa;font-size:15px;margin-bottom:0px;background:#f9fafd;box-sizing:border-box;}
+        #ticketModal input:focus,#ticketModal select:focus{border:1.5px solid var(--deep-blue);outline:none;background:#eefaff;}
+        #ticketModal .btn-primary{width:100%;font-size:1rem;}
+        footer{background:#222;padding:20px 7vw;color:#ccc;text-align:center;margin-top:50px;font-size:0.95em;}
+        @media screen and (max-width:900px){.featured,.events,#testimonialsSection,#contactSection,footer,header{padding-left:3vw;padding-right:3vw;}}
+        @media screen and (max-width:600px){header{flex-direction:column;align-items:flex-start;padding:12px 3vw;}.header-logo{height:42px;}nav{margin-top:10px;gap:4px;}.hero{min-height:170px;height:40vh;padding:0 2vw;margin-top:52px;}.hero h1{font-size:1.37rem;}.hero p{font-size:1rem;}.event-card{max-width:98vw;margin:24px 0;}.event-thumb{aspect-ratio:1/1;}.event-thumb img{width:100%;height:100%;}.modal-content{max-width:97vw;}}
+        @media screen and (max-width:400px){footer,header{padding-left:1vw;padding-right:1vw;}}
+        .loader{border:4px solid #f3f3f3;border-top:4px solid var(--blue);border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:20px auto;}
+        @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
     </style>
-    <!-- Defer QR library for faster paint -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <img src="logo.png" alt="Night of Laughter Logo" class="header-logo" loading="lazy">
-        </div>
-        <nav id="navMenu">
-            <a href="#featuredSection">Featured Events</a>
-            <a href="#eventsSection">Upcoming Events</a>
-            <a href="#testimonialsSection">Testimonials</a>
-            <a href="#contactSection">Contact</a>
-        </nav>
-    </header>
-    <section class="hero">
-        <div>
-            <h1>NIGHT OF LAUGHTER</h1>
-            <p>Instant digital tickets. No queues. No stress.</p>
-        </div>
-    </section>
-    
-    <!-- Loading State -->
-    <section class="featured" id="featuredSection">
-        <div class="loader" id="featuredLoader"></div>
-    </section>
-    <section class="events" id="eventsSection">
-        <div class="loader" id="eventsLoader"></div>
-    </section>
-    
-    <!-- About Section for Night of Laughter -->
-    <section id="about" style="padding: 4rem 1.5rem; background: #f9f9f9;">
-      <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-        <h1 style="font-size: 2.25rem; font-weight: bold; margin-bottom: 1.5rem; color: #333;">About Night of Laughter</h1>
-        <p style="font-size: 1.125rem; color: #555; margin-bottom: 1rem;">
-          Night of Laughter is Zambia's premier comedy platform, showcasing the country's top stand-up comedians, content creators, and writers. Since its inception, it has grown into the leading platform for comedy in the region.
-        </p>
-        <p style="font-size: 1rem; color: #666; margin-bottom: 1rem;">
-          Over the years, Night of Laughter has hosted several major events, including:
-        </p>
-        <ul style="font-size: 1rem; color: #666; margin-bottom: 1.5rem; text-align: left; display: inline-block;">
-          <li>ZED Laugh Festival Lusaka 2025</li>
-          <li>Night of Laughter: Comedy Night 2024</li>
-          <li>Stand-Up Showcase Lusaka 2023</li>
-          <li>Night of Laughter Regional Tour 2023</li>
-          <li>Comedy Stars Live: Lusaka Edition 2022</li>
-        </ul>
-        <p style="font-size: 1rem; color: #666; margin-bottom: 1rem;">
-          Night of Laughter has featured Zambia's top comedians, including <strong>Chingliz, Ba Emma, Smoke, Juss, Rhema, Bob Nkosha</strong>, and has welcomed renowned regional performers.
-        </p>
-        <p style="font-size: 1rem; color: #666; margin-bottom: 1.5rem;">
-          Night of Laughter continues to celebrate Zambia's comedy talent and provide a platform for both established and emerging performers. Join us for an experience full of humor and entertainment.
-        </p>
-      </div>
-    </section>
+<header>
+    <div class="header-left">
+        <img src="logo.png" alt="Night of Laughter Logo" class="header-logo" loading="lazy">
+    </div>
+    <nav id="navMenu">
+        <a href="#featuredSection">Featured Events</a>
+        <a href="#eventsSection">Upcoming Events</a>
+        <a href="#testimonialsSection">Testimonials</a>
+        <a href="#contactSection">Contact</a>
+    </nav>
+</header>
 
-    <section id="testimonialsSection">
-        <h2>Testimonials</h2>
-        <p>Coming soon: Audiences share their NIGHT OF LAUGHTER experiences!</p>
-    </section>
-    <section id="contactSection">
-        <h2>Contact</h2>
-        <p>Email: info@nightoflaughter.com<br>Phone: +260-973299759</p>
-    </section>
-    
-    <!-- TICKET TYPE SELECTION MODAL -->
-    <div id="ticketModal" class="modal">
-        <div class="modal-content">
-            <span class="close" tabindex="0" aria-label="Close popup" onclick="closeModal()">&times;</span>
-            <img id="ticketBanner" src="" class="ticket-banner" alt="Event ticket image" loading="lazy" />
-            <h2 id="eventNameDisplay" style="margin:18px 0 9px 0;"></h2>
-            
-            <div id="ticketDetails" style="text-align: left; margin-bottom: 20px;">
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span><strong>Date:</strong></span>
-                        <span id="modalEventDate">---</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span><strong>Time:</strong></span>
-                        <span id="modalEventTime">---</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span><strong>Venue:</strong></span>
-                        <span id="modalEventVenue">---</span>
-                    </div>
-                </div>
+<section class="hero">
+    <div>
+        <h1>NIGHT OF LAUGHTER</h1>
+        <p>Instant digital tickets. No queues. No stress.</p>
+    </div>
+</section>
+
+<section class="featured" id="featuredSection">
+    <div class="loader" id="featuredLoader"></div>
+</section>
+<section class="events" id="eventsSection">
+    <div class="loader" id="eventsLoader"></div>
+</section>
+
+<section id="testimonialsSection">
+    <h2>Testimonials</h2>
+    <p>Coming soon: Audiences share their NIGHT OF LAUGHTER experiences!</p>
+</section>
+<section id="contactSection">
+    <h2>Contact</h2>
+    <p>Email: info@nightoflaughter.com<br>Phone: +260-973299759</p>
+</section>
+
+<!-- TICKET MODAL -->
+<div id="ticketModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="ticketBanner" class="ticket-banner" src="" alt="Event Image">
+        <h2 id="eventNameDisplay"></h2>
+        <div id="ticketDetails" style="text-align:left;margin-bottom:20px;">
+            <div style="background:#f8f9fa;padding:15px;border-radius:8px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span><strong>Date:</strong></span><span id="modalEventDate">---</span></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span><strong>Time:</strong></span><span id="modalEventTime">---</span></div>
+                <div style="display:flex;justify-content:space-between;"><span><strong>Venue:</strong></span><span id="modalEventVenue">---</span></div>
             </div>
-            
-            <form id="ticketForm" autocomplete="off" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;">
-              <div class="field-group">
+        </div>
+        <form id="ticketForm" autocomplete="off" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;">
+            <div class="field-group">
                 <label for="ticketType">Select Ticket Type</label>
                 <select id="ticketType" required>
-                  <option value="">-- Select Ticket Type --</option>
-                  <option value="vip_single">VIP Single - K<span id="vipSinglePrice">0</span></option>
-                  <option value="vip_double">VIP Double - K<span id="vipDoublePrice">0</span></option>
-                  <option value="ordinary_single">Ordinary Single - K<span id="ordinarySinglePrice">0</span></option>
-                  <option value="ordinary_double">Ordinary Double - K<span id="ordinaryDoublePrice">0</span></option>
+                    <option value="">-- Select Ticket Type --</option>
+                    <option value="vip_single">VIP Single - K<span id="vipSinglePrice">0</span></option>
+                    <option value="vip_double">VIP Double - K<span id="vipDoublePrice">0</span></option>
+                    <option value="ordinary_single">Ordinary Single - K<span id="ordinarySinglePrice">0</span></option>
+                    <option value="ordinary_double">Ordinary Double - K<span id="ordinaryDoublePrice">0</span></option>
                 </select>
-              </div>
-              
-              <div id="selectedTicketInfo" style="display: none; background: #e8f5e9; padding: 12px; border-radius: 8px; margin-top: 10px;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                      <span><strong>Selected:</strong></span>
-                      <span id="selectedTypeDisplay">---</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                      <span><strong>Price:</strong></span>
-                      <span id="selectedPriceDisplay">K0</span>
-                  </div>
-              </div>
-              
-              <button type="button" class="btn-primary" style="margin-top:14px;" onclick="proceedToPayment()">
-                Proceed to Payment
-              </button>
-            </form>
-        </div>
+            </div>
+            <div id="selectedTicketInfo" style="display:none;background:#e8f5e9;padding:12px;border-radius:8px;margin-top:10px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span><strong>Selected:</strong></span><span id="selectedTypeDisplay">---</span></div>
+                <div style="display:flex;justify-content:space-between;font-weight:bold;"><span><strong>Price:</strong></span><span id="selectedPriceDisplay">K0</span></div>
+            </div>
+            <button type="button" class="btn-primary" onclick="proceedToPayment()">Proceed to Payment</button>
+        </form>
     </div>
-    
-    <!-- PAYMENT SELECTION MODAL -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <span class="close" tabindex="0" aria-label="Close popup" onclick="closePaymentModal()">&times;</span>
-            <h2 id="paymentEventName" style="margin:18px 0 9px 0;"></h2>
-            
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span><strong>Ticket Type:</strong></span>
-                    <span id="paymentTicketType">---</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span><strong>Quantity:</strong></span>
-                    <span>1</span>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem;">
-                    <span><strong>Total Amount:</strong></span>
-                    <span id="paymentTotal">K0</span>
-                </div>
-            </div>
-            
-            <div class="payment-options">
-                <h3 style="margin-bottom: 15px; text-align: center;">Select Payment Method</h3>
-                
-                <button class="payment-option-btn whatsapp" onclick="processWhatsAppPayment()">
-                    <i class="fab fa-whatsapp"></i>
-                    Book & Pay via WhatsApp
-                </button>
-                
-                <button class="payment-option-btn" onclick="redirectToPaymentLink()" style="background: var(--blue); color: white; border-color: var(--blue);">
-                    <i class="fas fa-external-link-alt"></i>
-                    Go to Payment Page
-                </button>
-            </div>
-            
-            <button onclick="closePaymentModal()" class="btn-secondary" style="margin-top: 20px; width: 100%;">
-                Cancel
-            </button>
-        </div>
-    </div>
-    
-    <footer>
-        NIGHT OF LAUGHTER© 2025 • All Rights Reserved
-    </footer>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    
-    <script>
-    // ============================================
-    // CONFIGURATION
-    // ============================================
-    
-    // SheetDB Configuration
-    const SHEETDB_API_URL = "https://sheetdb.io/api/v1/nry7jy0x23z4g"; // Replace with your SheetDB API URL
-    
-    // WhatsApp Configuration
-    const WHATSAPP_NUMBER = "260973299759";
-    const BUSINESS_NAME = "Night of Laughter";
-    
-    let events = [];
-    let currentEvent = null;
-    let selectedTicketType = "";
-    let selectedTicketPrice = 0;
-    
-    // Helper function to escape special characters
-    function jsEscape(s){
-        if(s === undefined || s === null) return '';
-        return String(s).replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, ' ');
-    }
-    
-    // Toggle description visibility
-    function toggleDescription(id) {
-        const desc = document.getElementById(id);
-        if (desc) {
-            desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
-        }
-    }
-    
-    // Render event card
-    function renderEventCard(ev, idx, isFeatured = false) {
-        const moreId = `desc_${idx}`;
-        const safeName = jsEscape(ev.name);
-        const safeImage = jsEscape(ev.image);
-        const safeDate = jsEscape(ev.date);
-        const safeTime = jsEscape(ev.time);
-        const safeVenue = jsEscape(ev.venue);
-        
-        // Get payment links from event data
-        const vipSingleLink = ev.payment_link_vip_single || "#";
-        const vipDoubleLink = ev.payment_link_vip_double || "#";
-        const ordinarySingleLink = ev.payment_link_ordinary_single || "#";
-        const ordinaryDoubleLink = ev.payment_link_ordinary_double || "#";
-        
-        return `<div class="event-card">
-            <div class="event-thumb">
-                <img src="${ev.image || 'https://via.placeholder.com/400x400'}" loading="lazy" alt="${ev.name}" onerror="this.src='https://via.placeholder.com/400x400'">
-            </div>
-            <div class="event-content">
-                <div class="event-title">${ev.name || "Event Name"}</div>
-                <div><span class="info-label">Date:</span> ${ev.date || "TBA"}</div>
-                <div><span class="info-label">Time:</span> ${ev.time || "TBA"}</div>
-                <div><span class="info-label">Venue:</span> ${ev.venue || "TBA"}</div>
-                <div class="price-box">
-                    <div><b>Ticket Prices:</b></div>
-                    <div>VIP Single: K${ev.vip_single || "0"}</div>
-                    <div>VIP Double: K${ev.vip_double || "0"}</div>
-                    <div>Ordinary Single: K${ev.ordinary_single || "0"}</div>
-                    <div>Ordinary Double: K${ev.ordinary_double || "0"}</div>
-                </div>
-                <div class="btn-row">
-                    <button class="btn" onclick="openTicketModal('${safeName}', '${safeImage}', '${safeDate}', '${safeTime}', '${safeVenue}', ${JSON.stringify(ev).replace(/'/g, "\\'")})">
-                        Buy Ticket
-                    </button>
-                    <button class="btn info" onclick="toggleDescription('${moreId}')">
-                        More Info
-                    </button>
-                </div>
-                <div id="${moreId}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #eee;">
-                    <p><strong>Description:</strong> ${ev.description || ev.desc || "No description available."}</p>
-                    ${ev.lineup ? `<p><strong>Lineup:</strong> ${ev.lineup}</p>` : ''}
-                    ${ev.terms ? `<p><strong>Terms:</strong> ${ev.terms}</p>` : ''}
-                </div>
-            </div>
-        </div>`;
-    }
-    
-    // Render all events
-    function renderEvents(eventsData) {
-        window.events = eventsData; // Store globally
-        
-        const featuredSection = document.getElementById("featuredSection");
-        const eventsSection = document.getElementById("eventsSection");
-        
-        // Hide loaders
-        document.getElementById("featuredLoader").style.display = 'none';
-        document.getElementById("eventsLoader").style.display = 'none';
-        
-        // Filter featured events
-        const featured = eventsData.filter(ev => 
-            ev.type && ev.type.toLowerCase().trim() === "featured"
-        );
-        
-        // Filter upcoming events
-        const upcoming = eventsData.filter(ev => 
-            ev.type && ev.type.toLowerCase().trim() === "upcoming"
-        );
-        
-        // Render featured events
-        if (featured.length > 0) {
-            featuredSection.innerHTML = `
-                <h2>Featured Events</h2>
-                <div class="event-list">
-                    ${featured.map((ev, idx) => renderEventCard(ev, idx, true)).join('')}
-                </div>
-            `;
-        } else {
-            featuredSection.innerHTML = `
-                <h2>Featured Events</h2>
-                <p style="text-align: center; color: #666; padding: 40px 0;">
-                    No featured events at the moment. Check back soon!
-                </p>
-            `;
-        }
-        
-        // Render upcoming events
-        if (upcoming.length > 0) {
-            eventsSection.innerHTML = `
-                <h2>Upcoming Events</h2>
-                <div class="event-list">
-                    ${upcoming.map((ev, idx) => renderEventCard(ev, idx)).join('')}
-                </div>
-            `;
-        } else {
-            eventsSection.innerHTML = `
-                <h2>Upcoming Events</h2>
-                <p style="text-align: center; color: #666; padding: 40px 0;">
-                    No upcoming events scheduled. Stay tuned for announcements!
-                </p>
-            `;
-        }
-    }
-    
-    // Open ticket modal with event details
-    function openTicketModal(eventName, image, date, time, venue, eventData) {
-        currentEvent = eventData;
-        
-        // Set modal content
-        document.getElementById("eventNameDisplay").textContent = eventName;
-        document.getElementById("ticketBanner").src = image || '';
-        document.getElementById("modalEventDate").textContent = date;
-        document.getElementById("modalEventTime").textContent = time;
-        document.getElementById("modalEventVenue").textContent = venue;
-        
-        // Set price displays in dropdown
-        document.getElementById("vipSinglePrice").textContent = eventData.vip_single || "0";
-        document.getElementById("vipDoublePrice").textContent = eventData.vip_double || "0";
-        document.getElementById("ordinarySinglePrice").textContent = eventData.ordinary_single || "0";
-        document.getElementById("ordinaryDoublePrice").textContent = eventData.ordinary_double || "0";
-        
-        // Reset form
-        document.getElementById("ticketType").value = "";
-        document.getElementById("selectedTicketInfo").style.display = "none";
-        
-        // Show modal
-        document.getElementById("ticketModal").style.display = "flex";
-        
-        // Add event listener for ticket type selection
-        document.getElementById("ticketType").addEventListener("change", updateSelectedTicket);
-    }
-    
-    // Update selected ticket information
-    function updateSelectedTicket() {
-        const ticketType = document.getElementById("ticketType").value;
-        const infoDiv = document.getElementById("selectedTicketInfo");
-        
-        if (!ticketType) {
-            infoDiv.style.display = "none";
-            return;
-        }
-        
-        let typeDisplay = "";
-        let price = 0;
-        
-        switch(ticketType) {
-            case "vip_single":
-                typeDisplay = "VIP Single Ticket";
-                price = parseInt(currentEvent.vip_single) || 0;
-                break;
-            case "vip_double":
-                typeDisplay = "VIP Double Ticket";
-                price = parseInt(currentEvent.vip_double) || 0;
-                break;
-            case "ordinary_single":
-                typeDisplay = "Ordinary Single Ticket";
-                price = parseInt(currentEvent.ordinary_single) || 0;
-                break;
-            case "ordinary_double":
-                typeDisplay = "Ordinary Double Ticket";
-                price = parseInt(currentEvent.ordinary_double) || 0;
-                break;
-        }
-        
-        selectedTicketType = ticketType;
-        selectedTicketPrice = price;
-        
-        document.getElementById("selectedTypeDisplay").textContent = typeDisplay;
-        document.getElementById("selectedPriceDisplay").textContent = `K${price}`;
-        infoDiv.style.display = "block";
-    }
-    
-    // Proceed to payment selection
-    function proceedToPayment() {
-        const ticketType = document.getElementById("ticketType").value;
-        
-        if (!ticketType) {
-            alert("Please select a ticket type");
-            return;
-        }
-        
-        // Set payment modal details
-        document.getElementById("paymentEventName").textContent = currentEvent.name;
-        
-        let typeDisplay = "";
-        switch(ticketType) {
-            case "vip_single":
-                typeDisplay = "VIP Single Ticket";
-                break;
-            case "vip_double":
-                typeDisplay = "VIP Double Ticket";
-                break;
-            case "ordinary_single":
-                typeDisplay = "Ordinary Single Ticket";
-                break;
-            case "ordinary_double":
-                typeDisplay = "Ordinary Double Ticket";
-                break;
-        }
-        
-        document.getElementById("paymentTicketType").textContent = typeDisplay;
-        document.getElementById("paymentTotal").textContent = `K${selectedTicketPrice}`;
-        
-        // Close ticket modal and open payment modal
-        closeModal();
-        document.getElementById("paymentModal").style.display = "flex";
-    }
-    
-    // Get payment link based on ticket type
-    function getPaymentLink() {
-        if (!currentEvent || !selectedTicketType) return "#";
-        
-        switch(selectedTicketType) {
-            case "vip_single":
-                return currentEvent.payment_link_vip_single || "#";
-            case "vip_double":
-                return currentEvent.payment_link_vip_double || "#";
-            case "ordinary_single":
-                return currentEvent.payment_link_ordinary_single || "#";
-            case "ordinary_double":
-                return currentEvent.payment_link_ordinary_double || "#";
-            default:
-                return "#";
-        }
-    }
-    
-    // Process WhatsApp payment
-    function processWhatsAppPayment() {
-        const paymentLink = getPaymentLink();
-        
-        if (paymentLink === "#") {
-            alert("Payment link not available for this ticket type. Please contact support.");
-            return;
-        }
-        
-        let typeDisplay = "";
-        switch(selectedTicketType) {
-            case "vip_single":
-                typeDisplay = "VIP Single Ticket";
-                break;
-            case "vip_double":
-                typeDisplay = "VIP Double Ticket";
-                break;
-            case "ordinary_single":
-                typeDisplay = "Ordinary Single Ticket";
-                break;
-            case "ordinary_double":
-                typeDisplay = "Ordinary Double Ticket";
-                break;
-        }
-        
-        const message = `Hello ${BUSINESS_NAME}! I want to book a ticket:
-        
-Event: ${currentEvent.name}
-Date: ${currentEvent.date}
-Time: ${currentEvent.time}
-Venue: ${currentEvent.venue}
-Ticket Type: ${typeDisplay}
-Amount: K${selectedTicketPrice}
+</div>
 
-Please send me the payment details.`;
-        
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-        
-        window.open(whatsappUrl, '_blank');
-        closePaymentModal();
+<!-- PAYMENT MODAL -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePaymentModal()">&times;</span>
+        <h2 id="paymentEventName"></h2>
+        <div style="background:#f8f9fa;padding:15px;border-radius:8px;margin-bottom:20px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span><strong>Ticket Type:</strong></span><span id="paymentTicketType">---</span></div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span><strong>Quantity:</strong></span><span>1</span></div>
+            <div style="display:flex;justify-content:space-between;font-weight:bold;font-size:1.1rem;"><span><strong>Total Amount:</strong></span><span id="paymentTotal">K0</span></div>
+        </div>
+        <div class="payment-options">
+            <button class="payment-option-btn whatsapp" onclick="processWhatsAppPayment()"><i class="fab fa-whatsapp"></i> Book & Pay via WhatsApp</button>
+        </div>
+        <button onclick="closePaymentModal()" class="btn-secondary" style="margin-top:20px;width:100%;">Cancel</button>
+    </div>
+</div>
+
+<footer>NIGHT OF LAUGHTER© 2025 • All Rights Reserved</footer>
+
+<script>
+const SHEETDB_API_URL = "https://sheetdb.io/api/v1/nry7jy0x23z4g"; // <-- Replace with your SheetDB URL
+const WHATSAPP_NUMBER = "260973299759";
+const BUSINESS_NAME = "Night of Laughter";
+
+let events=[], currentEvent=null, selectedTicketType="", selectedTicketPrice=0;
+
+// Render event card
+function renderEventCard(ev,idx){
+    const safeName = ev.name.replace(/'/g,"\\'");
+    const safeImage = ev.image.replace(/'/g,"\\'");
+    const safeDate = ev.date; const safeTime = ev.time; const safeVenue = ev.venue;
+    return `<div class="event-card">
+        <div class="event-thumb"><img src="${ev.image||'https://via.placeholder.com/400x400'}" alt="${ev.name}"></div>
+        <div class="event-content">
+            <div class="event-title">${ev.name}</div>
+            <div><span class="info-label">Date:</span> ${ev.date||"TBA"}</div>
+            <div><span class="info-label">Time:</span> ${ev.time||"TBA"}</div>
+            <div><span class="info-label">Venue:</span> ${ev.venue||"TBA"}</div>
+            <div class="price-box">
+                <div><b>Ticket Prices:</b></div>
+                <div>VIP Single: K${ev.vip_single||0}</div>
+                <div>VIP Double: K${ev.vip_double||0}</div>
+                <div>Ordinary Single: K${ev.ordinary_single||0}</div>
+                <div>Ordinary Double: K${ev.ordinary_double||0}</div>
+            </div>
+            <div class="btn-row">
+                <button class="btn" onclick="openTicketModal('${safeName}','${safeImage}','${safeDate}','${safeTime}','${safeVenue}',${JSON.stringify(ev).replace(/'/g,"\\'")})">Buy Ticket</button>
+            </div>
+        </div>
+    </div>`;
+}
+
+function renderEvents(eventsData){
+    events=eventsData;
+    document.getElementById("featuredLoader").style.display="none";
+    document.getElementById("eventsLoader").style.display="none";
+    const featuredSection=document.getElementById("featuredSection");
+    const eventsSection=document.getElementById("eventsSection");
+    const featured=eventsData.filter(ev=>ev.type.toLowerCase()==="featured");
+    const upcoming=eventsData.filter(ev=>ev.type.toLowerCase()==="upcoming");
+    featuredSection.innerHTML=featured.length>0?`<h2>Featured Events</h2><div class="event-list">${featured.map(renderEventCard).join("")}</div>`:`<h2>Featured Events</h2><p style="text-align:center;color:#666;padding:40px 0;">No featured events at the moment. Check back soon!</p>`;
+    eventsSection.innerHTML=upcoming.length>0?`<h2>Upcoming Events</h2><div class="event-list">${upcoming.map(renderEventCard).join("")}</div>`:`<h2>Upcoming Events</h2><p style="text-align:center;color:#666;padding:40px 0;">No upcoming events scheduled. Stay tuned!</p>`;
+}
+
+// Ticket Modal
+function openTicketModal(name,img,date,time,venue,data){
+    currentEvent=data;
+    document.getElementById("eventNameDisplay").textContent=name;
+    document.getElementById("ticketBanner").src=img;
+    document.getElementById("modalEventDate").textContent=date;
+    document.getElementById("modalEventTime").textContent=time;
+    document.getElementById("modalEventVenue").textContent=venue;
+    // Update dropdown prices
+    document.getElementById("vipSinglePrice").textContent=data.vip_single||0;
+    document.getElementById("vipDoublePrice").textContent=data.vip_double||0;
+    document.getElementById("ordinarySinglePrice").textContent=data.ordinary_single||0;
+    document.getElementById("ordinaryDoublePrice").textContent=data.ordinary_double||0;
+    selectedTicketType=""; selectedTicketPrice=0;
+    document.getElementById("selectedTicketInfo").style.display="none";
+    document.getElementById("ticketType").value="";
+    document.getElementById("ticketModal").style.display="flex";
+}
+function closeModal(){document.getElementById("ticketModal").style.display="none";}
+function closePaymentModal(){document.getElementById("paymentModal").style.display="none";}
+
+// Handle ticket selection
+document.getElementById("ticketType").addEventListener("change",function(){
+    const val=this.value;
+    if(!currentEvent||!val){document.getElementById("selectedTicketInfo").style.display="none"; return;}
+    selectedTicketType=val;
+    selectedTicketPrice=currentEvent[val]||0;
+    document.getElementById("selectedTypeDisplay").textContent=val.replace("_"," ").replace(/\b\w/g,l=>l.toUpperCase());
+    document.getElementById("selectedPriceDisplay").textContent="K"+selectedTicketPrice;
+    document.getElementById("selectedTicketInfo").style.display="block";
+});
+
+// Payment flow
+function proceedToPayment(){
+    if(!selectedTicketType){alert("Please select a ticket type."); return;}
+    document.getElementById("paymentEventName").textContent=currentEvent.name;
+    document.getElementById("paymentTicketType").textContent=selectedTicketType.replace("_"," ").replace(/\b\w/g,l=>l.toUpperCase());
+    document.getElementById("paymentTotal").textContent="K"+selectedTicketPrice;
+    closeModal();
+    document.getElementById("paymentModal").style.display="flex";
+}
+
+function processWhatsAppPayment(){
+    const msg=`Hello, I would like to book ${selectedTicketType.replace("_"," ").replace(/\b\w/g,l=>l.toUpperCase())} ticket for "${currentEvent.name}" amounting to K${selectedTicketPrice}.`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");
+    closePaymentModal();
+}
+
+// Fetch events from SheetDB
+async function fetchEvents(){
+    try{
+        const res=await fetch(SHEETDB_API_URL);
+        const data=await res.json();
+        renderEvents(data);
+    }catch(err){
+        console.error("Failed to fetch events from SheetDB:",err);
+        document.getElementById("featuredLoader").textContent="Failed to load featured events.";
+        document.getElementById("eventsLoader").textContent="Failed to load upcoming events.";
     }
-    
-    // Redirect to payment link
-    function redirectToPaymentLink() {
-        const paymentLink = getPaymentLink();
-        
-        if (paymentLink === "#") {
-            alert("Payment link not available for this ticket type. Please contact support.");
-            return;
-        }
-        
-        // Close modal and redirect to payment link
-        closePaymentModal();
-        window.open(paymentLink, '_blank');
-    }
-    
-    // Modal controls
-    function closeModal() {
-        document.getElementById("ticketModal").style.display = "none";
-    }
-    
-    function closePaymentModal() {
-        document.getElementById("paymentModal").style.display = "none";
-    }
-    
-    // Fetch events from SheetDB
-    async function fetchEventsFromSheetDB() {
-        try {
-            console.log("Fetching events from SheetDB...");
-            
-            const response = await fetch(SHEETDB_API_URL);
-            
-            if (!response.ok) {
-                throw new Error(`SheetDB API error: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            console.log("Events fetched successfully:", data);
-            
-            if (!data || data.length === 0) {
-                console.warn("No events found in SheetDB");
-                return getSampleEvents();
-            }
-            
-            return data;
-            
-        } catch (error) {
-            console.error("Error fetching events from SheetDB:", error);
-            
-            // Fallback to sample data
-            return getSampleEvents();
-        }
-    }
-    
-   
-    
-    // Initialize the application
-    document.addEventListener('DOMContentLoaded', async function() {
-        // Load events from SheetDB
-        try {
-            const eventsData = await fetchEventsFromSheetDB();
-            renderEvents(eventsData);
-        } catch (error) {
-            console.error("Failed to load events:", error);
-            document.getElementById("featuredSection").innerHTML = `
-                <h2>Events</h2>
-                <p style="color: #666; text-align: center; padding: 40px 0;">
-                    Unable to load events. Please check back later.
-                </p>
-            `;
-            document.getElementById("eventsSection").innerHTML = "";
-        }
-        
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target === document.getElementById("ticketModal")) {
-                closeModal();
-            }
-            if (event.target === document.getElementById("paymentModal")) {
-                closePaymentModal();
-            }
-        };
-        
-        // Close modals with Escape key
-        window.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") {
-                closeModal();
-                closePaymentModal();
-            }
-        });
-    });
-    </script>
+}
+
+// Init
+fetchEvents();
+</script>
 </body>
 </html>
