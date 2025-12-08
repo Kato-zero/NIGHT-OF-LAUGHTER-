@@ -692,7 +692,7 @@
     // Your SheetDB API URL - Replace with your actual URL
     const SHEETDB_API_URL = "https://sheetdb.io/api/v1/datk69lw1162m";
     
-    // Lipila Payment URL
+    // Lipila Payment URL (confirmed)
     const LIPILA_PAYMENT_URL = "https://dashboard.lipila.io/pay/?id=89D57F9F154F440";
     
     // Admin password (optional - for admin panel access)
@@ -712,6 +712,8 @@
         bookingId: '',
         paymentDate: ''
     };
+    // ensure ticket listeners set once
+    let ticketListenersSetup = false;
 
     // ============================================
     // ADMIN PANEL FUNCTIONS
@@ -804,20 +806,10 @@
     // HELPER FUNCTIONS
     // ============================================
 
-    // Toggle description
-    function toggleDescription(id) {
-        const desc = document.getElementById(id);
-        if (desc) {
-            desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
-        }
-    }
-
-    // Format currency
     function formatCurrency(amount) {
-        return 'K' + parseInt(amount).toLocaleString();
+        return 'K' + (parseInt(amount) || 0).toLocaleString();
     }
 
-    // Generate booking ID
     function generateBookingId() {
         return 'NOL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
     }
@@ -842,7 +834,6 @@
             if (data && data.length > 0) {
                 renderEvents(data);
             } else {
-                // No data in SheetDB, show empty state
                 showEmptyState();
             }
         } catch (error) {
@@ -900,10 +891,10 @@
     // EVENT RENDERING
     // ============================================
 
-    // Render event card
     function renderEventCard(ev, idx) {
         const moreId = `desc_${idx}`;
-        
+        // sanitize attributes for onclick by escaping quotes
+        const safeEvStr = JSON.stringify(ev).replace(/"/g, '&quot;').replace(/'/g, "\\'");
         return `<div class="event-card">
             <div class="event-thumb">
                 <img src="${ev.image || 'https://via.placeholder.com/400x400?text=Event+Image'}" 
@@ -924,7 +915,7 @@
                     ${ev.ordinary_double ? `<div>Ordinary Double: K${ev.ordinary_double}</div>` : ''}
                 </div>
                 <div class="btn-row">
-                    <button class="btn" onclick="openTicketModal(${JSON.stringify(ev).replace(/"/g, '&quot;').replace(/'/g, "\\'")})">
+                    <button class="btn" onclick="openTicketModal(JSON.parse(decodeHtmlEntities('${encodeURIComponent(safeEvStr)}')))">
                         Buy Ticket
                     </button>
                     <button class="btn info" onclick="toggleDescription('${moreId}')">
@@ -940,7 +931,18 @@
         </div>`;
     }
 
-    // Render all events
+    // helper to decode what we encoded for onclick passing
+    function decodeHtmlEntities(encodedStr) {
+        try {
+            const jsonStr = decodeURIComponent(encodedStr);
+            // handle &quot; back to quotes
+            return jsonStr.replace(/&quot;/g, '"');
+        } catch (e) {
+            console.error('Failed to decode event data', e);
+            return {};
+        }
+    }
+
     function renderEvents(eventsData) {
         const featuredSection = document.getElementById("featuredSection");
         const eventsSection = document.getElementById("eventsSection");
@@ -1000,11 +1002,9 @@
     }
 
     // ============================================
-    // TICKET PURCHASE FLOW (Same as before)
+    // TICKET PURCHASE FLOW
     // ============================================
 
-    // [All the ticket purchase modal functions remain the same as previous code]
-    // Open ticket modal
     function openTicketModal(eventData) {
         currentEvent = eventData;
         ticketData.event = eventData;
@@ -1022,7 +1022,11 @@
         
         // Reset price display
         document.getElementById('priceDisplay').style.display = 'none';
-        
+        document.getElementById('totalPrice').textContent = 'K0';
+        ticketData.price = 0;
+        ticketData.ticketType = '';
+        ticketData.quantity = 1;
+
         // Show step 1
         showStep(1);
         
@@ -1030,7 +1034,6 @@
         document.getElementById('ticketModal').style.display = 'flex';
     }
 
-    // Show specific step
     function showStep(step) {
         // Hide all steps
         document.querySelectorAll('.modal-step').forEach(el => {
@@ -1041,14 +1044,15 @@
         document.getElementById(`step${step}`).classList.add('active');
         currentStep = step;
         
-        // Update ticket type price when step 1 is shown
+        // Setup listeners once (avoid duplicates)
         if (step === 1) {
             setupTicketTypeListeners();
         }
     }
 
-    // Setup ticket type listeners
     function setupTicketTypeListeners() {
+        if (ticketListenersSetup) return; // only once
+
         const ticketTypeSelect = document.getElementById('ticketType');
         const quantitySelect = document.getElementById('ticketQuantity');
         const priceDisplay = document.getElementById('priceDisplay');
@@ -1056,10 +1060,11 @@
         
         function updatePrice() {
             const ticketType = ticketTypeSelect.value;
-            const quantity = parseInt(quantitySelect.value);
+            const quantity = parseInt(quantitySelect.value) || 1;
             
             if (!ticketType || !currentEvent) {
                 priceDisplay.style.display = 'none';
+                ticketData.price = 0;
                 return;
             }
             
@@ -1090,9 +1095,10 @@
         
         ticketTypeSelect.addEventListener('change', updatePrice);
         quantitySelect.addEventListener('change', updatePrice);
+
+        ticketListenersSetup = true;
     }
 
-    // Next step
     function nextStep(current) {
         if (current === 1) {
             const ticketType = document.getElementById('ticketType').value;
@@ -1100,6 +1106,10 @@
                 alert('Please select a ticket type');
                 return;
             }
+            // ensure price is updated using currentEvent
+            // call price update once to set ticketData
+            const evt = new Event('change');
+            document.getElementById('ticketType').dispatchEvent(evt);
             showStep(2);
         } else if (current === 2) {
             const fullName = document.getElementById('fullName').value.trim();
@@ -1122,12 +1132,10 @@
         }
     }
 
-    // Previous step
     function prevStep(current) {
         showStep(current - 1);
     }
 
-    // Update confirmation display
     function updateConfirmation() {
         document.getElementById('confirmEvent').textContent = currentEvent.name;
         
@@ -1137,6 +1145,7 @@
             case 'vip_double': ticketTypeText = 'VIP Double'; break;
             case 'ordinary_single': ticketTypeText = 'Ordinary Single'; break;
             case 'ordinary_double': ticketTypeText = 'Ordinary Double'; break;
+            default: ticketTypeText = ticketData.ticketType;
         }
         
         document.getElementById('confirmTicketType').textContent = ticketTypeText;
@@ -1147,14 +1156,23 @@
         document.getElementById('confirmPhone').textContent = ticketData.customer.phone;
     }
 
-    // Proceed to payment
     function proceedToPayment() {
+        if (!ticketData.ticketType) {
+            alert('Ticket type not selected.');
+            return;
+        }
+        if (!ticketData.price || ticketData.price <= 0) {
+            alert('Invalid ticket price. Please select a valid ticket type and quantity.');
+            return;
+        }
+
         ticketData.bookingId = generateBookingId();
-        ticketData.paymentDate = new Date().toLocaleDateString('en-US', {
+        ticketData.paymentDate = new Date().toLocaleString('en-GB', {
             year: 'numeric', month: 'long', day: 'numeric',
             hour: '2-digit', minute: '2-digit'
         });
         
+        // persist so we can show ticket after redirect
         localStorage.setItem('lastTicketData', JSON.stringify(ticketData));
         localStorage.setItem('lastEventData', JSON.stringify(currentEvent));
         
@@ -1170,42 +1188,58 @@
         };
         
         const encodedData = encodeURIComponent(JSON.stringify(paymentData));
-        const redirectUrl = `${LIPILA_PAYMENT_URL}&data=${encodedData}&callback=${encodeURIComponent(window.location.origin + window.location.pathname)}`;
+
+        // Build callback URL dynamically and add ?paid=true so we detect it on return
+        const callbackUrl = window.location.origin + window.location.pathname + "?paid=true";
+        const redirectUrl = `${LIPILA_PAYMENT_URL}&callback=${encodeURIComponent(callbackUrl)}&data=${encodedData}`;
         
         closeModal();
+        // redirect to Lipila
         window.location.href = redirectUrl;
     }
 
     // Check for payment success on page load
     function checkPaymentStatus() {
         const urlParams = new URLSearchParams(window.location.search);
-        const paymentStatus = urlParams.get('payment_status');
-        const bookingId = urlParams.get('booking_id');
-        
-        if (paymentStatus === 'success' && bookingId) {
+        const paid = urlParams.get('paid');
+
+        // User returned from Lipila redirect -> treat as success
+        if (paid === "true") {
             showSuccessModal();
+
+            // Clean the URL so query params are removed
             window.history.replaceState({}, document.title, window.location.pathname);
         }
     }
 
-    // Show success modal with ticket
     function showSuccessModal() {
         const savedTicketData = localStorage.getItem('lastTicketData');
         const savedEventData = localStorage.getItem('lastEventData');
         
         if (savedTicketData && savedEventData) {
-            ticketData = JSON.parse(savedTicketData);
-            currentEvent = JSON.parse(savedEventData);
+            try {
+                ticketData = JSON.parse(savedTicketData);
+                currentEvent = JSON.parse(savedEventData);
+            } catch (e) {
+                console.error('Failed to parse saved ticket data', e);
+            }
             generateTicket();
             document.getElementById('successModal').style.display = 'flex';
+            // Remove stored data (one-time read)
             localStorage.removeItem('lastTicketData');
             localStorage.removeItem('lastEventData');
+        } else {
+            // If stored data missing, still show a simple success message
+            document.getElementById('ticketContainer').innerHTML = '<p style="color:#666;">Payment confirmed. If your ticket is not shown, please contact support.</p>';
+            document.getElementById('successModal').style.display = 'flex';
         }
     }
 
-    // Generate ticket HTML
     function generateTicket() {
         const container = document.getElementById('ticketContainer');
+        // clear any existing QR container if present
+        container.innerHTML = '';
+
         const qrData = JSON.stringify({
             bookingId: ticketData.bookingId,
             event: ticketData.event.name,
@@ -1214,7 +1248,9 @@
             quantity: ticketData.quantity,
             amount: ticketData.price
         });
-        
+
+        const displayTicketType = (ticketData.ticketType || '').replace(/_/g, ' ').toUpperCase();
+
         const ticketHTML = `
             <div class="ticket-template">
                 <div class="ticket-header">
@@ -1224,10 +1260,10 @@
                 <div class="ticket-body">
                     <div class="ticket-row"><span class="ticket-label">Booking ID:</span><span class="ticket-value">${ticketData.bookingId}</span></div>
                     <div class="ticket-row"><span class="ticket-label">Event:</span><span class="ticket-value">${ticketData.event.name}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Date:</span><span class="ticket-value">${ticketData.event.date}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Time:</span><span class="ticket-value">${ticketData.event.time}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Venue:</span><span class="ticket-value">${ticketData.event.venue}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Ticket Type:</span><span class="ticket-value">${ticketData.ticketType.replace('_', ' ').toUpperCase()}</span></div>
+                    <div class="ticket-row"><span class="ticket-label">Date:</span><span class="ticket-value">${ticketData.event.date || ''}</span></div>
+                    <div class="ticket-row"><span class="ticket-label">Time:</span><span class="ticket-value">${ticketData.event.time || ''}</span></div>
+                    <div class="ticket-row"><span class="ticket-label">Venue:</span><span class="ticket-value">${ticketData.event.venue || ''}</span></div>
+                    <div class="ticket-row"><span class="ticket-label">Ticket Type:</span><span class="ticket-value">${displayTicketType}</span></div>
                     <div class="ticket-row"><span class="ticket-label">Quantity:</span><span class="ticket-value">${ticketData.quantity}</span></div>
                     <div class="ticket-row"><span class="ticket-label">Customer:</span><span class="ticket-value">${ticketData.customer.name}</span></div>
                     <div class="ticket-row"><span class="ticket-label">Email:</span><span class="ticket-value">${ticketData.customer.email}</span></div>
@@ -1239,22 +1275,35 @@
                 <div class="ticket-footer"><p>Present this ticket at the entrance</p><p>Terms & Conditions apply • No refunds</p></div>
             </div>
         `;
-        
+
         container.innerHTML = ticketHTML;
-        new QRCode(document.getElementById("qrcode"), {
-            text: qrData, width: 120, height: 120,
-            colorDark: "#000000", colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
+
+        // create QR code (clear previous)
+        const qrContainer = document.getElementById("qrcode");
+        qrContainer.innerHTML = '';
+        try {
+            new QRCode(qrContainer, {
+                text: qrData, width: 120, height: 120,
+                colorDark: "#000000", colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        } catch (e) {
+            console.error('QR code generation failed', e);
+        }
     }
 
     // Download ticket as PNG
     function downloadTicket() {
         const ticketElement = document.querySelector('.ticket-template');
+        if (!ticketElement) {
+            alert('No ticket available to download.');
+            return;
+        }
+
         html2canvas(ticketElement, { scale: 2, useCORS: true, logging: false })
             .then(canvas => {
                 const link = document.createElement('a');
-                link.download = `NOL-Ticket-${ticketData.bookingId}.png`;
+                link.download = `NOL-Ticket-${ticketData.bookingId || Date.now()}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             }).catch(error => {
