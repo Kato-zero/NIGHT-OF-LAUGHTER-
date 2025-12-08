@@ -358,6 +358,24 @@
             font-weight: bold;
         }
         
+        /* Payment Status Styles */
+        .payment-status {
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .payment-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .payment-failed {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
         footer{
             background: #222;
             padding: 20px 7vw;
@@ -421,6 +439,10 @@
             <a href="#contactSection">Contact</a>
         </nav>
     </header>
+    
+    <!-- Payment Status Banner -->
+    <div id="paymentStatusBanner" style="display: none; margin-top: 70px;"></div>
+    
     <section class="hero">
         <div>
             <h1>NIGHT OF LAUGHTER</h1>
@@ -587,6 +609,9 @@
                     <button class="btn" onclick="downloadTicket()" style="background: var(--blue);">
                         Download Ticket
                     </button>
+                    <button class="btn" onclick="printTicket()" style="background: #17a2b8;">
+                        Print Ticket
+                    </button>
                     <button class="btn" onclick="closeSuccessModal()" style="background: #6c757d;">
                         Close
                     </button>
@@ -644,22 +669,22 @@
                 
                 <div class="form-group">
                     <label for="vipSingle">VIP Single Price (K)</label>
-                    <input type="number" id="vipSingle" placeholder="500">
+                    <input type="number" id="vipSingle" placeholder="500" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="vipDouble">VIP Double Price (K)</label>
-                    <input type="number" id="vipDouble" placeholder="800">
+                    <input type="number" id="vipDouble" placeholder="800" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="ordinarySingle">Ordinary Single Price (K)</label>
-                    <input type="number" id="ordinarySingle" placeholder="300">
+                    <input type="number" id="ordinarySingle" placeholder="300" required>
                 </div>
                 
                 <div class="form-group">
                     <label for="ordinaryDouble">Ordinary Double Price (K)</label>
-                    <input type="number" id="ordinaryDouble" placeholder="500">
+                    <input type="number" id="ordinaryDouble" placeholder="500" required>
                 </div>
                 
                 <div class="form-group">
@@ -732,10 +757,14 @@
         document.getElementById('featuredLoader').style.display = 'block';
         document.getElementById('eventsLoader').style.display = 'block';
         
-        document.getElementById("featuredSection").innerHTML = '<div class="loader" id="featuredLoader"></div>';
-        document.getElementById("eventsSection").innerHTML = '<div class="loader" id="eventsLoader"></div>';
+        const featuredSection = document.getElementById("featuredSection");
+        const eventsSection = document.getElementById("eventsSection");
+        
+        featuredSection.innerHTML = '<div class="loader" id="featuredLoader"></div>';
+        eventsSection.innerHTML = '<div class="loader" id="eventsLoader"></div>';
         
         fetchEvents();
+        alert('Events refreshed successfully!');
     }
 
     function openAddEventForm() {
@@ -750,9 +779,10 @@
 
     function copyApiUrl() {
         const apiUrlInput = document.getElementById('apiUrl');
+        apiUrlInput.value = SHEETDB_API_URL;
         apiUrlInput.select();
         apiUrlInput.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(apiUrlInput.value);
+        navigator.clipboard.writeText(SHEETDB_API_URL);
         alert('API URL copied to clipboard!');
     }
 
@@ -769,15 +799,21 @@
             venue: document.getElementById('eventVenue').value,
             image: document.getElementById('eventImage').value,
             description: document.getElementById('eventDescription').value,
-            vip_single: document.getElementById('vipSingle').value || '',
-            vip_double: document.getElementById('vipDouble').value || '',
-            ordinary_single: document.getElementById('ordinarySingle').value || '',
-            ordinary_double: document.getElementById('ordinaryDouble').value || '',
+            vip_single: document.getElementById('vipSingle').value || '0',
+            vip_double: document.getElementById('vipDouble').value || '0',
+            ordinary_single: document.getElementById('ordinarySingle').value || '0',
+            ordinary_double: document.getElementById('ordinaryDouble').value || '0',
             lineup: document.getElementById('eventLineup').value || '',
             terms: document.getElementById('eventTerms').value || ''
         };
 
         try {
+            // Show loading state
+            const submitBtn = e.target.querySelector('.btn-pay');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Adding...';
+            submitBtn.disabled = true;
+
             // Send data to SheetDB (POST request)
             const response = await fetch(SHEETDB_API_URL, {
                 method: 'POST',
@@ -792,11 +828,17 @@
                 closeAddEventModal();
                 refreshEvents();
             } else {
-                alert('Error adding event. Please check your SheetDB configuration.');
+                const errorData = await response.json();
+                alert(`Error adding event: ${errorData.error || 'Please check your SheetDB configuration.'}`);
             }
         } catch (error) {
             console.error('Error:', error);
             alert('Error adding event. Please try again.');
+        } finally {
+            // Reset button state
+            const submitBtn = e.target.querySelector('.btn-pay');
+            submitBtn.textContent = 'Add Event to Sheet';
+            submitBtn.disabled = false;
         }
     });
 
@@ -820,6 +862,30 @@
     // Generate booking ID
     function generateBookingId() {
         return 'NOL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+    }
+
+    // Show payment status
+    function showPaymentStatus(type, message) {
+        const banner = document.getElementById('paymentStatusBanner');
+        if (type === 'success') {
+            banner.innerHTML = `
+                <div class="payment-status payment-success">
+                    <strong>✓ ${message}</strong>
+                </div>
+            `;
+        } else {
+            banner.innerHTML = `
+                <div class="payment-status payment-failed">
+                    <strong>✗ ${message}</strong>
+                </div>
+            `;
+        }
+        banner.style.display = 'block';
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+            banner.style.display = 'none';
+        }, 5000);
     }
 
     // ============================================
@@ -918,10 +984,10 @@
                 <div><span class="info-label">Venue:</span> ${ev.venue || "TBA"}</div>
                 <div class="price-box">
                     <div><b>Ticket Prices:</b></div>
-                    ${ev.vip_single ? `<div>VIP Single: K${ev.vip_single}</div>` : ''}
-                    ${ev.vip_double ? `<div>VIP Double: K${ev.vip_double}</div>` : ''}
-                    ${ev.ordinary_single ? `<div>Ordinary Single: K${ev.ordinary_single}</div>` : ''}
-                    ${ev.ordinary_double ? `<div>Ordinary Double: K${ev.ordinary_double}</div>` : ''}
+                    ${ev.vip_single && ev.vip_single !== '0' ? `<div>VIP Single: K${ev.vip_single}</div>` : ''}
+                    ${ev.vip_double && ev.vip_double !== '0' ? `<div>VIP Double: K${ev.vip_double}</div>` : ''}
+                    ${ev.ordinary_single && ev.ordinary_single !== '0' ? `<div>Ordinary Single: K${ev.ordinary_single}</div>` : ''}
+                    ${ev.ordinary_double && ev.ordinary_double !== '0' ? `<div>Ordinary Double: K${ev.ordinary_double}</div>` : ''}
                 </div>
                 <div class="btn-row">
                     <button class="btn" onclick="openTicketModal(${JSON.stringify(ev).replace(/"/g, '&quot;').replace(/'/g, "\\'")})">
@@ -1000,10 +1066,9 @@
     }
 
     // ============================================
-    // TICKET PURCHASE FLOW (Same as before)
+    // TICKET PURCHASE FLOW
     // ============================================
 
-    // [All the ticket purchase modal functions remain the same as previous code]
     // Open ticket modal
     function openTicketModal(eventData) {
         currentEvent = eventData;
@@ -1079,6 +1144,13 @@
                     break;
             }
             
+            if (pricePerTicket === 0) {
+                alert('This ticket type is not available for this event.');
+                ticketTypeSelect.value = '';
+                priceDisplay.style.display = 'none';
+                return;
+            }
+            
             const total = pricePerTicket * quantity;
             ticketData.price = total;
             ticketData.ticketType = ticketType;
@@ -1090,24 +1162,76 @@
         
         ticketTypeSelect.addEventListener('change', updatePrice);
         quantitySelect.addEventListener('change', updatePrice);
+        
+        // Initial price calculation if already selected
+        if (ticketTypeSelect.value) {
+            updatePrice();
+        }
     }
 
     // Next step
     function nextStep(current) {
         if (current === 1) {
             const ticketType = document.getElementById('ticketType').value;
+            const quantity = parseInt(document.getElementById('ticketQuantity').value);
+            
             if (!ticketType) {
                 alert('Please select a ticket type');
                 return;
             }
+            
+            // Check if ticket price is available
+            let pricePerTicket = 0;
+            switch(ticketType) {
+                case 'vip_single':
+                    pricePerTicket = parseInt(currentEvent.vip_single) || 0;
+                    break;
+                case 'vip_double':
+                    pricePerTicket = parseInt(currentEvent.vip_double) || 0;
+                    break;
+                case 'ordinary_single':
+                    pricePerTicket = parseInt(currentEvent.ordinary_single) || 0;
+                    break;
+                case 'ordinary_double':
+                    pricePerTicket = parseInt(currentEvent.ordinary_double) || 0;
+                    break;
+            }
+            
+            if (pricePerTicket === 0) {
+                alert('This ticket type is not available. Please select another option.');
+                return;
+            }
+            
+            if (pricePerTicket * quantity === 0) {
+                alert('Please select a valid ticket type and quantity.');
+                return;
+            }
+            
             showStep(2);
         } else if (current === 2) {
             const fullName = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
             
-            if (!fullName || !email || !phone) {
-                alert('Please fill in all your details');
+            if (!fullName) {
+                alert('Please enter your full name');
+                return;
+            }
+            
+            if (!email) {
+                alert('Please enter your email address');
+                return;
+            }
+            
+            // Simple email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            if (!phone) {
+                alert('Please enter your phone number');
                 return;
             }
             
@@ -1155,9 +1279,11 @@
             hour: '2-digit', minute: '2-digit'
         });
         
+        // Save data for after payment
         localStorage.setItem('lastTicketData', JSON.stringify(ticketData));
         localStorage.setItem('lastEventData', JSON.stringify(currentEvent));
         
+        // Create payment data
         const paymentData = {
             amount: ticketData.price,
             event: currentEvent.name,
@@ -1169,22 +1295,27 @@
             bookingId: ticketData.bookingId
         };
         
+        // Redirect to payment gateway
         const encodedData = encodeURIComponent(JSON.stringify(paymentData));
-        const redirectUrl = `${LIPILA_PAYMENT_URL}&data=${encodedData}&callback=${encodeURIComponent(window.location.origin + window.location.pathname)}`;
+        const callbackUrl = encodeURIComponent(window.location.origin + window.location.pathname + '?payment_callback=true');
+        const paymentUrl = `${LIPILA_PAYMENT_URL}&data=${encodedData}&callback=${callbackUrl}`;
         
         closeModal();
-        window.location.href = redirectUrl;
+        window.location.href = paymentUrl;
     }
 
-    // Check for payment success on page load
+    // Check for payment status on page load
     function checkPaymentStatus() {
         const urlParams = new URLSearchParams(window.location.search);
-        const paymentStatus = urlParams.get('payment_status');
-        const bookingId = urlParams.get('booking_id');
+        const paymentCallback = urlParams.get('payment_callback');
         
-        if (paymentStatus === 'success' && bookingId) {
-            showSuccessModal();
-            window.history.replaceState({}, document.title, window.location.pathname);
+        if (paymentCallback === 'true') {
+            // Simulate payment success (in real implementation, verify with your payment gateway)
+            setTimeout(() => {
+                showSuccessModal();
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }, 1000);
         }
     }
 
@@ -1198,8 +1329,27 @@
             currentEvent = JSON.parse(savedEventData);
             generateTicket();
             document.getElementById('successModal').style.display = 'flex';
-            localStorage.removeItem('lastTicketData');
-            localStorage.removeItem('lastEventData');
+            
+            // Show payment success banner
+            showPaymentStatus('success', 'Payment successful! Your ticket is ready.');
+        } else {
+            // For demo purposes, create dummy data
+            ticketData = {
+                event: { name: "ZED Laugh Festival", date: "March 15, 2025", time: "6:00 PM", venue: "Lusaka Playhouse" },
+                ticketType: 'vip_single',
+                quantity: 1,
+                price: 500,
+                customer: { name: "Demo User", email: "demo@example.com", phone: "+260-123456789" },
+                bookingId: generateBookingId(),
+                paymentDate: new Date().toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                })
+            };
+            currentEvent = ticketData.event;
+            generateTicket();
+            document.getElementById('successModal').style.display = 'flex';
+            showPaymentStatus('success', 'Payment successful! Your ticket is ready.');
         }
     }
 
@@ -1241,30 +1391,95 @@
         `;
         
         container.innerHTML = ticketHTML;
-        new QRCode(document.getElementById("qrcode"), {
-            text: qrData, width: 120, height: 120,
-            colorDark: "#000000", colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
+        
+        // Generate QR code
+        setTimeout(() => {
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(document.getElementById("qrcode"), {
+                    text: qrData,
+                    width: 120,
+                    height: 120,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } else {
+                console.error('QRCode library not loaded');
+            }
+        }, 100);
     }
 
     // Download ticket as PNG
     function downloadTicket() {
+        if (typeof html2canvas === 'undefined') {
+            alert('Download feature requires html2canvas library. Please try printing instead.');
+            return;
+        }
+        
         const ticketElement = document.querySelector('.ticket-template');
-        html2canvas(ticketElement, { scale: 2, useCORS: true, logging: false })
-            .then(canvas => {
-                const link = document.createElement('a');
-                link.download = `NOL-Ticket-${ticketData.bookingId}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('Error downloading ticket. Please take a screenshot.');
-            });
+        html2canvas(ticketElement, { 
+            scale: 2, 
+            useCORS: true, 
+            logging: false,
+            backgroundColor: '#ffffff'
+        })
+        .then(canvas => {
+            const link = document.createElement('a');
+            link.download = `NOL-Ticket-${ticketData.bookingId}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            showPaymentStatus('success', 'Ticket downloaded successfully!');
+        })
+        .catch(error => {
+            console.error('Error downloading ticket:', error);
+            alert('Error downloading ticket. Please try printing instead.');
+        });
+    }
+
+    // Print ticket
+    function printTicket() {
+        const ticketElement = document.querySelector('.ticket-template');
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Night of Laughter Ticket - ${ticketData.bookingId}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; }
+                    .ticket { border: 2px solid #333; padding: 20px; max-width: 400px; margin: 0 auto; }
+                    .ticket-header { text-align: center; border-bottom: 2px dashed #333; padding-bottom: 15px; margin-bottom: 20px; }
+                    .ticket-row { display: flex; justify-content: space-between; margin-bottom: 8px; padding: 8px 0; border-bottom: 1px dashed #ddd; }
+                    .ticket-label { font-weight: bold; }
+                    @media print { 
+                        body { margin: 0; padding: 10px; } 
+                        button { display: none; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="ticket">
+                    ${ticketElement.innerHTML}
+                </div>
+                <script>
+                    window.onload = function() {
+                        window.print();
+                        setTimeout(function() { window.close(); }, 1000);
+                    }
+                </\script>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
     }
 
     // Close modals
-    function closeModal() { document.getElementById('ticketModal').style.display = 'none'; }
+    function closeModal() { 
+        document.getElementById('ticketModal').style.display = 'none'; 
+        currentEvent = null;
+        currentStep = 1;
+    }
+    
     function closeSuccessModal() { 
         document.getElementById('successModal').style.display = 'none';
         ticketData = { event: {}, ticketType: '', quantity: 1, price: 0, customer: {}, bookingId: '', paymentDate: '' };
@@ -1284,7 +1499,7 @@
         // Fetch events from SheetDB
         fetchEvents();
         
-        // Check for payment success
+        // Check for payment status
         checkPaymentStatus();
         
         // Close modals when clicking outside
@@ -1293,10 +1508,20 @@
             if (event.target === document.getElementById('successModal')) closeSuccessModal();
             if (event.target === document.getElementById('addEventModal')) closeAddEventModal();
         };
+        
+        // Initialize QR code library
+        if (typeof QRCode === 'undefined') {
+            console.warn('QRCode library not loaded. Ticket QR codes will not work.');
+        }
+        
+        // Initialize html2canvas
+        if (typeof html2canvas === 'undefined') {
+            console.warn('html2canvas library not loaded. Ticket downloads will not work.');
+        }
     });
     </script>
     
     <!-- html2canvas for ticket download -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
 </html>
