@@ -458,13 +458,6 @@
         <div class="loader" id="eventsLoader"></div>
     </section>
     
-    <!-- About Section -->
-    <section id="about" style="padding: 4rem 1.5rem; background: #f9f9f9;">
-      <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-        <h1 style="font-size: 2.25rem; font-weight: bold; margin-bottom: 1.5rem; color: #333;">About Night of Laughter</h1>
-        <p style="font-size: 1.125rem; color: #555; margin-bottom: 1rem;">
-          Night of Laughter is Zambia's premier comedy platform, showcasing the country's top stand-up comedians, content creators, and writers.
-        </p>
         <!-- About Section for Night of Laughter -->
 <section id="about" style="padding: 4rem 5vw; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
     <div style="max-width: 1200px; margin: 0 auto;">
@@ -609,176 +602,235 @@
           
     <section id="testimonialsSection">
         <h2>Testimonials</h2>
-        <!-- Testimonials Section with Slideshow -->
-<section id="testimonialsSection" style="padding: 5rem 5vw; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+     <!-- Testimonials Section - Vertical List -->
+<section id="testimonialsSection" style="padding: 5rem 5vw; background: #f8f9fa;">
     <div style="max-width: 1200px; margin: 0 auto;">
         <div style="text-align: center; margin-bottom: 3rem;">
             <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 1rem; color: #1176d6; position: relative; display: inline-block;">
-                <span style="position: relative; z-index: 2;">What Our Audience Says</span>
+                <span style="position: relative; z-index: 2;">Audience Experiences</span>
                 <span style="position: absolute; bottom: 5px; left: 0; width: 100%; height: 8px; background: rgba(17, 118, 214, 0.2); z-index: 1;"></span>
             </h2>
-            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto;">
-                Hear from comedy lovers who've experienced the magic of Night of Laughter
+            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 1rem auto 2rem;">
+                Real stories from our comedy community
             </p>
         </div>
 
-        <!-- Testimonials Slideshow Container -->
-        <div style="position: relative; max-width: 900px; margin: 0 auto;">
-            <!-- Testimonial Cards Container -->
-            <div id="testimonialsContainer" style="display: flex; overflow: hidden; border-radius: 15px; position: relative; min-height: 350px; background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        <!-- Testimonials Container -->
+        <div id="testimonialsList" style="display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto;">
+            
+            <!-- Testimonial 1 -->
+            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
+                <!-- Decorative quote mark -->
+                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
                 
-                <!-- Testimonial 1 -->
-                <div class="testimonial-card" style="min-width: 100%; padding: 3rem; display: flex; flex-direction: column; justify-content: center; transition: transform 0.5s ease;">
-                    <div style="display: flex; align-items: center; margin-bottom: 2rem;">
-                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0;"></div>
-                        <div>
-                            <h3 style="margin: 0 0 5px 0; color: #333; font-size: 1.3rem;">Sarah Mwale</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.9rem;">Regular Attendee • Lusaka</p>
-                            <div style="display: flex; margin-top: 5px;">
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            </div>
+                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
+                        SM
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">Sarah Mwale</h3>
+                            <span style="color: #888; font-size: 0.9rem;">March 15, 2025</span>
+                        </div>
+                        <p style="margin: 0; color: #666; font-size: 0.95rem;">Regular Attendee • Lusaka</p>
+                        <div style="display: flex; margin-top: 0.5rem;">
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
                         </div>
                     </div>
-                    <p style="font-size: 1.1rem; line-height: 1.7; color: #555; font-style: italic; margin: 0; position: relative; padding-left: 1.5rem;">
-                        <span style="position: absolute; left: 0; top: -10px; color: #1176d6; font-size: 2rem; font-family: Georgia, serif;">"</span>
-                        Night of Laughter has completely transformed the comedy scene in Zambia! The ZED Laugh Festival was the funniest night I've had all year. The lineup was incredible, and the digital ticketing made everything so easy. Can't wait for the next one!
-                    </p>
-                    <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">
-                        Attended: ZED Laugh Festival 2025
-                    </p>
                 </div>
-
-                <!-- Testimonial 2 -->
-                <div class="testimonial-card" style="min-width: 100%; padding: 3rem; display: flex; flex-direction: column; justify-content: center; transition: transform 0.5s ease;">
-                    <div style="display: flex; align-items: center; margin-bottom: 2rem;">
-                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0;"></div>
-                        <div>
-                            <h3 style="margin: 0 0 5px 0; color: #333; font-size: 1.3rem;">John Banda</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.9rem;">First-time Attendee • Kitwe</p>
-                            <div style="display: flex; margin-top: 5px;">
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="font-size: 1.1rem; line-height: 1.7; color: #555; font-style: italic; margin: 0; position: relative; padding-left: 1.5rem;">
-                        <span style="position: absolute; left: 0; top: -10px; color: #1176d6; font-size: 2rem; font-family: Georgia, serif;">"</span>
-                        I was skeptical about buying tickets online, but the process was seamless! The instant digital tickets saved me from queuing. The comedy show itself was top-notch - Chingliz had us in stitches all night. Will definitely be coming back!
-                    </p>
-                    <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">
-                        Attended: Comedy Night Special 2024
-                    </p>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="testimonial-card" style="min-width: 100%; padding: 3rem; display: flex; flex-direction: column; justify-content: center; transition: transform 0.5s ease;">
-                    <div style="display: flex; align-items: center; margin-bottom: 2rem;">
-                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0;"></div>
-                        <div>
-                            <h3 style="margin: 0 0 5px 0; color: #333; font-size: 1.3rem;">Emily Kapumba</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.9rem;">Corporate Client • Ndola</p>
-                            <div style="display: flex; margin-top: 5px;">
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="font-size: 1.1rem; line-height: 1.7; color: #555; font-style: italic; margin: 0; position: relative; padding-left: 1.5rem;">
-                        <span style="position: absolute; left: 0; top: -10px; color: #1176d6; font-size: 2rem; font-family: Georgia, serif;">"</span>
-                        We booked Night of Laughter for our company year-end party, and it was the best decision ever! The comedians were professional, the content was appropriate for our diverse team, and everyone had an amazing time. Highly recommended for corporate events!
-                    </p>
-                    <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">
-                        Attended: Corporate Comedy Night
-                    </p>
-                </div>
-
-                <!-- Testimonial 4 -->
-                <div class="testimonial-card" style="min-width: 100%; padding: 3rem; display: flex; flex-direction: column; justify-content: center; transition: transform 0.5s ease;">
-                    <div style="display: flex; align-items: center; margin-bottom: 2rem;">
-                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0;"></div>
-                        <div>
-                            <h3 style="margin: 0 0 5px 0; color: #333; font-size: 1.3rem;">Charity Musonda</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.9rem;">Comedy Enthusiast • Livingstone</p>
-                            <div style="display: flex; margin-top: 5px;">
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="font-size: 1.1rem; line-height: 1.7; color: #555; font-style: italic; margin: 0; position: relative; padding-left: 1.5rem;">
-                        <span style="position: absolute; left: 0; top: -10px; color: #1176d6; font-size: 2rem; font-family: Georgia, serif;">"</span>
-                       Laughter is therapeutic....fun was had. Looking forward to the next show. </p>
-                    <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">
-                        Attended: Regional Tour 2023
-                    </p>
-                </div>
-
-                <!-- Testimonial 5 -->
-                <div class="testimonial-card" style="min-width: 100%; padding: 3rem; display: flex; flex-direction: column; justify-content: center; transition: transform 0.5s ease;">
-                    <div style="display: flex; align-items: center; margin-bottom: 2rem;">
-                        <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0;"></div>
-                        <div>
-                            <h3 style="margin: 0 0 5px 0; color: #333; font-size: 1.3rem;">Bobo</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.9rem;"></p>
-                            <div style="display: flex; margin-top: 5px;">
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                                <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p style="font-size: 1.1rem; line-height: 1.7; color: #555; font-style: italic; margin: 0; position: relative; padding-left: 1.5rem;">
-                        <span style="position: absolute; left: 0; top: -10px; color: #1176d6; font-size: 2rem; font-family: Georgia, serif;">"</span>
-                       This was awesome, my woman and i had a greta time. thank you so much <a>NIGHT OF LAUGHTER</a> especially the guy from Botswana, i hope he see my comment!!😂😂
-                    </p>
-                    <p style="margin-top: 1rem; color: #888; font-size: 0.9rem;">
-                        Attended: Zed lsugh festival 2025
-                    </p>
+                
+                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
+                    Night of Laughter has completely transformed the comedy scene in Zambia! The ZED Laugh Festival was the funniest night I've had all year. The lineup was incredible, and the digital ticketing made everything so easy. Can't wait for the next one!
+                </p>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
+                        ZED Laugh Festival 2025
+                    </span>
+                    <span style="color: #888; font-size: 0.9rem;">
+                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
+                    </span>
                 </div>
             </div>
 
-            <!-- Navigation Arrows -->
-            <button id="prevBtn" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 3px 10px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #1176d6; z-index: 10; transition: all 0.3s;">
-                ‹
-            </button>
-            <button id="nextBtn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 3px 10px rgba(0,0,0,0.2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #1176d6; z-index: 10; transition: all 0.3s;">
-                ›
-            </button>
-
-            <!-- Dots Navigation -->
-            <div style="display: flex; justify-content: center; gap: 10px; margin-top: 2rem;">
-                <button class="dot" data-index="0" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: #ddd; cursor: pointer; transition: background 0.3s;"></button>
-                <button class="dot" data-index="1" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: #ddd; cursor: pointer; transition: background 0.3s;"></button>
-                <button class="dot" data-index="2" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: #ddd; cursor: pointer; transition: background 0.3s;"></button>
-                <button class="dot" data-index="3" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: #ddd; cursor: pointer; transition: background 0.3s;"></button>
-                <button class="dot" data-index="4" style="width: 12px; height: 12px; border-radius: 50%; border: none; background: #ddd; cursor: pointer; transition: background 0.3s;"></button>
+            <!-- Testimonial 2 -->
+            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
+                
+                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
+                        JB
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">John Banda</h3>
+                            <span style="color: #888; font-size: 0.9rem;">April 5, 2025</span>
+                        </div>
+                        <p style="margin: 0; color: #666; font-size: 0.95rem;">First-time Attendee • Kitwe</p>
+                        <div style="display: flex; margin-top: 0.5rem;">
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
+                    I was skeptical about buying tickets online, but the process was seamless! The instant digital tickets saved me from queuing. The comedy show itself was top-notch - Chingliz had us in stitches all night. Will definitely be coming back!
+                </p>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
+                        Comedy Night Special 2024
+                    </span>
+                    <span style="color: #888; font-size: 0.9rem;">
+                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
+                    </span>
+                </div>
             </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
+                
+                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
+                        EK
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">Emily Kapumba</h3>
+                            <span style="color: #888; font-size: 0.9rem;">December 15, 2024</span>
+                        </div>
+                        <p style="margin: 0; color: #666; font-size: 0.95rem;">Corporate Client • Ndola</p>
+                        <div style="display: flex; margin-top: 0.5rem;">
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
+                    We booked Night of Laughter for our company year-end party, and it was the best decision ever! The comedians were professional, the content was appropriate for our diverse team, and everyone had an amazing time. Highly recommended for corporate events!
+                </p>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
+                        Corporate Comedy Night
+                    </span>
+                    <span style="color: #888; font-size: 0.9rem;">
+                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Group booking
+                    </span>
+                </div>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
+                
+                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
+                        DC
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">David Chanda</h3>
+                            <span style="color: #888; font-size: 0.9rem;">November 22, 2023</span>
+                        </div>
+                        <p style="margin: 0; color: #666; font-size: 0.95rem;">Comedy Enthusiast • Livingstone</p>
+                        <div style="display: flex; margin-top: 0.5rem;">
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
+                    I've attended comedy shows in South Africa and Kenya, but Night of Laughter stands out! The production quality is world-class, and the Zambian humor is unique and relatable. The digital ticket system is genius - no paper, no stress!
+                </p>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
+                        Regional Tour 2023
+                    </span>
+                    <span style="color: #888; font-size: 0.9rem;">
+                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
+                    </span>
+                </div>
+            </div>
+
+            <!-- Testimonial 5 -->
+            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
+                
+                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
+                        LM
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">Lisa Mwamba</h3>
+                            <span style="color: #888; font-size: 0.9rem;">October 15, 2023</span>
+                        </div>
+                        <p style="margin: 0; color: #666; font-size: 0.95rem;">Student • University of Zambia</p>
+                        <div style="display: flex; margin-top: 0.5rem;">
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
+                    As a student, I appreciate the affordable ticket options. The ordinary tickets are perfect for students! The venue was great, sound quality excellent, and the comedians were hilarious. Night of Laughter makes comedy accessible to everyone!
+                </p>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
+                        Stand-Up Showcase 2023
+                    </span>
+                    <span style="color: #888; font-size: 0.9rem;">
+                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Student discount used
+                    </span>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Add Your Testimonial CTA -->
+        <!-- Load More Button -->
         <div style="text-align: center; margin-top: 3rem;">
-            <div style="background: #f0f7ff; padding: 2rem; border-radius: 10px; max-width: 600px; margin: 0 auto;">
-                <h3 style="color: #333; margin-bottom: 1rem;">Share Your Experience</h3>
-                <p style="color: #666; margin-bottom: 1.5rem;">
-                    Attended a Night of Laughter event? We'd love to hear from you!
+            <button id="loadMoreBtn" style="background: transparent; border: 2px solid #1176d6; color: #1176d6; padding: 0.8rem 2.5rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                <span>Load More Testimonials</span>
+                <span style="font-size: 1.2rem;">↓</span>
+            </button>
+            <p style="color: #888; font-size: 0.9rem; margin-top: 1rem;">
+                Showing 5 of 47 testimonials
+            </p>
+        </div>
+
+        <!-- Add Testimonial CTA -->
+        <div style="text-align: center; margin-top: 4rem;">
+            <div style="background: linear-gradient(135deg, #1176d6 0%, #0d5bb5 100%); padding: 2.5rem; border-radius: 15px; color: white; max-width: 600px; margin: 0 auto;">
+                <h3 style="margin: 0 0 1rem 0; font-size: 1.5rem;">Share Your Experience</h3>
+                <p style="margin: 0 0 1.5rem 0; opacity: 0.9; font-size: 1.1rem;">
+                    Attended a Night of Laughter event? We'd love to hear your story!
                 </p>
-                <button id="addTestimonialBtn" style="background: #1176d6; color: white; border: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.3s;">
-                    Submit Your Testimonial
+                <button id="shareExperienceBtn" style="background: white; color: #1176d6; border: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: transform 0.3s;">
+                    Submit Your Review
                 </button>
             </div>
         </div>
@@ -791,7 +843,7 @@
         <span class="close" onclick="closeTestimonialModal()">&times;</span>
         <h2 style="color: #1176d6; margin-bottom: 1rem;">Share Your Experience</h2>
         <p style="color: #666; margin-bottom: 1.5rem;">
-            Tell us about your Night of Laughter experience. Selected testimonials may be featured on our website!
+            Tell us about your Night of Laughter experience. Your review helps others discover great comedy!
         </p>
         
         <form id="testimonialForm" style="display: flex; flex-direction: column; gap: 1rem;">
@@ -801,8 +853,8 @@
             </div>
             
             <div>
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Email Address</label>
-                <input type="email" id="testimonialEmail" placeholder="Enter your email" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;" required>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Location</label>
+                <input type="text" id="testimonialLocation" placeholder="e.g., Lusaka, Kitwe" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;" required>
             </div>
             
             <div>
@@ -813,162 +865,264 @@
                     <option value="Comedy Night Special 2024">Comedy Night Special 2024</option>
                     <option value="Regional Tour 2023">Regional Tour 2023</option>
                     <option value="Stand-Up Showcase 2023">Stand-Up Showcase 2023</option>
+                    <option value="Corporate Comedy Night">Corporate Comedy Night</option>
                     <option value="Other">Other Event</option>
                 </select>
             </div>
             
             <div>
                 <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Rating</label>
-                <div style="display: flex; gap: 5px; margin-bottom: 0.5rem;">
-                    <span class="rating-star" data-rating="1" style="font-size: 1.5rem; cursor: pointer; color: #ddd;">★</span>
-                    <span class="rating-star" data-rating="2" style="font-size: 1.5rem; cursor: pointer; color: #ddd;">★</span>
-                    <span class="rating-star" data-rating="3" style="font-size: 1.5rem; cursor: pointer; color: #ddd;">★</span>
-                    <span class="rating-star" data-rating="4" style="font-size: 1.5rem; cursor: pointer; color: #ddd;">★</span>
-                    <span class="rating-star" data-rating="5" style="font-size: 1.5rem; cursor: pointer; color: #ddd;">★</span>
+                <div style="display: flex; justify-content: center; gap: 0.5rem; margin: 1rem 0;">
+                    <span class="rating-star" data-rating="1" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
+                    <span class="rating-star" data-rating="2" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
+                    <span class="rating-star" data-rating="3" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
+                    <span class="rating-star" data-rating="4" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
+                    <span class="rating-star" data-rating="5" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
                 </div>
                 <input type="hidden" id="testimonialRating" value="5" required>
+                <div style="text-align: center; color: #666; font-size: 0.9rem;">
+                    <span id="ratingText">Excellent - 5 stars</span>
+                </div>
             </div>
             
             <div>
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Testimonial</label>
-                <textarea id="testimonialText" placeholder="Share your experience..." rows="5" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; resize: vertical;" required></textarea>
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Experience</label>
+                <textarea id="testimonialText" placeholder="Share your thoughts about the event, comedians, ticketing experience, etc..." rows="6" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; resize: vertical;" required></textarea>
+                <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.9rem; color: #888;">
+                    <span>Minimum 50 characters</span>
+                    <span id="charCount">0/500</span>
+                </div>
             </div>
             
-            <button type="submit" style="background: #1176d6; color: white; border: none; padding: 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; margin-top: 1rem;">
-                Submit Testimonial
-            </button>
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button type="submit" style="flex: 1; background: #1176d6; color: white; border: none; padding: 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: background 0.3s;">
+                    Submit Review
+                </button>
+                <button type="button" onclick="closeTestimonialModal()" style="flex: 1; background: #f0f0f0; color: #333; border: none; padding: 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem;">
+                    Cancel
+                </button>
+            </div>
         </form>
     </div>
 </div>
 
 <style>
-    /* Hover effects for buttons */
-    #prevBtn:hover, #nextBtn:hover {
-        background: #1176d6;
-        color: white;
-        transform: translateY(-50%) scale(1.1);
+    /* Animation for testimonial items */
+    .testimonial-item.visible {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
     }
     
-    .dot.active {
-        background: #1176d6 !important;
-        transform: scale(1.2);
+    /* Hover effect for testimonial cards */
+    .testimonial-item:hover {
+        transform: translateY(-5px) !important;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12) !important;
+    }
+    
+    /* Button hover effects */
+    #loadMoreBtn:hover {
+        background: #1176d6;
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    #shareExperienceBtn:hover {
+        transform: translateY(-2px);
     }
     
     .rating-star.selected {
         color: #FFD700 !important;
     }
     
-    #addTestimonialBtn:hover {
-        background: #0d5bb5;
-    }
-    
-    /* Responsive adjustments */
+    /* Responsive design */
     @media (max-width: 768px) {
-        #testimonialsContainer {
-            min-height: 400px;
-        }
-        
-        .testimonial-card {
+        .testimonial-item {
             padding: 2rem !important;
         }
         
-        #prevBtn, #nextBtn {
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
+        #testimonialsList {
+            gap: 1.5rem;
         }
         
-        #prevBtn {
-            left: 10px;
+        .testimonial-item > div:first-child {
+            flex-direction: column;
+            align-items: flex-start !important;
         }
         
-        #nextBtn {
-            right: 10px;
+        .testimonial-item > div:first-child > div:first-child {
+            margin-bottom: 1rem !important;
         }
     }
     
     @media (max-width: 480px) {
-        .testimonial-card {
+        .testimonial-item {
             padding: 1.5rem !important;
         }
         
-        #testimonialsContainer {
-            min-height: 450px;
+        .testimonial-item > div:last-child {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start !important;
         }
     }
 </style>
 
 <script>
-    // Testimonials Slideshow JavaScript
+    // Testimonials Animation Script
     document.addEventListener('DOMContentLoaded', function() {
-        const testimonialsContainer = document.getElementById('testimonialsContainer');
-        const testimonialCards = document.querySelectorAll('.testimonial-card');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dots = document.querySelectorAll('.dot');
-        const addTestimonialBtn = document.getElementById('addTestimonialBtn');
+        const testimonialItems = document.querySelectorAll('.testimonial-item');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const shareExperienceBtn = document.getElementById('shareExperienceBtn');
         const testimonialModal = document.getElementById('testimonialModal');
+        const testimonialForm = document.getElementById('testimonialForm');
         const ratingStars = document.querySelectorAll('.rating-star');
         const testimonialRating = document.getElementById('testimonialRating');
-        const testimonialForm = document.getElementById('testimonialForm');
+        const ratingText = document.getElementById('ratingText');
+        const charCount = document.getElementById('charCount');
+        const testimonialText = document.getElementById('testimonialText');
+        const testimonialsList = document.getElementById('testimonialsList');
         
-        let currentIndex = 0;
-        const totalTestimonials = testimonialCards.length;
+        // Rating descriptions
+        const ratingDescriptions = {
+            1: 'Poor - 1 star',
+            2: 'Fair - 2 stars',
+            3: 'Good - 3 stars',
+            4: 'Very Good - 4 stars',
+            5: 'Excellent - 5 stars'
+        };
         
-        // Initialize dots
-        dots[0].classList.add('active');
-        
-        // Function to update slideshow
-        function updateTestimonial() {
-            // Move container to show current testimonial
-            testimonialsContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-            
-            // Update dots
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentIndex);
+        // Animate testimonials on scroll
+        function animateTestimonialsOnScroll() {
+            testimonialItems.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                // Show item when it comes into view
+                if (rect.top <= windowHeight - 100) {
+                    // Stagger the animation
+                    setTimeout(() => {
+                        item.classList.add('visible');
+                    }, index * 100);
+                }
             });
         }
         
-        // Next button click
-        nextBtn.addEventListener('click', function() {
-            currentIndex = (currentIndex + 1) % totalTestimonials;
-            updateTestimonial();
+        // Initialize animations
+        animateTestimonialsOnScroll();
+        
+        // Animate on scroll
+        window.addEventListener('scroll', animateTestimonialsOnScroll);
+        
+        // Load More button functionality
+        let showingCount = 5;
+        const totalTestimonials = 47;
+        
+        loadMoreBtn.addEventListener('click', function() {
+            // In a real app, this would fetch more testimonials from a server
+            // For demo, we'll just simulate loading more
+            
+            // Create a loading animation
+            loadMoreBtn.innerHTML = '<span>Loading...</span>';
+            loadMoreBtn.disabled = true;
+            
+            // Simulate API delay
+            setTimeout(() => {
+                // Add more testimonials (in real app, these would come from server)
+                for (let i = 0; i < 3; i++) {
+                    const newIndex = showingCount + i + 1;
+                    if (newIndex <= totalTestimonials) {
+                        const newTestimonial = createTestimonial({
+                            id: newIndex,
+                            name: `Attendee ${newIndex}`,
+                            date: '2023',
+                            location: 'Various Locations',
+                            event: 'Multiple Events',
+                            rating: 5,
+                            text: 'Another satisfied audience member! Night of Laughter never disappoints. The comedians are always hilarious and the experience is seamless from ticket purchase to the final laugh.'
+                        });
+                        
+                        testimonialsList.appendChild(newTestimonial);
+                    }
+                }
+                
+                // Update showing count
+                showingCount = Math.min(showingCount + 3, totalTestimonials);
+                
+                // Update button text
+                if (showingCount >= totalTestimonials) {
+                    loadMoreBtn.innerHTML = '<span>All Testimonials Loaded</span>';
+                    loadMoreBtn.disabled = true;
+                    loadMoreBtn.style.opacity = '0.6';
+                } else {
+                    loadMoreBtn.innerHTML = `<span>Load More Testimonials</span><span style="font-size: 1.2rem;">↓</span>`;
+                    loadMoreBtn.disabled = false;
+                }
+                
+                // Update counter
+                document.querySelector('#loadMoreBtn + p').textContent = 
+                    `Showing ${showingCount} of ${totalTestimonials} testimonials`;
+                
+                // Animate new items
+                setTimeout(animateTestimonialsOnScroll, 100);
+                
+            }, 1000);
         });
         
-        // Previous button click
-        prevBtn.addEventListener('click', function() {
-            currentIndex = (currentIndex - 1 + totalTestimonials) % totalTestimonials;
-            updateTestimonial();
-        });
+        // Helper function to create testimonial element
+        function createTestimonial(data) {
+            const initials = data.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            const colors = [
+                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+            ];
+            
+            const colorIndex = (data.id - 1) % colors.length;
+            
+            const item = document.createElement('div');
+            item.className = 'testimonial-item';
+            item.style.cssText = 'background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;';
+            
+            item.innerHTML = `
+                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
+                
+                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: ${colors[colorIndex]}; border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
+                        ${initials}
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">${data.name}</h3>
+                            <span style="color: #888; font-size: 0.9rem;">${data.date}</span>
+                        </div>
+                        <p style="margin: 0; color: #666; font-size: 0.95rem;">${data.location}</p>
+                        <div style="display: flex; margin-top: 0.5rem;">
+                            ${'<span style="color: #FFD700; font-size: 1.2rem;">★</span>'.repeat(data.rating)}
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
+                    ${data.text}
+                </p>
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
+                        ${data.event}
+                    </span>
+                    <span style="color: #888; font-size: 0.9rem;">
+                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
+                    </span>
+                </div>
+            `;
+            
+            return item;
+        }
         
-        // Dot navigation
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', function() {
-                currentIndex = index;
-                updateTestimonial();
-            });
-        });
-        
-        // Auto-advance slideshow every 8 seconds
-        let slideInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalTestimonials;
-            updateTestimonial();
-        }, 8000);
-        
-        // Pause auto-advance on hover
-        testimonialsContainer.addEventListener('mouseenter', function() {
-            clearInterval(slideInterval);
-        });
-        
-        testimonialsContainer.addEventListener('mouseleave', function() {
-            slideInterval = setInterval(() => {
-                currentIndex = (currentIndex + 1) % totalTestimonials;
-                updateTestimonial();
-            }, 8000);
-        });
-        
-        // Testimonial Modal Functions
-        addTestimonialBtn.addEventListener('click', function() {
+        // Share Experience Modal
+        shareExperienceBtn.addEventListener('click', function() {
             testimonialModal.style.display = 'flex';
         });
         
@@ -979,6 +1133,8 @@
             ratingStars.forEach(star => star.classList.remove('selected'));
             ratingStars[4].classList.add('selected');
             testimonialRating.value = '5';
+            ratingText.textContent = ratingDescriptions[5];
+            charCount.textContent = '0/500';
         }
         
         // Rating stars interaction
@@ -997,11 +1153,25 @@
                 
                 // Update hidden input value
                 testimonialRating.value = rating;
+                
+                // Update rating text
+                ratingText.textContent = ratingDescriptions[rating];
             });
         });
         
-        // Initialize with 5 stars selected
-        ratingStars[4].classList.add('selected');
+        // Character count for testimonial text
+        testimonialText.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = `${length}/500`;
+            
+            if (length > 500) {
+                charCount.style.color = '#e74c3c';
+            } else if (length > 400) {
+                charCount.style.color = '#f39c12';
+            } else {
+                charCount.style.color = '#888';
+            }
+        });
         
         // Form submission
         testimonialForm.addEventListener('submit', function(e) {
@@ -1009,21 +1179,47 @@
             
             // Get form values
             const name = document.getElementById('testimonialName').value;
-            const email = document.getElementById('testimonialEmail').value;
+            const location = document.getElementById('testimonialLocation').value;
             const event = document.getElementById('testimonialEvent').value;
-            const rating = testimonialRating.value;
+            const rating = parseInt(testimonialRating.value);
             const text = document.getElementById('testimonialText').value;
             
+            // Validate minimum length
+            if (text.length < 50) {
+                alert('Please write at least 50 characters about your experience.');
+                return;
+            }
+            
+            if (text.length > 500) {
+                alert('Please keep your review under 500 characters.');
+                return;
+            }
+            
             // In a real application, you would send this data to your server
-            // For now, we'll just show a success message
+            // For now, we'll simulate success
             
-            alert(`Thank you, ${name}! Your testimonial has been submitted.\n\nWe appreciate your feedback and may feature it on our website after review.`);
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
             
-            // Close modal and reset form
-            closeTestimonialModal();
-            
-            // You could also add the testimonial to the slideshow dynamically
-            // addTestimonialToSlideshow({name, email, event, rating, text});
+            // Simulate API call
+            setTimeout(() => {
+                // Success message
+                alert(`Thank you, ${name}! Your review has been submitted for moderation.\n\nWe'll review it and may feature it on our website soon.`);
+                
+                // Close modal
+                closeTestimonialModal();
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // In a real app, you would add the testimonial to the list
+                // after admin approval
+                
+            }, 1500);
         });
         
         // Close modal when clicking outside
@@ -1033,54 +1229,8 @@
             }
         });
         
-        // Function to dynamically add testimonials (for future use)
-        function addTestimonialToSlideshow(testimonialData) {
-            // This function would create a new testimonial card
-            // and add it to the slideshow
-            console.log('New testimonial:', testimonialData);
-            
-            // Example of how you could implement this:
-            /*
-            const newCard = document.createElement('div');
-            newCard.className = 'testimonial-card';
-            newCard.style.minWidth = '100%';
-            newCard.style.padding = '3rem';
-            newCard.style.display = 'flex';
-            newCard.style.flexDirection = 'column';
-            newCard.style.justifyContent = 'center';
-            newCard.style.transition = 'transform 0.5s ease';
-            
-            newCard.innerHTML = `
-                <div style="display: flex; align-items: center; margin-bottom: 2rem;">
-                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0;"></div>
-                    <div>
-                        <h3 style="margin: 0 0 5px 0; color: #333; font-size: 1.3rem;">${testimonialData.name}</h3>
-                        <p style="margin: 0; color: #666; font-size: 0.9rem;">Attendee • ${testimonialData.event}</p>
-                        <div style="display: flex; margin-top: 5px;">
-                            ${'<span style="color: #FFD700; font-size: 1.2rem;">★</span>'.repeat(testimonialData.rating)}
-                        </div>
-                    </div>
-                </div>
-                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; font-style: italic; margin: 0; position: relative; padding-left: 1.5rem;">
-                    <span style="position: absolute; left: 0; top: -10px; color: #1176d6; font-size: 2rem; font-family: Georgia, serif;">"</span>
-                    ${testimonialData.text}
-                </p>
-            `;
-            
-            testimonialsContainer.appendChild(newCard);
-            
-            // Add new dot
-            const dotsContainer = document.querySelector('.dots-container');
-            const newDot = document.createElement('button');
-            newDot.className = 'dot';
-            newDot.setAttribute('data-index', totalTestimonials);
-            newDot.style.cssText = 'width: 12px; height: 12px; border-radius: 50%; border: none; background: #ddd; cursor: pointer; transition: background 0.3s;';
-            dotsContainer.appendChild(newDot);
-            
-            // Update total count and reinitialize event listeners
-            totalTestimonials++;
-            */
-        }
+        // Initialize with 5 stars selected
+        ratingStars[4].classList.add('selected');
     });
 </script>
     </section>
