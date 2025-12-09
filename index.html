@@ -2025,18 +2025,10 @@
                 
                 <div style="display: flex; flex-direction: column; gap: 1rem;">
                     <div style="display: flex; justify-content: space-between; padding-bottom: 0.8rem; border-bottom: 1px solid #eee;">
-                        <span style="color: #555; font-weight: 500;">Monday - Friday</span>
-                        <span style="color: #1176d6; font-weight: bold;">9:00 AM - 5:00 PM</span>
+                        <span style="color: #555; font-weight: 500;">sunday - saturday</span>
+                        <span style="color: #1176d6; font-weight: bold;">24/7</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; padding-bottom: 0.8rem; border-bottom: 1px solid #eee;">
-                        <span style="color: #555; font-weight: 500;">Saturday</span>
-                        <span style="color: #1176d6; font-weight: bold;">10:00 AM - 2:00 PM</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span style="color: #555; font-weight: 500;">Sunday</span>
-                        <span style="color: #888; font-weight: 500;">Closed</span>
-                    </div>
-                </div>
+                  
                 
                 <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
                     <p style="color: #666; font-size: 0.9rem; margin: 0;">
@@ -2493,6 +2485,26 @@
     <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeSuccessModal()">&times;</span>
+            <div id="ticketContainer">
+    <div class="ticket-template">
+        <div class="ticket-header">
+            <h2 style="color:#1176d6;margin:0">Night of Laughter</h2>
+            <div style="font-weight:bold;margin-top:8px">
+                Booking ID: <span id="bookingId"></span>
+            </div>
+        </div>
+
+        <div class="ticket-body">
+            <!-- Event, ticket type, customer details -->
+        </div>
+
+        <div class="ticket-qr">
+            <div id="qrcode-placeholder"></div>
+            <p style="margin-top:10px;color:#666;font-size:14px">Scan for verification</p>
+        </div>
+    </div>
+</div>
+
             
             <div style="text-align: center; padding: 20px;">
                 <div style="color: #28a745; font-size: 48px; margin-bottom: 20px;">✓</div>
