@@ -1234,6 +1234,634 @@
     });
 </script>
     </section>
+  <!-- FAQ / Q&A Section -->
+<section id="faqSection" style="padding: 5rem 5vw; background: #f8f9fa;">
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 1rem; color: #1176d6; position: relative; display: inline-block;">
+                <span style="position: relative; z-index: 2;">Frequently Asked Questions</span>
+                <span style="position: absolute; bottom: 5px; left: 0; width: 100%; height: 8px; background: rgba(17, 118, 214, 0.2); z-index: 1;"></span>
+            </h2>
+            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 1rem auto 2rem;">
+                Find quick answers to common questions about Night of Laughter events
+            </p>
+        </div>
+
+        <!-- FAQ Categories -->
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
+            <button class="faq-category active" data-category="all" style="background: #1176d6; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                All Questions
+            </button>
+            <button class="faq-category" data-category="tickets" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                Tickets
+            </button>
+            <button class="faq-category" data-category="events" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                Events
+            </button>
+            <button class="faq-category" data-category="booking" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                Booking
+            </button>
+            <button class="faq-category" data-category="general" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                General
+            </button>
+        </div>
+
+        <!-- FAQ Items Container -->
+        <div id="faqContainer" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem;">
+            
+            <!-- FAQ Item 1 -->
+            <div class="faq-item" data-category="tickets" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
+                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
+                    <span>1. Is there a way to get tickets online instead of waiting for delivery?</span>
+                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                </button>
+                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
+                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
+                        <p><strong>Yes, absolutely!</strong> We offer instant digital tickets through our website. Simply visit <a href="https://night-of-laughter.com" style="color: #1176d6; font-weight: bold; text-decoration: none;">night-of-laughter.com</a>, select your event, choose your tickets, and complete the payment. Your digital tickets will be available immediately for download.</p>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-top: 1rem; background: #f0f7ff; padding: 1rem; border-radius: 8px;">
+                            <span style="font-size: 1.5rem; color: #1176d6;">⚡</span>
+                            <div>
+                                <strong style="color: #333;">Benefits of Digital Tickets:</strong>
+                                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; color: #666;">
+                                    <li>Instant delivery - no waiting</li>
+                                    <li>No physical delivery fees</li>
+                                    <li>Easy to store on your phone</li>
+                                    <li>Environmentally friendly</li>
+                                    <li>QR code for quick entry</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="faq-item" data-category="events" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
+                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
+                    <span>2. Can other comedians have events posted on the Night of Laughter website?</span>
+                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                </button>
+                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
+                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
+                        <p><strong>Yes, they can!</strong> We welcome collaborations with comedians across Zambia and beyond. If you're a comedian interested in hosting an event through our platform, please get in touch with our team.</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #333; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="color: #1176d6;">📧</span>
+                                    Email Us
+                                </h4>
+                                <p style="margin: 0; color: #666;">
+                                    Send your proposal to:<br>
+                                    <a href="mailto:bookings@nightoflaughter.com" style="color: #1176d6; font-weight: bold;">bookings@nightoflaughter.com</a>
+                                </p>
+                            </div>
+                            
+                            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #333; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="color: #1176d6;">📱</span>
+                                    Call/WhatsApp
+                                </h4>
+                                <p style="margin: 0; color: #666;">
+                                    Contact our bookings team:<br>
+                                    <a href="tel:+260973299759" style="color: #1176d6; font-weight: bold;">+260 973 299 759</a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
+                            <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32; display: flex; align-items: center; gap: 0.5rem;">
+                                <span>🎭</span>
+                                What We Offer Comedians
+                            </h4>
+                            <ul style="margin: 0; padding-left: 1.2rem; color: #666;">
+                                <li>Professional event promotion</li>
+                                <li>Digital ticketing system</li>
+                                <li>Venue booking assistance</li>
+                                <li>Marketing support</li>
+                                <li>Payment processing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="faq-item" data-category="tickets" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
+                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
+                    <span>3. What payment methods do you accept for tickets?</span>
+                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                </button>
+                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
+                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
+                        <p>We accept various payment methods to make ticket purchasing convenient for everyone:</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 1.5rem; color: #1176d6;">💳</span>
+                                <div>
+                                    <strong style="color: #333;">Card Payments</strong>
+                                    <p style="margin: 0.2rem 0 0 0; color: #666; font-size: 0.9rem;">Visa, Mastercard, UnionPay</p>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 1.5rem; color: #1176d6;">🤝</span>
+                                <div>
+                                    <strong style="color: #333;">Mobile Money</strong>
+                                    <p style="margin: 0.2rem 0 0 0; color: #666; font-size: 0.9rem;">Zamtel Kwacha, MTN, Airtel Money</p>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 1.5rem; color: #1176d6;">💬</span>
+                                <div>
+                                    <strong style="color: #333;">WhatsApp Payments</strong>
+                                    <p style="margin: 0.2rem 0 0 0; color: #666; font-size: 0.9rem;">Via our WhatsApp business</p>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <span style="font-size: 1.5rem; color: #1176d6;">🏦</span>
+                                <div>
+                                    <strong style="color: #333;">Bank Transfer</strong>
+                                    <p style="margin: 0.2rem 0 0 0; color: #666; font-size: 0.9rem;">Direct bank deposits</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #fff3e0; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                            <p style="margin: 0; color: #e65100; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+                                <span>🔒</span>
+                                All payments are processed securely through our encrypted payment gateway.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="faq-item" data-category="booking" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
+                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
+                    <span>4. Can I get a refund if I can't attend an event?</span>
+                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                </button>
+                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
+                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
+                        <p><strong>Our refund policy is as follows:</strong></p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+                            <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32;">✅ Full Refund</h4>
+                                <ul style="margin: 0; padding-left: 1.2rem; color: #666;">
+                                    <li>Event cancellation by organizers</li>
+                                    <li>Date changes you can't attend</li>
+                                    <li>Within 24 hours of purchase</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="background: #ffebee; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #c62828;">❌ No Refund</h4>
+                                <ul style="margin: 0; padding-left: 1.2rem; color: #666;">
+                                    <li>Change of mind</li>
+                                    <li>Personal schedule conflicts</li>
+                                    <li>Last-minute cancellations</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                            <h4 style="margin: 0 0 0.5rem 0; color: #1565c0;">🔄 Ticket Transfer Option</h4>
+                            <p style="margin: 0; color: #666;">
+                                If you can't attend, you can transfer your ticket to someone else! Contact us at least 24 hours before the event, and we'll help transfer the ticket to another person's name.
+                            </p>
+                            <button style="margin-top: 1rem; background: #1565c0; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
+                                Request Ticket Transfer
+                            </button>
+                        </div>
+                        
+                        <p style="margin-top: 1.5rem; color: #666; font-size: 0.9rem;">
+                            For refund requests, please email <a href="mailto:support@nightoflaughter.com" style="color: #1176d6;">support@nightoflaughter.com</a> with your booking reference.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="faq-item" data-category="general" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
+                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
+                    <span>5. Are your events suitable for all ages?</span>
+                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                </button>
+                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
+                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
+                        <p>We host different types of events suitable for various age groups:</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                            <div style="background: #f3e5f5; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #7b1fa2; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span>👨‍👩‍👧‍👦</span>
+                                    Family-Friendly
+                                </h4>
+                                <p style="margin: 0; color: #666;">
+                                    Selected afternoon shows with clean comedy suitable for all ages
+                                </p>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="color: #4caf50; font-weight: bold;">✓</span>
+                                    <span style="color: #666; font-size: 0.9rem;">Ages 8+ welcome</span>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span>🎓</span>
+                                    Teen & Adult
+                                </h4>
+                                <p style="margin: 0; color: #666;">
+                                    Evening shows suitable for ages 16+ with some mature content
+                                </p>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="color: #ff9800; font-weight: bold;">16+</span>
+                                    <span style="color: #666; font-size: 0.9rem;">Parental guidance suggested</span>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #fff3e0; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #ef6c00; display: flex; align-items: center; gap: 0.5rem;">
+                                    <span>🎭</span>
+                                    Adults Only
+                                </h4>
+                                <p style="margin: 0; color: #666;">
+                                    Late night shows for ages 18+ with mature themes
+                                </p>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                                    <span style="color: #f44336; font-weight: bold;">18+</span>
+                                    <span style="color: #666; font-size: 0.9rem;">Strict age enforcement</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                            <h4 style="margin: 0 0 0.5rem 0; color: #1565c0;">ℹ️ How to Check Event Rating</h4>
+                            <p style="margin: 0; color: #666;">
+                                Each event page clearly indicates the age rating. Look for the age icon on the event card or check the event details page. We also include content warnings where appropriate.
+                            </p>
+                        </div>
+                        
+                        <p style="margin-top: 1.5rem; color: #666; font-size: 0.9rem;">
+                            <strong>Note:</strong> All attendees must present valid ID for 18+ events. Underage attendees will not be admitted to adult-only shows, and no refunds will be given.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Item 6 -->
+            <div class="faq-item" data-category="tickets" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
+                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
+                    <span>6. What should I do if I lose my digital ticket?</span>
+                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                </button>
+                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
+                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
+                        <p><strong>Don't worry! We can help you retrieve your ticket.</strong> Here's what to do:</p>
+                        
+                        <div style="display: flex; align-items: flex-start; gap: 1rem; background: #f0f7ff; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                            <span style="font-size: 2rem; color: #1176d6;">1</span>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; color: #333;">Check Your Email</h4>
+                                <p style="margin: 0; color: #666;">
+                                    Search your inbox for "Night of Laughter" or "Ticket Confirmation". All digital tickets are sent to your email address.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: flex-start; gap: 1rem; background: #f0f7ff; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                            <span style="font-size: 2rem; color: #1176d6;">2</span>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; color: #333;">Contact Support</h4>
+                                <p style="margin: 0; color: #666;">
+                                    Email us at <a href="mailto:support@nightoflaughter.com" style="color: #1176d6;">support@nightoflaughter.com</a> with:
+                                </p>
+                                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; color: #666;">
+                                    <li>Your full name</li>
+                                    <li>Event name and date</li>
+                                    <li>Email used for booking</li>
+                                    <li>Phone number if available</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: flex-start; gap: 1rem; background: #f0f7ff; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                            <span style="font-size: 2rem; color: #1176d6;">3</span>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; color: #333;">Visit the Venue</h4>
+                                <p style="margin: 0; color: #666;">
+                                    If you can't retrieve your ticket before the event, visit the venue's ticket desk with your ID and booking confirmation email (or phone number). We can look up your purchase.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+                            <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32;">💡 Pro Tips</h4>
+                            <ul style="margin: 0; padding-left: 1.2rem; color: #666;">
+                                <li>Save your ticket to your phone's wallet app</li>
+                                <li>Take a screenshot of the QR code</li>
+                                <li>Forward the confirmation email to a friend</li>
+                                <li>Save our support number: +260 973 299 759</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Still Have Questions? -->
+        <div style="text-align: center; margin-top: 4rem;">
+            <div style="background: linear-gradient(135deg, #1176d6 0%, #0d5bb5 100%); padding: 3rem; border-radius: 20px; color: white; max-width: 800px; margin: 0 auto;">
+                <h3 style="margin: 0 0 1rem 0; font-size: 1.8rem;">Still Have Questions?</h3>
+                <p style="margin: 0 0 2rem 0; opacity: 0.9; font-size: 1.1rem;">
+                    Can't find what you're looking for? Our team is here to help!
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#contactSection" style="background: white; color: #1176d6; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: transform 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>Contact Us</span>
+                        <span>→</span>
+                    </a>
+                    <a href="https://wa.me/260973299759" target="_blank" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>💬</span>
+                        <span>WhatsApp Chat</span>
+                    </a>
+                </div>
+                <p style="margin: 2rem 0 0 0; opacity: 0.8; font-size: 0.9rem;">
+                    Average response time: 1-2 hours during business hours
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* FAQ Animation Styles */
+    .faq-item.active {
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    }
+    
+    .faq-item.active .faq-question {
+        background: #f0f7ff !important;
+    }
+    
+    .faq-item.active .faq-icon {
+        transform: rotate(45deg) !important;
+    }
+    
+    .faq-item.active .faq-answer {
+        max-height: 1000px !important;
+        padding-bottom: 2rem !important;
+    }
+    
+    /* Category Button Styles */
+    .faq-category:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .faq-category.active {
+        border-color: #1176d6 !important;
+        box-shadow: 0 4px 10px rgba(17, 118, 214, 0.2);
+    }
+    
+    /* Question Hover Effect */
+    .faq-question:hover {
+        background: #f8f9fa !important;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .faq-question {
+            padding: 1.25rem 1.5rem !important;
+            font-size: 1rem !important;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem !important;
+        }
+        
+        .faq-answer > div {
+            padding: 0 0 1.5rem 0 !important;
+        }
+        
+        .faq-category {
+            padding: 0.6rem 1rem !important;
+            font-size: 0.8rem !important;
+        }
+        
+        #faqContainer {
+            gap: 0.75rem !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .faq-question {
+            padding: 1rem 1.25rem !important;
+        }
+        
+        .faq-question span:first-child {
+            padding-right: 1rem;
+        }
+        
+        .faq-answer > div {
+            padding: 0 0 1rem 0 !important;
+        }
+    }
+</style>
+
+<script>
+    // FAQ Section Script
+    document.addEventListener('DOMContentLoaded', function() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        const categoryButtons = document.querySelectorAll('.faq-category');
+        const faqContainer = document.getElementById('faqContainer');
+        
+        // Toggle FAQ item
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.closest('.faq-item');
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                faqItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // If it wasn't active, open it
+                if (!isActive) {
+                    item.classList.add('active');
+                    
+                    // Scroll into view if needed
+                    if (window.innerWidth < 768) {
+                        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+        });
+        
+        // Category filtering
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active category button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show/hide FAQ items based on category
+                faqItems.forEach(item => {
+                    const itemCategory = item.getAttribute('data-category');
+                    
+                    if (category === 'all' || itemCategory === category) {
+                        item.style.display = 'block';
+                        // Add slight delay for animation
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(10px)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+                
+                // Close all items when switching categories
+                faqItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Scroll to top of FAQ section on mobile
+                if (window.innerWidth < 768) {
+                    faqContainer.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Open first FAQ item by default
+        if (faqItems.length > 0) {
+            faqItems[0].classList.add('active');
+        }
+        
+        // Search functionality (optional enhancement)
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Search FAQs...';
+        searchInput.style.cssText = `
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 2rem auto;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        `;
+        
+        // Insert search after categories
+        const categoriesDiv = document.querySelector('.faq-category').parentElement;
+        categoriesDiv.parentElement.insertBefore(searchInput, categoriesDiv.nextSibling);
+        
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            if (searchTerm.length < 2) {
+                // Reset to current category view
+                const activeCategory = document.querySelector('.faq-category.active');
+                if (activeCategory) {
+                    activeCategory.click();
+                }
+                return;
+            }
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 10);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(10px)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+                
+                // Close all items during search
+                item.classList.remove('active');
+            });
+        });
+        
+        // Search input focus styles
+        searchInput.addEventListener('focus', function() {
+            this.style.borderColor = '#1176d6';
+            this.style.boxShadow = '0 0 0 3px rgba(17, 118, 214, 0.1)';
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            this.style.borderColor = '#ddd';
+            this.style.boxShadow = 'none';
+        });
+        
+        // Keyboard navigation for FAQ
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                const activeItems = Array.from(faqItems).filter(item => 
+                    getComputedStyle(item).display !== 'none'
+                );
+                
+                const currentIndex = activeItems.findIndex(item => 
+                    item.classList.contains('active')
+                );
+                
+                let nextIndex;
+                if (e.key === 'ArrowDown') {
+                    nextIndex = currentIndex < activeItems.length - 1 ? currentIndex + 1 : 0;
+                } else {
+                    nextIndex = currentIndex > 0 ? currentIndex - 1 : activeItems.length - 1;
+                }
+                
+                // Close current, open next
+                faqItems.forEach(item => item.classList.remove('active'));
+                if (activeItems[nextIndex]) {
+                    activeItems[nextIndex].classList.add('active');
+                    activeItems[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+        
+        // Smooth scroll for "Contact Us" button
+        document.querySelector('a[href="#contactSection"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetElement = document.querySelector('#contactSection');
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
     <section id="contactSection">
         <h2>Contact</h2>
        <!-- Contact Section -->
