@@ -2617,819 +2617,251 @@
         NIGHT OF LAUGHTER© 2025 • All Rights Reserved
     </footer>
 
-    <script>
-    // ============================================
-    // CONFIGURATION - EDIT THIS SECTION
-    // ============================================
+<script>
+// ============================================
+// CONFIGURATION
+// ============================================
+const SHEETDB_API_URL = "https://sheetdb.io/api/v1/datk69lw1162m";
+const ADMIN_PASSWORD = "nol2025";
+const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd69gVqCrIRoLYt56gaZN6ZUW_ZuwLFeIKnHAkUtqys4NSLaA/viewform?usp=header";
+
+// ============================================
+// ADMIN PANEL FUNCTIONS
+// ============================================
+function toggleAdminPanel() {
+    const panel = document.getElementById('adminPanel');
+    const password = prompt("Enter admin password:");
+    if (password === ADMIN_PASSWORD) {
+        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    } else if (password !== null) {
+        alert("Incorrect password");
+    }
+}
+
+function refreshEvents() {
+    document.getElementById('featuredLoader').style.display = 'block';
+    document.getElementById('eventsLoader').style.display = 'block';
+    const featuredSection = document.getElementById("featuredSection");
+    const eventsSection = document.getElementById("eventsSection");
+    featuredSection.innerHTML = '<div class="loader" id="featuredLoader"></div>';
+    eventsSection.innerHTML = '<div class="loader" id="eventsLoader"></div>';
+    fetchEvents();
+    alert('Events refreshed successfully!');
+}
+
+function openAddEventForm() {
+    document.getElementById('addEventModal').style.display = 'flex';
+    document.getElementById('adminPanel').style.display = 'none';
+}
+
+function closeAddEventModal() {
+    document.getElementById('addEventModal').style.display = 'none';
+    document.getElementById('addEventForm').reset();
+}
+
+function copyApiUrl() {
+    const apiUrlInput = document.getElementById('apiUrl');
+    apiUrlInput.value = SHEETDB_API_URL;
+    apiUrlInput.select();
+    apiUrlInput.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(SHEETDB_API_URL);
+    alert('API URL copied to clipboard!');
+}
+
+// ============================================
+// HELPER FUNCTIONS
+// ============================================
+function toggleDescription(id) {
+    const desc = document.getElementById(id);
+    if (desc) {
+        desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
+    }
+}
+
+function formatCurrency(amount) {
+    return 'K' + parseInt(amount).toLocaleString();
+}
+
+// ============================================
+// SIMPLE BUY TICKET FUNCTION
+// ============================================
+function buyTicket(eventData) {
+    // Direct redirect to Google Form
+    window.open(GOOGLE_FORM_URL, '_blank');
     
-    // Your SheetDB API URL - Replace with your actual URL
-    const SHEETDB_API_URL = "https://sheetdb.io/api/v1/datk69lw1162m";
-    
-    // Lipila Payment URL
-    const LIPILA_PAYMENT_URL = "https://dashboard.lipila.io/pay/?id=89D57F9F154F440";
-    
-    // Admin password (optional - for admin panel access)
-    const ADMIN_PASSWORD = "nol2025"; // Change this to your preferred password
+    // Optional: Show a quick message
+    alert(`Redirecting to booking form for: ${eventData.name}`);
+}
 
-    // ============================================
-    // GLOBAL VARIABLES
-    // ============================================
-    let currentEvent = null;
-    let currentStep = 1;
-    let ticketData = {
-        event: {},
-        ticketType: '',
-        quantity: 1,
-        price: 0,
-        customer: {},
-        bookingId: '',
-        paymentDate: ''
-    };
-
-    // ============================================
-    // ADMIN PANEL FUNCTIONS
-    // ============================================
-
-    function toggleAdminPanel() {
-        const panel = document.getElementById('adminPanel');
-        const password = prompt("Enter admin password:");
-        
-        if (password === ADMIN_PASSWORD) {
-            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-        } else if (password !== null) {
-            alert("Incorrect password");
+// ============================================
+// FETCH EVENTS FROM SHEETDB
+// ============================================
+async function fetchEvents() {
+    try {
+        const response = await fetch(SHEETDB_API_URL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    }
-
-    function refreshEvents() {
-        document.getElementById('featuredLoader').style.display = 'block';
-        document.getElementById('eventsLoader').style.display = 'block';
-        
-        const featuredSection = document.getElementById("featuredSection");
-        const eventsSection = document.getElementById("eventsSection");
-        
-        featuredSection.innerHTML = '<div class="loader" id="featuredLoader"></div>';
-        eventsSection.innerHTML = '<div class="loader" id="eventsLoader"></div>';
-        
-        fetchEvents();
-        alert('Events refreshed successfully!');
-    }
-
-    function openAddEventForm() {
-        document.getElementById('addEventModal').style.display = 'flex';
-        document.getElementById('adminPanel').style.display = 'none';
-    }
-
-    function closeAddEventModal() {
-        document.getElementById('addEventModal').style.display = 'none';
-        document.getElementById('addEventForm').reset();
-    }
-
-    function copyApiUrl() {
-        const apiUrlInput = document.getElementById('apiUrl');
-        apiUrlInput.value = SHEETDB_API_URL;
-        apiUrlInput.select();
-        apiUrlInput.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(SHEETDB_API_URL);
-        alert('API URL copied to clipboard!');
-    }
-
-    // Handle Add Event Form Submission
-    document.getElementById('addEventForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        // Collect form data
-        const eventData = {
-            name: document.getElementById('eventName').value,
-            type: document.getElementById('eventType').value,
-            date: document.getElementById('eventDate').value,
-            time: document.getElementById('eventTime').value,
-            venue: document.getElementById('eventVenue').value,
-            image: document.getElementById('eventImage').value,
-            description: document.getElementById('eventDescription').value,
-            vip_single: document.getElementById('vipSingle').value || '0',
-            vip_double: document.getElementById('vipDouble').value || '0',
-            ordinary_single: document.getElementById('ordinarySingle').value || '0',
-            ordinary_double: document.getElementById('ordinaryDouble').value || '0',
-            lineup: document.getElementById('eventLineup').value || '',
-            terms: document.getElementById('eventTerms').value || ''
-        };
-
-        try {
-            // Show loading state
-            const submitBtn = e.target.querySelector('.btn-pay');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Adding...';
-            submitBtn.disabled = true;
-
-            // Send data to SheetDB (POST request)
-            const response = await fetch(SHEETDB_API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ data: [eventData] })
-            });
-
-            if (response.ok) {
-                alert('Event added successfully!');
-                closeAddEventModal();
-                refreshEvents();
-            } else {
-                const errorData = await response.json();
-                alert(`Error adding event: ${errorData.error || 'Please check your SheetDB configuration.'}`);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error adding event. Please try again.');
-        } finally {
-            // Reset button state
-            const submitBtn = e.target.querySelector('.btn-pay');
-            submitBtn.textContent = 'Add Event to Sheet';
-            submitBtn.disabled = false;
-        }
-    });
-
-    // ============================================
-    // HELPER FUNCTIONS
-    // ============================================
-
-    // Toggle description
-    function toggleDescription(id) {
-        const desc = document.getElementById(id);
-        if (desc) {
-            desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
-        }
-    }
-
-    // Format currency
-    function formatCurrency(amount) {
-        return 'K' + parseInt(amount).toLocaleString();
-    }
-
-    // Generate booking ID
-    function generateBookingId() {
-        return 'NOL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-    }
-
-    // Show payment status
-    function showPaymentStatus(type, message) {
-        const banner = document.getElementById('paymentStatusBanner');
-        if (type === 'success') {
-            banner.innerHTML = `
-                <div class="payment-status payment-success">
-                    <strong>✓ ${message}</strong>
-                </div>
-            `;
+        const data = await response.json();
+        if (data && data.length > 0) {
+            renderEvents(data);
         } else {
-            banner.innerHTML = `
-                <div class="payment-status payment-failed">
-                    <strong>✗ ${message}</strong>
-                </div>
-            `;
+            showEmptyState();
         }
-        banner.style.display = 'block';
-        
-        // Auto-hide after 5 seconds
-        setTimeout(() => {
-            banner.style.display = 'none';
-        }, 5000);
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        showErrorState();
     }
+}
 
-    // ============================================
-    // FETCH EVENTS FROM SHEETDB
-    // ============================================
+function showEmptyState() {
+    const featuredSection = document.getElementById("featuredSection");
+    const eventsSection = document.getElementById("eventsSection");
+    
+    document.getElementById("featuredLoader").style.display = 'none';
+    document.getElementById("eventsLoader").style.display = 'none';
+    
+    featuredSection.innerHTML = `
+        <h2>Featured Events</h2>
+        <p style="text-align: center; color: #666; padding: 40px 0;">
+            No featured events yet. Use the admin panel (⚙️) to add events.
+        </p>
+    `;
+    
+    eventsSection.innerHTML = `
+        <h2>Upcoming Events</h2>
+        <p style="text-align: center; color: #666; padding: 40px 0;">
+            No upcoming events scheduled. Stay tuned!
+        </p>
+    `;
+}
 
-    async function fetchEvents() {
-        try {
-            console.log('Fetching events from SheetDB...');
-            
-            const response = await fetch(SHEETDB_API_URL);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            console.log('Events fetched:', data);
-            
-            if (data && data.length > 0) {
-                renderEvents(data);
-            } else {
-                // No data in SheetDB, show empty state
-                showEmptyState();
-            }
-        } catch (error) {
-            console.error('Error fetching events:', error);
-            showErrorState();
-        }
+function showErrorState() {
+    const featuredSection = document.getElementById("featuredSection");
+    const eventsSection = document.getElementById("eventsSection");
+    
+    document.getElementById("featuredLoader").style.display = 'none';
+    document.getElementById("eventsLoader").style.display = 'none';
+    
+    featuredSection.innerHTML = `
+        <h2>Featured Events</h2>
+        <div style="text-align: center; color: #666; padding: 40px 0;">
+            <p>Unable to load events. Please check:</p>
+            <p>1. Your SheetDB API URL is correct</p>
+            <p>2. Your Google Sheet is publicly accessible</p>
+            <p>3. You have internet connection</p>
+            <button onclick="refreshEvents()" style="margin-top: 20px; padding: 10px 20px; background: var(--blue); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Retry
+            </button>
+        </div>
+    `;
+    
+    eventsSection.innerHTML = '';
+}
+
+// ============================================
+// EVENT RENDERING
+// ============================================
+function renderEventCard(ev, idx) {
+    const moreId = `desc_${idx}`;
+    
+    return `<div class="event-card">
+        <div class="event-thumb">
+            <img src="${ev.image || 'https://via.placeholder.com/400x400?text=Event+Image'}" 
+                 loading="lazy" 
+                 alt="${ev.name || 'Event'}" 
+                 onerror="this.src='https://via.placeholder.com/400x400?text=Event+Image'">
+        </div>
+        <div class="event-content">
+            <div class="event-title">${ev.name || "Event Name"}</div>
+            <div><span class="info-label">Date:</span> ${ev.date || "TBA"}</div>
+            <div><span class="info-label">Time:</span> ${ev.time || "TBA"}</div>
+            <div><span class="info-label">Venue:</span> ${ev.venue || "TBA"}</div>
+            <div class="price-box">
+                <div><b>Ticket Prices:</b></div>
+                ${ev.vip_single && ev.vip_single !== '0' ? `<div>VIP Single: K${ev.vip_single}</div>` : ''}
+                ${ev.vip_double && ev.vip_double !== '0' ? `<div>VIP Double: K${ev.vip_double}</div>` : ''}
+                ${ev.ordinary_single && ev.ordinary_single !== '0' ? `<div>Ordinary Single: K${ev.ordinary_single}</div>` : ''}
+                ${ev.ordinary_double && ev.ordinary_double !== '0' ? `<div>Ordinary Double: K${ev.ordinary_double}</div>` : ''}
+            </div>
+            <div class="btn-row">
+                <button class="btn" onclick="buyTicket(${JSON.stringify(ev).replace(/"/g, '&quot;')})">
+                    Buy Ticket
+                </button>
+                <button class="btn info" onclick="toggleDescription('${moreId}')">
+                    More Info
+                </button>
+            </div>
+            <div id="${moreId}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #eee;">
+                <p><strong>Description:</strong> ${ev.description || ev.desc || "No description available."}</p>
+                ${ev.lineup ? `<p><strong>Lineup:</strong> ${ev.lineup}</p>` : ''}
+                ${ev.terms ? `<p><strong>Terms:</strong> ${ev.terms}</p>` : ''}
+            </div>
+        </div>
+    </div>`;
+}
+
+function renderEvents(eventsData) {
+    const featuredSection = document.getElementById("featuredSection");
+    const eventsSection = document.getElementById("eventsSection");
+    
+    document.getElementById("featuredLoader").style.display = 'none';
+    document.getElementById("eventsLoader").style.display = 'none';
+    
+    if (!eventsData || eventsData.length === 0) {
+        showEmptyState();
+        return;
     }
-
-    function showEmptyState() {
-        const featuredSection = document.getElementById("featuredSection");
-        const eventsSection = document.getElementById("eventsSection");
-        
-        document.getElementById("featuredLoader").style.display = 'none';
-        document.getElementById("eventsLoader").style.display = 'none';
-        
+    
+    const featured = eventsData.filter(ev => 
+        ev.type && ev.type.toLowerCase().includes('featured')
+    );
+    
+    const upcoming = eventsData.filter(ev => 
+        !ev.type || !ev.type.toLowerCase().includes('featured')
+    );
+    
+    if (featured.length > 0) {
+        featuredSection.innerHTML = `
+            <h2>Featured Events</h2>
+            <div class="event-list">
+                ${featured.map((ev, idx) => renderEventCard(ev, idx)).join('')}
+            </div>
+        `;
+    } else {
         featuredSection.innerHTML = `
             <h2>Featured Events</h2>
             <p style="text-align: center; color: #666; padding: 40px 0;">
-                No featured events yet. Use the admin panel (⚙️) to add events.
+                No featured events at the moment. Check back soon!
             </p>
         `;
-        
+    }
+    
+    if (upcoming.length > 0) {
+        eventsSection.innerHTML = `
+            <h2>Upcoming Events</h2>
+            <div class="event-list">
+                ${upcoming.map((ev, idx) => renderEventCard(ev, idx)).join('')}
+            </div>
+        `;
+    } else {
         eventsSection.innerHTML = `
             <h2>Upcoming Events</h2>
             <p style="text-align: center; color: #666; padding: 40px 0;">
-                No upcoming events scheduled. Stay tuned!
+                No upcoming events scheduled. Stay tuned for announcements!
             </p>
         `;
     }
+}
 
-    function showErrorState() {
-        const featuredSection = document.getElementById("featuredSection");
-        const eventsSection = document.getElementById("eventsSection");
-        
-        document.getElementById("featuredLoader").style.display = 'none';
-        document.getElementById("eventsLoader").style.display = 'none';
-        
-        featuredSection.innerHTML = `
-            <h2>Featured Events</h2>
-            <div style="text-align: center; color: #666; padding: 40px 0;">
-                <p>Unable to load events. Please check:</p>
-                <p>1. Your SheetDB API URL is correct</p>
-                <p>2. Your Google Sheet is publicly accessible</p>
-                <p>3. You have internet connection</p>
-                <button onclick="refreshEvents()" style="margin-top: 20px; padding: 10px 20px; background: var(--blue); color: white; border: none; border-radius: 5px; cursor: pointer;">
-                    Retry
-                </button>
-            </div>
-        `;
-        
-        eventsSection.innerHTML = '';
-    }
-
-    // ============================================
-    // EVENT RENDERING
-    // ============================================
-
-    // Render event card
-    function renderEventCard(ev, idx) {
-        const moreId = `desc_${idx}`;
-        
-        return `<div class="event-card">
-            <div class="event-thumb">
-                <img src="${ev.image || 'https://via.placeholder.com/400x400?text=Event+Image'}" 
-                     loading="lazy" 
-                     alt="${ev.name || 'Event'}" 
-                     onerror="this.src='https://via.placeholder.com/400x400?text=Event+Image'">
-            </div>
-            <div class="event-content">
-                <div class="event-title">${ev.name || "Event Name"}</div>
-                <div><span class="info-label">Date:</span> ${ev.date || "TBA"}</div>
-                <div><span class="info-label">Time:</span> ${ev.time || "TBA"}</div>
-                <div><span class="info-label">Venue:</span> ${ev.venue || "TBA"}</div>
-                <div class="price-box">
-                    <div><b>Ticket Prices:</b></div>
-                    ${ev.vip_single && ev.vip_single !== '0' ? `<div>VIP Single: K${ev.vip_single}</div>` : ''}
-                    ${ev.vip_double && ev.vip_double !== '0' ? `<div>VIP Double: K${ev.vip_double}</div>` : ''}
-                    ${ev.ordinary_single && ev.ordinary_single !== '0' ? `<div>Ordinary Single: K${ev.ordinary_single}</div>` : ''}
-                    ${ev.ordinary_double && ev.ordinary_double !== '0' ? `<div>Ordinary Double: K${ev.ordinary_double}</div>` : ''}
-                </div>
-                <div class="btn-row">
-                    <button class="btn" onclick="openTicketModal(${JSON.stringify(ev).replace(/"/g, '&quot;').replace(/'/g, "\\'")})">
-                        Buy Ticket
-                    </button>
-                    <button class="btn info" onclick="toggleDescription('${moreId}')">
-                        More Info
-                    </button>
-                </div>
-                <div id="${moreId}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #eee;">
-                    <p><strong>Description:</strong> ${ev.description || ev.desc || "No description available."}</p>
-                    ${ev.lineup ? `<p><strong>Lineup:</strong> ${ev.lineup}</p>` : ''}
-                    ${ev.terms ? `<p><strong>Terms:</strong> ${ev.terms}</p>` : ''}
-                </div>
-            </div>
-        </div>`;
-    }
-
-    // Render all events
-    function renderEvents(eventsData) {
-        const featuredSection = document.getElementById("featuredSection");
-        const eventsSection = document.getElementById("eventsSection");
-        
-        // Hide loaders
-        document.getElementById("featuredLoader").style.display = 'none';
-        document.getElementById("eventsLoader").style.display = 'none';
-        
-        if (!eventsData || eventsData.length === 0) {
-            showEmptyState();
-            return;
-        }
-        
-        // Filter featured events
-        const featured = eventsData.filter(ev => 
-            ev.type && ev.type.toLowerCase().includes('featured')
-        );
-        
-        // Filter upcoming events
-        const upcoming = eventsData.filter(ev => 
-            !ev.type || !ev.type.toLowerCase().includes('featured')
-        );
-        
-        // Render featured events
-        if (featured.length > 0) {
-            featuredSection.innerHTML = `
-                <h2>Featured Events</h2>
-                <div class="event-list">
-                    ${featured.map((ev, idx) => renderEventCard(ev, idx)).join('')}
-                </div>
-            `;
-        } else {
-            featuredSection.innerHTML = `
-                <h2>Featured Events</h2>
-                <p style="text-align: center; color: #666; padding: 40px 0;">
-                    No featured events at the moment. Check back soon!
-                </p>
-            `;
-        }
-        
-        // Render upcoming events
-        if (upcoming.length > 0) {
-            eventsSection.innerHTML = `
-                <h2>Upcoming Events</h2>
-                <div class="event-list">
-                    ${upcoming.map((ev, idx) => renderEventCard(ev, idx)).join('')}
-                </div>
-            `;
-        } else {
-            eventsSection.innerHTML = `
-                <h2>Upcoming Events</h2>
-                <p style="text-align: center; color: #666; padding: 40px 0;">
-                    No upcoming events scheduled. Stay tuned for announcements!
-                </p>
-            `;
-        }
-    }
-
-    // ============================================
-    // TICKET PURCHASE FLOW
-    // ============================================
-
-    // Open ticket modal
-    function openTicketModal(eventData) {
-        currentEvent = eventData;
-        ticketData.event = eventData;
-        currentStep = 1;
-        
-        // Reset form
-        document.getElementById('ticketType').value = '';
-        document.getElementById('ticketQuantity').value = '1';
-        document.getElementById('fullName').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('phone').value = '';
-        
-        // Update event name
-        document.getElementById('modalEventName').textContent = eventData.name;
-        
-        // Reset price display
-        document.getElementById('priceDisplay').style.display = 'none';
-        
-        // Show step 1
-        showStep(1);
-        
-        // Open modal
-        document.getElementById('ticketModal').style.display = 'flex';
-    }
-
-    // Show specific step
-    function showStep(step) {
-        // Hide all steps
-        document.querySelectorAll('.modal-step').forEach(el => {
-            el.classList.remove('active');
-        });
-        
-        // Show requested step
-        document.getElementById(`step${step}`).classList.add('active');
-        currentStep = step;
-        
-        // Update ticket type price when step 1 is shown
-        if (step === 1) {
-            setupTicketTypeListeners();
-        }
-    }
-
-    // Setup ticket type listeners
-    function setupTicketTypeListeners() {
-        const ticketTypeSelect = document.getElementById('ticketType');
-        const quantitySelect = document.getElementById('ticketQuantity');
-        const priceDisplay = document.getElementById('priceDisplay');
-        const totalPrice = document.getElementById('totalPrice');
-        
-        function updatePrice() {
-            const ticketType = ticketTypeSelect.value;
-            const quantity = parseInt(quantitySelect.value);
-            
-            if (!ticketType || !currentEvent) {
-                priceDisplay.style.display = 'none';
-                return;
-            }
-            
-            let pricePerTicket = 0;
-            switch(ticketType) {
-                case 'vip_single':
-                    pricePerTicket = parseInt(currentEvent.vip_single) || 0;
-                    break;
-                case 'vip_double':
-                    pricePerTicket = parseInt(currentEvent.vip_double) || 0;
-                    break;
-                case 'ordinary_single':
-                    pricePerTicket = parseInt(currentEvent.ordinary_single) || 0;
-                    break;
-                case 'ordinary_double':
-                    pricePerTicket = parseInt(currentEvent.ordinary_double) || 0;
-                    break;
-            }
-            
-            if (pricePerTicket === 0) {
-                alert('This ticket type is not available for this event.');
-                ticketTypeSelect.value = '';
-                priceDisplay.style.display = 'none';
-                return;
-            }
-            
-            const total = pricePerTicket * quantity;
-            ticketData.price = total;
-            ticketData.ticketType = ticketType;
-            ticketData.quantity = quantity;
-            
-            totalPrice.textContent = formatCurrency(total);
-            priceDisplay.style.display = 'block';
-        }
-        
-        ticketTypeSelect.addEventListener('change', updatePrice);
-        quantitySelect.addEventListener('change', updatePrice);
-        
-        // Initial price calculation if already selected
-        if (ticketTypeSelect.value) {
-            updatePrice();
-        }
-    }
-
-    // Next step
-    function nextStep(current) {
-        if (current === 1) {
-            const ticketType = document.getElementById('ticketType').value;
-            const quantity = parseInt(document.getElementById('ticketQuantity').value);
-            
-            if (!ticketType) {
-                alert('Please select a ticket type');
-                return;
-            }
-            
-            // Check if ticket price is available
-            let pricePerTicket = 0;
-            switch(ticketType) {
-                case 'vip_single':
-                    pricePerTicket = parseInt(currentEvent.vip_single) || 0;
-                    break;
-                case 'vip_double':
-                    pricePerTicket = parseInt(currentEvent.vip_double) || 0;
-                    break;
-                case 'ordinary_single':
-                    pricePerTicket = parseInt(currentEvent.ordinary_single) || 0;
-                    break;
-                case 'ordinary_double':
-                    pricePerTicket = parseInt(currentEvent.ordinary_double) || 0;
-                    break;
-            }
-            
-            if (pricePerTicket === 0) {
-                alert('This ticket type is not available. Please select another option.');
-                return;
-            }
-            
-            if (pricePerTicket * quantity === 0) {
-                alert('Please select a valid ticket type and quantity.');
-                return;
-            }
-            
-            showStep(2);
-        } else if (current === 2) {
-            const fullName = document.getElementById('fullName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            
-            if (!fullName) {
-                alert('Please enter your full name');
-                return;
-            }
-            
-            if (!email) {
-                alert('Please enter your email address');
-                return;
-            }
-            
-            // Simple email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address');
-                return;
-            }
-            
-            if (!phone) {
-                alert('Please enter your phone number');
-                return;
-            }
-            
-            ticketData.customer = {
-                name: fullName,
-                email: email,
-                phone: phone
-            };
-            
-            updateConfirmation();
-            showStep(3);
-        }
-    }
-
-    // Previous step
-    function prevStep(current) {
-        showStep(current - 1);
-    }
-
-    // Update confirmation display
-    function updateConfirmation() {
-        document.getElementById('confirmEvent').textContent = currentEvent.name;
-        
-        let ticketTypeText = '';
-        switch(ticketData.ticketType) {
-            case 'vip_single': ticketTypeText = 'VIP Single'; break;
-            case 'vip_double': ticketTypeText = 'VIP Double'; break;
-            case 'ordinary_single': ticketTypeText = 'Ordinary Single'; break;
-            case 'ordinary_double': ticketTypeText = 'Ordinary Double'; break;
-        }
-        
-        document.getElementById('confirmTicketType').textContent = ticketTypeText;
-        document.getElementById('confirmQuantity').textContent = ticketData.quantity;
-        document.getElementById('confirmPrice').textContent = formatCurrency(ticketData.price);
-        document.getElementById('confirmName').textContent = ticketData.customer.name;
-        document.getElementById('confirmEmail').textContent = ticketData.customer.email;
-        document.getElementById('confirmPhone').textContent = ticketData.customer.phone;
-    }
-
-    // Proceed to payment
-    function proceedToPayment() {
-        ticketData.bookingId = generateBookingId();
-        ticketData.paymentDate = new Date().toLocaleDateString('en-US', {
-            year: 'numeric', month: 'long', day: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-        });
-        
-        // Save data for after payment
-        localStorage.setItem('lastTicketData', JSON.stringify(ticketData));
-        localStorage.setItem('lastEventData', JSON.stringify(currentEvent));
-        
-        // Create payment data
-        const paymentData = {
-            amount: ticketData.price,
-            event: currentEvent.name,
-            ticketType: ticketData.ticketType,
-            quantity: ticketData.quantity,
-            customerName: ticketData.customer.name,
-            customerEmail: ticketData.customer.email,
-            customerPhone: ticketData.customer.phone,
-            bookingId: ticketData.bookingId
-        };
-        
-        // Redirect to payment gateway
-        const encodedData = encodeURIComponent(JSON.stringify(paymentData));
-        const callbackUrl = encodeURIComponent(window.location.origin + window.location.pathname + '?payment_callback=true');
-        const paymentUrl = `${LIPILA_PAYMENT_URL}&data=${encodedData}&callback=${callbackUrl}`;
-        
-        closeModal();
-        window.location.href = paymentUrl;
-    }
-
-    // Check for payment status on page load
-    function checkPaymentStatus() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const paymentCallback = urlParams.get('payment_callback');
-        
-        if (paymentCallback === 'true') {
-            // Simulate payment success (in real implementation, verify with your payment gateway)
-            setTimeout(() => {
-                showSuccessModal();
-                // Clean URL
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }, 1000);
-        }
-    }
-
-    // Show success modal with ticket
-    function showSuccessModal() {
-        const savedTicketData = localStorage.getItem('lastTicketData');
-        const savedEventData = localStorage.getItem('lastEventData');
-        
-        if (savedTicketData && savedEventData) {
-            ticketData = JSON.parse(savedTicketData);
-            currentEvent = JSON.parse(savedEventData);
-            generateTicket();
-            document.getElementById('successModal').style.display = 'flex';
-            
-            // Show payment success banner
-            showPaymentStatus('success', 'Payment successful! Your ticket is ready.');
-        } else {
-            // For demo purposes, create dummy data
-            ticketData = {
-                event: { name: "ZED Laugh Festival", date: "March 15, 2025", time: "6:00 PM", venue: "Lusaka Playhouse" },
-                ticketType: 'vip_single',
-                quantity: 1,
-                price: 500,
-                customer: { name: "Demo User", email: "demo@example.com", phone: "+260-123456789" },
-                bookingId: generateBookingId(),
-                paymentDate: new Date().toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric',
-                    hour: '2-digit', minute: '2-digit'
-                })
-            };
-            currentEvent = ticketData.event;
-            generateTicket();
-            document.getElementById('successModal').style.display = 'flex';
-            showPaymentStatus('success', 'Payment successful! Your ticket is ready.');
-        }
-    }
-
-    // Generate ticket HTML
-    function generateTicket() {
-        const container = document.getElementById('ticketContainer');
-        const qrData = JSON.stringify({
-            bookingId: ticketData.bookingId,
-            event: ticketData.event.name,
-            customer: ticketData.customer.name,
-            ticketType: ticketData.ticketType,
-            quantity: ticketData.quantity,
-            amount: ticketData.price
-        });
-        
-        const ticketHTML = `
-            <div class="ticket-template">
-                <div class="ticket-header">
-                    <h2>NIGHT OF LAUGHTER</h2>
-                    <p style="color: #666; margin: 5px 0;">E-Ticket & Receipt</p>
-                </div>
-                <div class="ticket-body">
-                    <div class="ticket-row"><span class="ticket-label">Booking ID:</span><span class="ticket-value">${ticketData.bookingId}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Event:</span><span class="ticket-value">${ticketData.event.name}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Date:</span><span class="ticket-value">${ticketData.event.date}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Time:</span><span class="ticket-value">${ticketData.event.time}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Venue:</span><span class="ticket-value">${ticketData.event.venue}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Ticket Type:</span><span class="ticket-value">${ticketData.ticketType.replace('_', ' ').toUpperCase()}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Quantity:</span><span class="ticket-value">${ticketData.quantity}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Customer:</span><span class="ticket-value">${ticketData.customer.name}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Email:</span><span class="ticket-value">${ticketData.customer.email}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Phone:</span><span class="ticket-value">${ticketData.customer.phone}</span></div>
-                    <div class="ticket-row"><span class="ticket-label">Payment Date:</span><span class="ticket-value">${ticketData.paymentDate}</span></div>
-                    <div class="ticket-row" style="font-weight: bold; font-size: 1.1em;"><span class="ticket-label">Amount Paid:</span><span class="ticket-value">${formatCurrency(ticketData.price)}</span></div>
-                </div>
-                <div class="ticket-qr"><div id="qrcode"></div><p style="margin-top: 10px; color: #666; font-size: 14px;">Scan for verification</p></div>
-                <div class="ticket-footer"><p>Present this ticket at the entrance</p><p>Terms & Conditions apply • No refunds</p></div>
-            </div>
-        `;
-        
-        container.innerHTML = ticketHTML;
-        
-        // Generate QR code
-        setTimeout(() => {
-            if (typeof QRCode !== 'undefined') {
-                new QRCode(document.getElementById("qrcode"), {
-                    text: qrData,
-                    width: 120,
-                    height: 120,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-            } else {
-                console.error('QRCode library not loaded');
-            }
-        }, 100);
-    }
-
-    // Download ticket as PNG
-    function downloadTicket() {
-        if (typeof html2canvas === 'undefined') {
-            alert('Download feature requires html2canvas library. Please try printing instead.');
-            return;
-        }
-        
-        const ticketElement = document.querySelector('.ticket-template');
-        html2canvas(ticketElement, { 
-            scale: 2, 
-            useCORS: true, 
-            logging: false,
-            backgroundColor: '#ffffff'
-        })
-        .then(canvas => {
-            const link = document.createElement('a');
-            link.download = `NOL-Ticket-${ticketData.bookingId}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            showPaymentStatus('success', 'Ticket downloaded successfully!');
-        })
-        .catch(error => {
-            console.error('Error downloading ticket:', error);
-            alert('Error downloading ticket. Please try printing instead.');
-        });
-    }
-
-    // Print ticket
-    function printTicket() {
-        const ticketElement = document.querySelector('.ticket-template');
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Night of Laughter Ticket - ${ticketData.bookingId}</title>
-                <style>
-                    body { font-family: Arial, sans-serif; padding: 20px; }
-                    .ticket { border: 2px solid #333; padding: 20px; max-width: 400px; margin: 0 auto; }
-                    .ticket-header { text-align: center; border-bottom: 2px dashed #333; padding-bottom: 15px; margin-bottom: 20px; }
-                    .ticket-row { display: flex; justify-content: space-between; margin-bottom: 8px; padding: 8px 0; border-bottom: 1px dashed #ddd; }
-                    .ticket-label { font-weight: bold; }
-                    @media print { 
-                        body { margin: 0; padding: 10px; } 
-                        button { display: none; }
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="ticket">
-                    ${ticketElement.innerHTML}
-                </div>
-                <script>
-                    window.onload = function() {
-                        window.print();
-                        setTimeout(function() { window.close(); }, 1000);
-                    }
-                </\script>
+// ============================================
+// INITIALIZE APPLICATION
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('apiUrl').value = SHEETDB_API_URL;
+    fetchEvents();
+});
+</script>
             </body>
             </html>
-        `);
-        printWindow.document.close();
-    }
-
-    // Close modals
-    function closeModal() { 
-        document.getElementById('ticketModal').style.display = 'none'; 
-        currentEvent = null;
-        currentStep = 1;
-    }
-    
-    function closeSuccessModal() { 
-        document.getElementById('successModal').style.display = 'none';
-        ticketData = { event: {}, ticketType: '', quantity: 1, price: 0, customer: {}, bookingId: '', paymentDate: '' };
-        currentEvent = null;
-    }
-
-    // ============================================
-    // INITIALIZE APPLICATION
-    // ============================================
-
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("Page loaded. Initializing...");
         
-        // Set API URL in admin panel
-        document.getElementById('apiUrl').value = SHEETDB_API_URL;
-        
-        // Fetch events from SheetDB
-        fetchEvents();
-        
-        // Check for payment status
-        checkPaymentStatus();
-        
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target === document.getElementById('ticketModal')) closeModal();
-            if (event.target === document.getElementById('successModal')) closeSuccessModal();
-            if (event.target === document.getElementById('addEventModal')) closeAddEventModal();
-        };
-        
-        // Initialize QR code library
-        if (typeof QRCode === 'undefined') {
-            console.warn('QRCode library not loaded. Ticket QR codes will not work.');
-        }
-        
-        // Initialize html2canvas
-        if (typeof html2canvas === 'undefined') {
-            console.warn('html2canvas library not loaded. Ticket downloads will not work.');
-        }
-    });
-    </script>
-    
-    <!-- html2canvas for ticket download -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-</body>
-</html>
