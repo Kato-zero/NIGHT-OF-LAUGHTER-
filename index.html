@@ -10,6 +10,7 @@
     <meta name="description" content="Night of Laughter is Zambia's premier comedy platform featuring top stand-up comedians like Chingliz, Ba Emma, Smoke, Juss, Rhema, and Bob Nkosha. Buy instant digital tickets for featured and upcoming comedy events in Lusaka and beyond.">
     <meta name="keywords" content="Night of Laughter, Zambia comedy event, stand-up comedy Zambia, ZED Laugh Festival, comedy shows Lusaka, Chingliz, Ba Emma, Smoke, Juss">
     <meta name="author" content="Night of Laughter Event Team">
+    
     <style>
         :root {
             --blue: #007bff;
@@ -26,6 +27,7 @@
             font-family: system-ui, Arial, sans-serif;
             background: var(--gray-bg);
             color: var(--black);
+            scroll-behavior: smooth;
         }
         header{
             width: 100%;
@@ -66,13 +68,23 @@
         }
         .hero h1{ color: var(--white); font-size: 2.5rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,.3);}
         .hero p{ color: #eee; font-size: 1.15rem; margin-bottom: 18px; text-shadow: 0 2px 6px rgba(0,0,0,0.4);}
-        .featured, .events, #testimonialsSection, #contactSection { width: 100%; padding: 2rem 5vw 0 5vw; box-sizing: border-box; }
-
-        .featured h2, .events h2, #testimonialsSection h2, #contactSection h2 {
-            font-size: 1.6rem; margin-bottom: 20px;
+        
+        /* Main content sections */
+        .featured, .events, .section-content { 
+            width: 100%; 
+            padding: 2rem 5vw 0 5vw; 
+            box-sizing: border-box; 
         }
-        .event-list { display: flex; flex-wrap: wrap; gap: 2vw; justify-content: center; }
-
+        .featured h2, .events h2, .section-title {
+            font-size: 1.6rem; 
+            margin-bottom: 20px;
+        }
+        .event-list { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 2vw; 
+            justify-content: center; 
+        }
         .event-card {
             width: 100%;
             max-width: 370px;
@@ -85,7 +97,9 @@
             flex-direction: column;
             transition: box-shadow .13s;
         }
-        .event-card:hover { box-shadow: 0 4px 16px rgba(17,118,214,0.11);}
+        .event-card:hover { 
+            box-shadow: 0 4px 16px rgba(17,118,214,0.11);
+        }
         .event-thumb {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -105,10 +119,14 @@
             padding: 15px;
             flex: 1;
             line-height: 1.6;
-            display: flex; flex-direction: column; justify-content: flex-start;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-start;
         }
         .event-title{
-            font-size: 1.2rem; font-weight: bold; margin-bottom: 6px;
+            font-size: 1.2rem; 
+            font-weight: bold; 
+            margin-bottom: 6px;
         }
         .info-label{ font-weight: bold;}
         .price-box {
@@ -119,7 +137,12 @@
             font-size: 0.97em;
         }
         .btn-row{
-            display: flex; flex-wrap: wrap; justify-content: space-between; align-items:center; margin-top: 14px; gap:12px;
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: space-between; 
+            align-items:center; 
+            margin-top: 14px; 
+            gap:12px;
         }
         .btn {
             flex: 1 1 46%;
@@ -132,19 +155,131 @@
             font-weight: bold;
             cursor: pointer;
             border: none;
-            transition: background .11s, opacity .11s;
+            transition: background .11s, opacity .11s, transform .2s;
             font-size: 1rem;
             min-width: 120px;
         }
         .btn.info{ background: #444; }
-        .btn:hover, .btn:focus { opacity:0.93;}
-
-        #testimonialsSection, #contactSection {
-            padding: 2rem 5vw;
+        .btn:hover, .btn:focus { 
+            opacity:0.93;
+            transform: translateY(-2px);
+        }
+        
+        /* Section Styling */
+        .section-content {
+            padding: 4rem 5vw;
+        }
+        .section-bg-light {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .section-bg-white {
             background: var(--white);
-            margin-top: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #1176d6;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title span {
+            position: relative;
+            z-index: 2;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(17, 118, 214, 0.2);
+            z-index: 1;
+        }
+        
+        /* FAQ Styling */
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            margin-bottom: 10px;
+        }
+        .faq-item.active {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: white;
+            border: none;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            transition: background 0.3s;
+        }
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+        .faq-item.active .faq-question {
+            background: #f0f7ff;
+        }
+        .faq-icon {
+            font-size: 1.5rem;
+            color: #1176d6;
+            transition: transform 0.3s;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+            padding-bottom: 2rem;
+        }
+        
+        /* Contact Form */
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #1176d6;
+            box-shadow: 0 0 0 3px rgba(17, 118, 214, 0.1);
+        }
+        
+        /* Testimonial Styling */
+        .testimonial-item {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        .testimonial-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .testimonial-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
         }
         
         /* Modal Styles */
@@ -171,164 +306,6 @@
             position: absolute;
             top: 15px; right: 20px;
             color: #444; font-size: 2.2rem; font-weight: bold; cursor: pointer;
-        }
-        .modal-step {
-            display: none;
-        }
-        .modal-step.active {
-            display: block;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--blue);
-            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
-        }
-        .modal-nav {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-        .modal-nav button {
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .btn-prev {
-            background: #f0f0f0;
-            color: #333;
-        }
-        .btn-next {
-            background: var(--blue);
-            color: white;
-        }
-        .btn-pay {
-            background: #28a745;
-            color: white;
-            width: 100%;
-        }
-        
-        /* Confirmation Step */
-        .confirmation-details {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-        .confirmation-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        .confirmation-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .confirmation-label {
-            font-weight: bold;
-            color: #555;
-        }
-        .confirmation-value {
-            color: #333;
-            font-weight: 500;
-        }
-        
-        /* Ticket Template */
-        .ticket-template {
-            background: white;
-            border: 2px solid #333;
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-            position: relative;
-        }
-        .ticket-header {
-            text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 2px dashed #333;
-            padding-bottom: 15px;
-        }
-        .ticket-header h2 {
-            color: var(--deep-blue);
-            margin: 0 0 10px 0;
-        }
-        .ticket-body {
-            margin-bottom: 20px;
-        }
-        .ticket-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            padding: 8px 0;
-            border-bottom: 1px dashed #ddd;
-        }
-        .ticket-row:last-child {
-            border-bottom: none;
-        }
-        .ticket-label {
-            font-weight: bold;
-            color: #555;
-        }
-        .ticket-value {
-            color: #333;
-        }
-        .ticket-qr {
-            text-align: center;
-            margin: 20px 0;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-        .ticket-footer {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 2px dashed #333;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        /* Loader */
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--blue);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
         
         /* Admin Panel */
@@ -358,22 +335,19 @@
             font-weight: bold;
         }
         
-        /* Payment Status Styles */
-        .payment-status {
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0;
-            border-radius: 10px;
+        /* Loader */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
-        .payment-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .payment-failed {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         footer{
@@ -386,24 +360,63 @@
         }
 
         /* Responsive */
-        @media screen and (max-width: 600px) {
-            header { flex-direction: column; align-items: flex-start; padding: 12px 3vw; }
+        @media screen and (max-width: 768px) {
+            header { 
+                flex-direction: column; 
+                align-items: flex-start; 
+                padding: 12px 3vw; 
+            }
             .header-logo { height: 42px;}
-            nav { margin-top: 10px; gap: 4px;}
+            nav { 
+                margin-top: 10px; 
+                gap: 4px;
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            nav a {
+                white-space: nowrap;
+                font-size: 11px;
+                padding: 6px 12px;
+            }
             .hero {
-                min-height: 170px; height: 40vh; padding: 0 2vw;margin-top: 52px;
+                min-height: 170px; 
+                height: 40vh; 
+                padding: 0 2vw;
+                margin-top: 52px;
             }
             .hero h1{ font-size:1.37rem;}
             .hero p{ font-size: 1rem;}
-            .event-card{ max-width:98vw; margin:24px 0;}
-            .modal-content{ max-width:95vw; padding: 20px 15px;}
-            .admin-toggle { top: 120px; right: 10px; }
+            .event-card{ 
+                max-width:98vw; 
+                margin:24px 0;
+            }
+            .modal-content{ 
+                max-width:95vw; 
+                padding: 20px 15px;
+            }
+            .admin-toggle { 
+                top: 120px; 
+                right: 10px; 
+            }
+            .section-content {
+                padding: 3rem 5vw;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .btn-row {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                min-width: auto;
+            }
         }
     </style>
-    <!-- QR Code library -->
+    <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- html2canvas library for ticket download -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
     <!-- Admin Panel Toggle -->
@@ -423,7 +436,7 @@
         <div style="font-size: 12px; color: #666;">
             <p><strong>Current API URL:</strong></p>
             <input type="text" id="apiUrl" style="width: 100%; padding: 5px; font-size: 11px; margin-bottom: 10px;" 
-                   value="https://sheetdb.io/api/v1/YOUR_API_ID_HERE" readonly>
+                   readonly>
             <button onclick="copyApiUrl()" style="width: 100%; padding: 8px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">
                 Copy API URL
             </button>
@@ -436,8 +449,10 @@
         </div>
         <nav id="navMenu">
             <a href="#featuredSection">Featured Events</a>
+            <a href="#aboutSection">About</a>
             <a href="#eventsSection">Upcoming Events</a>
             <a href="#testimonialsSection">Testimonials</a>
+            <a href="#faqSection">FAQ</a>
             <a href="#contactSection">Contact</a>
         </nav>
     </header>
@@ -456,2412 +471,732 @@
     <section class="featured" id="featuredSection">
         <div class="loader" id="featuredLoader"></div>
     </section>
+    
+    <!-- About Section -->
+    <section id="aboutSection" class="section-content section-bg-light">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">About Night of Laughter</h2>
+            <p style="font-size: 1.2rem; color: #555; max-width: 800px; margin: 0 auto 2rem; text-align: center;">
+                Zambia's Premier Comedy Platform - Where Laughter Meets Excellence
+            </p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
+                <div>
+                    <h3 style="font-size: 1.8rem; color: #333; margin-bottom: 1.5rem; border-left: 4px solid #1176d6; padding-left: 15px;">
+                        Our Story
+                    </h3>
+                    <p style="font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 1.5rem;">
+                        Founded in 2022, <strong>Night of Laughter</strong> emerged as Zambia's first professional comedy platform dedicated to showcasing the nation's top comedic talent. What began as a small gathering of comedy enthusiasts has evolved into the country's leading comedy production company.
+                    </p>
+                    <p style="font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 1.5rem;">
+                        Our mission is simple: to create unforgettable comedy experiences, nurture local talent, and bring world-class humor to audiences across Zambia and beyond. We believe laughter is universal, and through our events, we're building a community that celebrates comedy as an art form.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 style="font-size: 1.8rem; color: #333; margin-bottom: 1.5rem; border-left: 4px solid #1176d6; padding-left: 15px;">
+                        What We Do
+                    </h3>
+                    <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                        <div style="display: flex; align-items: start; margin-bottom: 1rem;">
+                            <div style="background: #1176d6; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
+                                <span style="font-weight: bold;">✓</span>
+                            </div>
+                            <div>
+                                <h4 style="margin: 0 0 5px 0; color: #333;">Comedy Events & Festivals</h4>
+                                <p style="margin: 0; color: #666; font-size: 0.95rem;">Producing large-scale comedy shows featuring top Zambian and international comedians</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; margin-bottom: 1rem;">
+                            <div style="background: #1176d6; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
+                                <span style="font-weight: bold;">✓</span>
+                            </div>
+                            <div>
+                                <h4 style="margin: 0 0 5px 0; color: #333;">Talent Development</h4>
+                                <p style="margin: 0; color: #666; font-size: 0.95rem;">Nurturing emerging comedians through workshops and open mic nights</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start;">
+                            <div style="background: #1176d6; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
+                                <span style="font-weight: bold;">✓</span>
+                            </div>
+                            <div>
+                                <h4 style="margin: 0 0 5px 0; color: #333;">Digital Ticketing</h4>
+                                <p style="margin: 0; color: #666; font-size: 0.95rem;">Providing seamless, instant digital ticket experiences for comedy fans</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Upcoming Events -->
     <section class="events" id="eventsSection">
         <div class="loader" id="eventsLoader"></div>
     </section>
     
-        <!-- About Section for Night of Laughter -->
-<section id="about" style="padding: 4rem 5vw; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-    <div style="max-width: 1200px; margin: 0 auto;">
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; color: #1176d6; position: relative; display: inline-block;">
-                <span style="position: relative; z-index: 2;">About Night of Laughter</span>
-                <span style="position: absolute; bottom: 5px; left: 0; width: 100%; height: 8px; background: rgba(17, 118, 214, 0.2); z-index: 1;"></span>
-            </h1>
-            <p style="font-size: 1.2rem; color: #555; max-width: 800px; margin: 0 auto;">
-                Zambia's Premier Comedy Platform - Where Laughter Meets Excellence
-            </p>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem;">
-            <div>
-                <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 1.5rem; border-left: 4px solid #1176d6; padding-left: 15px;">
-                    Our Story
-                </h2>
-                <p style="font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 1.5rem;">
-                    Founded in 2022, <strong>Night of Laughter</strong> emerged as Zambia's first professional comedy platform dedicated to showcasing the nation's top comedic talent. What began as a small gathering of comedy enthusiasts has evolved into the country's leading comedy production company.
-                </p>
-                <p style="font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 1.5rem;">
-                    Our mission is simple: to create unforgettable comedy experiences, nurture local talent, and bring world-class humor to audiences across Zambia and beyond. We believe laughter is universal, and through our events, we're building a community that celebrates comedy as an art form.
-                </p>
-            </div>
-
-            <div>
-                <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 1.5rem; border-left: 4px solid #1176d6; padding-left: 15px;">
-                    What We Do
-                </h2>
-                <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
-                    <div style="display: flex; align-items: start; margin-bottom: 1rem;">
-                        <div style="background: #1176d6; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
-                            <span style="font-weight: bold;">✓</span>
-                        </div>
-                        <div>
-                            <h3 style="margin: 0 0 5px 0; color: #333;">Comedy Events & Festivals</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.95rem;">Producing large-scale comedy shows featuring top Zambian and international comedians</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: start; margin-bottom: 1rem;">
-                        <div style="background: #1176d6; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
-                            <span style="font-weight: bold;">✓</span>
-                        </div>
-                        <div>
-                            <h3 style="margin: 0 0 5px 0; color: #333;">Talent Development</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.95rem;">Nurturing emerging comedians through workshops and open mic nights</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: start;">
-                        <div style="background: #1176d6; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">
-                            <span style="font-weight: bold;">✓</span>
-                        </div>
-                        <div>
-                            <h3 style="margin: 0 0 5px 0; color: #333;">Digital Ticketing</h3>
-                            <p style="margin: 0; color: #666; font-size: 0.95rem;">Providing seamless, instant digital ticket experiences for comedy fans</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 1.5rem; text-align: center;">
-                Milestone Events
-            </h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-                <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center;">
-                    <div style="font-size: 2.5rem; color: #1176d6; margin-bottom: 0.5rem;">🎭</div>
-                    <h3 style="margin: 0 0 10px 0; color: #333;">ZED Laugh Festival 2025</h3>
-                    <p style="color: #666; margin: 0; font-size: 0.95rem;">Zambia's largest comedy festival featuring 20+ comedians</p>
-                </div>
-                <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center;">
-                    <div style="font-size: 2.5rem; color: #1176d6; margin-bottom: 0.5rem;">🌟</div>
-                    <h3 style="margin: 0 0 10px 0; color: #333;">Comedy Night Special 2024</h3>
-                    <p style="color: #666; margin: 0; font-size: 0.95rem;">Sold-out show featuring Zambia's comedy legends</p>
-                </div>
-                <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center;">
-                    <div style="font-size: 2.5rem; color: #1176d6; margin-bottom: 0.5rem;">🚀</div>
-                    <h3 style="margin: 0 0 10px 0; color: #333;">Regional Tour 2023</h3>
-                    <p style="color: #666; margin: 0; font-size: 0.95rem;">Successful tour across 5 Zambian cities</p>
-                </div>
-                <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center;">
-                    <div style="font-size: 2.5rem; color: #1176d6; margin-bottom: 0.5rem;">🏆</div>
-                    <h3 style="margin: 0 0 10px 0; color: #333;">Stand-Up Showcase 2023</h3>
-                    <p style="color: #666; margin: 0; font-size: 0.95rem;">Launchpad for emerging comedy talent</p>
-                </div>
-            </div>
-        </div>
-
-        <div style="margin-bottom: 3rem;">
-            <h2 style="font-size: 1.8rem; color: #333; margin-bottom: 1.5rem; text-align: center;">
-                Featured Comedians
-            </h2>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
-                <div style="background: white; padding: 1rem 1.5rem; border-radius: 25px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%;"></div>
-                    <span style="font-weight: bold; color: #333;">Chingliz</span>
-                </div>
-                <div style="background: white; padding: 1rem 1.5rem; border-radius: 25px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%;"></div>
-                    <span style="font-weight: bold; color: #333;">Ba Emma</span>
-                </div>
-                <div style="background: white; padding: 1rem 1.5rem; border-radius: 25px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 50%;"></div>
-                    <span style="font-weight: bold; color: #333;">Smoke</span>
-                </div>
-                <div style="background: white; padding: 1rem 1.5rem; border-radius: 25px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 50%;"></div>
-                    <span style="font-weight: bold; color: #333;">Juss</span>
-                </div>
-                <div style="background: white; padding: 1rem 1.5rem; border-radius: 25px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 50%;"></div>
-                    <span style="font-weight: bold; color: #333;">Rhema</span>
-                </div>
-                <div style="background: white; padding: 1rem 1.5rem; border-radius: 25px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-radius: 50%;"></div>
-                    <span style="font-weight: bold; color: #333;">Bob Nkosha</span>
-                </div>
-            </div>
-            <p style="text-align: center; color: #666; font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.7;">
-                Night of Laughter has proudly featured Zambia's top comedic talents while welcoming renowned regional performers from across Africa. Our platform continues to celebrate Zambia's rich comedy scene and provide opportunities for both established and emerging performers.
-            </p>
-        </div>
-
-        <div style="background: linear-gradient(135deg, #1176d6 0%, #0d5bb5 100%); padding: 2.5rem; border-radius: 15px; color: white; text-align: center;">
-            <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">Join the Laughter Revolution</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
-                Experience the best of Zambian comedy. Whether you're looking for a night of laughs or want to perform on our stage, Night of Laughter is your premier destination.
-            </p>
-            <div style="display: flex; gap: 1rem; justify-content: center;">
-                <a href="#eventsSection" style="background: white; color: #1176d6; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: transform 0.3s;">
-                    View Events
-                </a>
-                <a href="#contactSection" style="background: transparent; border: 2px solid white; color: white; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; transition: background 0.3s;">
-                    Contact Us
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-          
-    <section id="testimonialsSection">
-        <h2>Testimonials</h2>
-     <!-- Testimonials Section - Vertical List -->
-<section id="testimonialsSection" style="padding: 5rem 5vw; background: #f8f9fa;">
-    <div style="max-width: 1200px; margin: 0 auto;">
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 1rem; color: #1176d6; position: relative; display: inline-block;">
-                <span style="position: relative; z-index: 2;">Audience Experiences</span>
-                <span style="position: absolute; bottom: 5px; left: 0; width: 100%; height: 8px; background: rgba(17, 118, 214, 0.2); z-index: 1;"></span>
-            </h2>
-            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 1rem auto 2rem;">
+    <!-- Testimonials Section -->
+    <section id="testimonialsSection" class="section-content section-bg-light">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">Audience Experiences</h2>
+            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 1rem auto 2rem; text-align: center;">
                 Real stories from our comedy community
             </p>
-        </div>
 
-        <!-- Testimonials Container -->
-        <div id="testimonialsList" style="display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto;">
-            
-            <!-- Testimonial 1 -->
-            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
-                <!-- Decorative quote mark -->
-                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
-                
-                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
-                        SM
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">Sarah Mwale</h3>
-                            <span style="color: #888; font-size: 0.9rem;">March 15, 2025</span>
-                        </div>
-                        <p style="margin: 0; color: #666; font-size: 0.95rem;">Regular Attendee • Lusaka</p>
-                        <div style="display: flex; margin-top: 0.5rem;">
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
-                    Night of Laughter has completely transformed the comedy scene in Zambia! The ZED Laugh Festival was the funniest night I've had all year. The lineup was incredible, and the digital ticketing made everything so easy. Can't wait for the next one!
-                </p>
-                
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
-                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
-                        ZED Laugh Festival 2025
-                    </span>
-                    <span style="color: #888; font-size: 0.9rem;">
-                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
-                    </span>
-                </div>
-            </div>
+            <!-- Testimonials Container -->
+            <div id="testimonialsList"></div>
 
-            <!-- Testimonial 2 -->
-            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
-                
-                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
-                        JB
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">John Banda</h3>
-                            <span style="color: #888; font-size: 0.9rem;">April 5, 2025</span>
-                        </div>
-                        <p style="margin: 0; color: #666; font-size: 0.95rem;">First-time Attendee • Kitwe</p>
-                        <div style="display: flex; margin-top: 0.5rem;">
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
-                    I was skeptical about buying tickets online, but the process was seamless! The instant digital tickets saved me from queuing. The comedy show itself was top-notch - Chingliz had us in stitches all night. Will definitely be coming back!
-                </p>
-                
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
-                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
-                        Comedy Night Special 2024
-                    </span>
-                    <span style="color: #888; font-size: 0.9rem;">
-                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
-                    </span>
-                </div>
-            </div>
-
-            <!-- Testimonial 3 -->
-            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
-                
-                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
-                        EK
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">Emily Kapumba</h3>
-                            <span style="color: #888; font-size: 0.9rem;">December 15, 2024</span>
-                        </div>
-                        <p style="margin: 0; color: #666; font-size: 0.95rem;">Corporate Client • Ndola</p>
-                        <div style="display: flex; margin-top: 0.5rem;">
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
-                    We booked Night of Laughter for our company year-end party, and it was the best decision ever! The comedians were professional, the content was appropriate for our diverse team, and everyone had an amazing time. Highly recommended for corporate events!
-                </p>
-                
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
-                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
-                        Corporate Comedy Night
-                    </span>
-                    <span style="color: #888; font-size: 0.9rem;">
-                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Group booking
-                    </span>
-                </div>
-            </div>
-
-            <!-- Testimonial 4 -->
-            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
-                
-                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
-                        DC
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">David Chanda</h3>
-                            <span style="color: #888; font-size: 0.9rem;">November 22, 2023</span>
-                        </div>
-                        <p style="margin: 0; color: #666; font-size: 0.95rem;">Comedy Enthusiast • Livingstone</p>
-                        <div style="display: flex; margin-top: 0.5rem;">
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
-                    I've attended comedy shows in South Africa and Kenya, but Night of Laughter stands out! The production quality is world-class, and the Zambian humor is unique and relatable. The digital ticket system is genius - no paper, no stress!
-                </p>
-                
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
-                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
-                        Regional Tour 2023
-                    </span>
-                    <span style="color: #888; font-size: 0.9rem;">
-                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
-                    </span>
-                </div>
-            </div>
-
-            <!-- Testimonial 5 -->
-            <div class="testimonial-item" style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
-                
-                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
-                        LM
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">Lisa Mwamba</h3>
-                            <span style="color: #888; font-size: 0.9rem;">October 15, 2023</span>
-                        </div>
-                        <p style="margin: 0; color: #666; font-size: 0.95rem;">Student • University of Zambia</p>
-                        <div style="display: flex; margin-top: 0.5rem;">
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                            <span style="color: #FFD700; font-size: 1.2rem;">★</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
-                    As a student, I appreciate the affordable ticket options. The ordinary tickets are perfect for students! The venue was great, sound quality excellent, and the comedians were hilarious. Night of Laughter makes comedy accessible to everyone!
-                </p>
-                
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
-                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
-                        Stand-Up Showcase 2023
-                    </span>
-                    <span style="color: #888; font-size: 0.9rem;">
-                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Student discount used
-                    </span>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Load More Button -->
-        <div style="text-align: center; margin-top: 3rem;">
-            <button id="loadMoreBtn" style="background: transparent; border: 2px solid #1176d6; color: #1176d6; padding: 0.8rem 2.5rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;">
-                <span>Load More Testimonials</span>
-                <span style="font-size: 1.2rem;">↓</span>
-            </button>
-            <p style="color: #888; font-size: 0.9rem; margin-top: 1rem;">
-                Showing 5 of 47 testimonials
-            </p>
-        </div>
-
-        <!-- Add Testimonial CTA -->
-        <div style="text-align: center; margin-top: 4rem;">
-            <div style="background: linear-gradient(135deg, #1176d6 0%, #0d5bb5 100%); padding: 2.5rem; border-radius: 15px; color: white; max-width: 600px; margin: 0 auto;">
-                <h3 style="margin: 0 0 1rem 0; font-size: 1.5rem;">Share Your Experience</h3>
-                <p style="margin: 0 0 1.5rem 0; opacity: 0.9; font-size: 1.1rem;">
-                    Attended a Night of Laughter event? We'd love to hear your story!
-                </p>
-                <button id="shareExperienceBtn" style="background: white; color: #1176d6; border: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: transform 0.3s;">
-                    Submit Your Review
+            <!-- Load More Button -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <button id="loadMoreBtn" style="background: transparent; border: 2px solid #1176d6; color: #1176d6; padding: 0.8rem 2.5rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <span>Load More Testimonials</span>
+                    <span style="font-size: 1.2rem;">↓</span>
                 </button>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- Add Testimonial Modal -->
-<div id="testimonialModal" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 500px;">
-        <span class="close" onclick="closeTestimonialModal()">&times;</span>
-        <h2 style="color: #1176d6; margin-bottom: 1rem;">Share Your Experience</h2>
-        <p style="color: #666; margin-bottom: 1.5rem;">
-            Tell us about your Night of Laughter experience. Your review helps others discover great comedy!
-        </p>
-        
-        <form id="testimonialForm" style="display: flex; flex-direction: column; gap: 1rem;">
-            <div>
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Name</label>
-                <input type="text" id="testimonialName" placeholder="Enter your name" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;" required>
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Location</label>
-                <input type="text" id="testimonialLocation" placeholder="e.g., Lusaka, Kitwe" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;" required>
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Event Attended</label>
-                <select id="testimonialEvent" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;" required>
-                    <option value="">Select Event</option>
-                    <option value="ZED Laugh Festival 2025">ZED Laugh Festival 2025</option>
-                    <option value="Comedy Night Special 2024">Comedy Night Special 2024</option>
-                    <option value="Regional Tour 2023">Regional Tour 2023</option>
-                    <option value="Stand-Up Showcase 2023">Stand-Up Showcase 2023</option>
-                    <option value="Corporate Comedy Night">Corporate Comedy Night</option>
-                    <option value="Other">Other Event</option>
-                </select>
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Rating</label>
-                <div style="display: flex; justify-content: center; gap: 0.5rem; margin: 1rem 0;">
-                    <span class="rating-star" data-rating="1" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
-                    <span class="rating-star" data-rating="2" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
-                    <span class="rating-star" data-rating="3" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
-                    <span class="rating-star" data-rating="4" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
-                    <span class="rating-star" data-rating="5" style="font-size: 2rem; cursor: pointer; color: #ddd; transition: color 0.3s;">★</span>
-                </div>
-                <input type="hidden" id="testimonialRating" value="5" required>
-                <div style="text-align: center; color: #666; font-size: 0.9rem;">
-                    <span id="ratingText">Excellent - 5 stars</span>
-                </div>
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Experience</label>
-                <textarea id="testimonialText" placeholder="Share your thoughts about the event, comedians, ticketing experience, etc..." rows="6" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; resize: vertical;" required></textarea>
-                <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.9rem; color: #888;">
-                    <span>Minimum 50 characters</span>
-                    <span id="charCount">0/500</span>
-                </div>
-            </div>
-            
-            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                <button type="submit" style="flex: 1; background: #1176d6; color: white; border: none; padding: 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: background 0.3s;">
-                    Submit Review
-                </button>
-                <button type="button" onclick="closeTestimonialModal()" style="flex: 1; background: #f0f0f0; color: #333; border: none; padding: 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem;">
-                    Cancel
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<style>
-    /* Animation for testimonial items */
-    .testimonial-item.visible {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-    }
-    
-    /* Hover effect for testimonial cards */
-    .testimonial-item:hover {
-        transform: translateY(-5px) !important;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.12) !important;
-    }
-    
-    /* Button hover effects */
-    #loadMoreBtn:hover {
-        background: #1176d6;
-        color: white;
-        transform: translateY(-2px);
-    }
-    
-    #shareExperienceBtn:hover {
-        transform: translateY(-2px);
-    }
-    
-    .rating-star.selected {
-        color: #FFD700 !important;
-    }
-    
-    /* Responsive design */
-    @media (max-width: 768px) {
-        .testimonial-item {
-            padding: 2rem !important;
-        }
-        
-        #testimonialsList {
-            gap: 1.5rem;
-        }
-        
-        .testimonial-item > div:first-child {
-            flex-direction: column;
-            align-items: flex-start !important;
-        }
-        
-        .testimonial-item > div:first-child > div:first-child {
-            margin-bottom: 1rem !important;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .testimonial-item {
-            padding: 1.5rem !important;
-        }
-        
-        .testimonial-item > div:last-child {
-            flex-direction: column;
-            gap: 1rem;
-            align-items: flex-start !important;
-        }
-    }
-</style>
-
-<script>
-    // Testimonials Animation Script
-    document.addEventListener('DOMContentLoaded', function() {
-        const testimonialItems = document.querySelectorAll('.testimonial-item');
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        const shareExperienceBtn = document.getElementById('shareExperienceBtn');
-        const testimonialModal = document.getElementById('testimonialModal');
-        const testimonialForm = document.getElementById('testimonialForm');
-        const ratingStars = document.querySelectorAll('.rating-star');
-        const testimonialRating = document.getElementById('testimonialRating');
-        const ratingText = document.getElementById('ratingText');
-        const charCount = document.getElementById('charCount');
-        const testimonialText = document.getElementById('testimonialText');
-        const testimonialsList = document.getElementById('testimonialsList');
-        
-        // Rating descriptions
-        const ratingDescriptions = {
-            1: 'Poor - 1 star',
-            2: 'Fair - 2 stars',
-            3: 'Good - 3 stars',
-            4: 'Very Good - 4 stars',
-            5: 'Excellent - 5 stars'
-        };
-        
-        // Animate testimonials on scroll
-        function animateTestimonialsOnScroll() {
-            testimonialItems.forEach((item, index) => {
-                const rect = item.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-                
-                // Show item when it comes into view
-                if (rect.top <= windowHeight - 100) {
-                    // Stagger the animation
-                    setTimeout(() => {
-                        item.classList.add('visible');
-                    }, index * 100);
-                }
-            });
-        }
-        
-        // Initialize animations
-        animateTestimonialsOnScroll();
-        
-        // Animate on scroll
-        window.addEventListener('scroll', animateTestimonialsOnScroll);
-        
-        // Load More button functionality
-        let showingCount = 5;
-        const totalTestimonials = 47;
-        
-        loadMoreBtn.addEventListener('click', function() {
-            // In a real app, this would fetch more testimonials from a server
-            // For demo, we'll just simulate loading more
-            
-            // Create a loading animation
-            loadMoreBtn.innerHTML = '<span>Loading...</span>';
-            loadMoreBtn.disabled = true;
-            
-            // Simulate API delay
-            setTimeout(() => {
-                // Add more testimonials (in real app, these would come from server)
-                for (let i = 0; i < 3; i++) {
-                    const newIndex = showingCount + i + 1;
-                    if (newIndex <= totalTestimonials) {
-                        const newTestimonial = createTestimonial({
-                            id: newIndex,
-                            name: `Attendee ${newIndex}`,
-                            date: '2023',
-                            location: 'Various Locations',
-                            event: 'Multiple Events',
-                            rating: 5,
-                            text: 'Another satisfied audience member! Night of Laughter never disappoints. The comedians are always hilarious and the experience is seamless from ticket purchase to the final laugh.'
-                        });
-                        
-                        testimonialsList.appendChild(newTestimonial);
-                    }
-                }
-                
-                // Update showing count
-                showingCount = Math.min(showingCount + 3, totalTestimonials);
-                
-                // Update button text
-                if (showingCount >= totalTestimonials) {
-                    loadMoreBtn.innerHTML = '<span>All Testimonials Loaded</span>';
-                    loadMoreBtn.disabled = true;
-                    loadMoreBtn.style.opacity = '0.6';
-                } else {
-                    loadMoreBtn.innerHTML = `<span>Load More Testimonials</span><span style="font-size: 1.2rem;">↓</span>`;
-                    loadMoreBtn.disabled = false;
-                }
-                
-                // Update counter
-                document.querySelector('#loadMoreBtn + p').textContent = 
-                    `Showing ${showingCount} of ${totalTestimonials} testimonials`;
-                
-                // Animate new items
-                setTimeout(animateTestimonialsOnScroll, 100);
-                
-            }, 1000);
-        });
-        
-        // Helper function to create testimonial element
-        function createTestimonial(data) {
-            const initials = data.name.split(' ').map(n => n[0]).join('').toUpperCase();
-            const colors = [
-                'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-                'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
-            ];
-            
-            const colorIndex = (data.id - 1) % colors.length;
-            
-            const item = document.createElement('div');
-            item.className = 'testimonial-item';
-            item.style.cssText = 'background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; position: relative; overflow: hidden;';
-            
-            item.innerHTML = `
-                <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
-                
-                <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-                    <div style="width: 60px; height: 60px; background: ${colors[colorIndex]}; border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
-                        ${initials}
-                    </div>
-                    <div style="flex: 1;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h3 style="margin: 0; color: #333; font-size: 1.3rem;">${data.name}</h3>
-                            <span style="color: #888; font-size: 0.9rem;">${data.date}</span>
-                        </div>
-                        <p style="margin: 0; color: #666; font-size: 0.95rem;">${data.location}</p>
-                        <div style="display: flex; margin-top: 0.5rem;">
-                            ${'<span style="color: #FFD700; font-size: 1.2rem;">★</span>'.repeat(data.rating)}
-                        </div>
-                    </div>
-                </div>
-                
-                <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
-                    ${data.text}
-                </p>
-                
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
-                    <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
-                        ${data.event}
-                    </span>
-                    <span style="color: #888; font-size: 0.9rem;">
-                        <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
-                    </span>
-                </div>
-            `;
-            
-            return item;
-        }
-        
-        // Share Experience Modal
-        shareExperienceBtn.addEventListener('click', function() {
-            testimonialModal.style.display = 'flex';
-        });
-        
-        function closeTestimonialModal() {
-            testimonialModal.style.display = 'none';
-            testimonialForm.reset();
-            // Reset stars to default
-            ratingStars.forEach(star => star.classList.remove('selected'));
-            ratingStars[4].classList.add('selected');
-            testimonialRating.value = '5';
-            ratingText.textContent = ratingDescriptions[5];
-            charCount.textContent = '0/500';
-        }
-        
-        // Rating stars interaction
-        ratingStars.forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = parseInt(this.getAttribute('data-rating'));
-                
-                // Update stars display
-                ratingStars.forEach((s, index) => {
-                    if (index < rating) {
-                        s.classList.add('selected');
-                    } else {
-                        s.classList.remove('selected');
-                    }
-                });
-                
-                // Update hidden input value
-                testimonialRating.value = rating;
-                
-                // Update rating text
-                ratingText.textContent = ratingDescriptions[rating];
-            });
-        });
-        
-        // Character count for testimonial text
-        testimonialText.addEventListener('input', function() {
-            const length = this.value.length;
-            charCount.textContent = `${length}/500`;
-            
-            if (length > 500) {
-                charCount.style.color = '#e74c3c';
-            } else if (length > 400) {
-                charCount.style.color = '#f39c12';
-            } else {
-                charCount.style.color = '#888';
-            }
-        });
-        
-        // Form submission
-        testimonialForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('testimonialName').value;
-            const location = document.getElementById('testimonialLocation').value;
-            const event = document.getElementById('testimonialEvent').value;
-            const rating = parseInt(testimonialRating.value);
-            const text = document.getElementById('testimonialText').value;
-            
-            // Validate minimum length
-            if (text.length < 50) {
-                alert('Please write at least 50 characters about your experience.');
-                return;
-            }
-            
-            if (text.length > 500) {
-                alert('Please keep your review under 500 characters.');
-                return;
-            }
-            
-            // In a real application, you would send this data to your server
-            // For now, we'll simulate success
-            
-            // Show loading state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Submitting...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Success message
-                alert(`Thank you, ${name}! Your review has been submitted for moderation.\n\nWe'll review it and may feature it on our website soon.`);
-                
-                // Close modal
-                closeTestimonialModal();
-                
-                // Reset button
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                
-                // In a real app, you would add the testimonial to the list
-                // after admin approval
-                
-            }, 1500);
-        });
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target === testimonialModal) {
-                closeTestimonialModal();
-            }
-        });
-        
-        // Initialize with 5 stars selected
-        ratingStars[4].classList.add('selected');
-    });
-</script>
     </section>
-  <!-- FAQ / Q&A Section -->
-<section id="faqSection" style="padding: 5rem 5vw; background: #f8f9fa;">
-    <div style="max-width: 1000px; margin: 0 auto;">
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 1rem; color: #1176d6; position: relative; display: inline-block;">
-                <span style="position: relative; z-index: 2;">Frequently Asked Questions</span>
-                <span style="position: absolute; bottom: 5px; left: 0; width: 100%; height: 8px; background: rgba(17, 118, 214, 0.2); z-index: 1;"></span>
-            </h2>
-            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 1rem auto 2rem;">
+    
+    <!-- FAQ Section -->
+    <section id="faqSection" class="section-content section-bg-white">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 1rem auto 2rem; text-align: center;">
                 Find quick answers to common questions about Night of Laughter events
             </p>
-        </div>
 
-        <!-- FAQ Categories -->
-        <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
-            <button class="faq-category active" data-category="all" style="background: #1176d6; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
-                All Questions
-            </button>
-            <button class="faq-category" data-category="tickets" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
-                Tickets
-            </button>
-            <button class="faq-category" data-category="events" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
-                Events
-            </button>
-            <button class="faq-category" data-category="booking" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
-                Booking
-            </button>
-            <button class="faq-category" data-category="general" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
-                General
-            </button>
-        </div>
-
-        <!-- FAQ Items Container -->
-        <div id="faqContainer" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 3rem;">
-            
-            <!-- FAQ Item 1 -->
-            <div class="faq-item" data-category="tickets" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
-                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
-                    <span>1. Is there a way to get tickets online instead of waiting for delivery?</span>
-                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+            <!-- FAQ Categories -->
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
+                <button class="faq-category active" data-category="all" style="background: #1176d6; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                    All Questions
                 </button>
-                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
-                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
-                        <p><strong>Yes, absolutely!</strong> We offer instant digital tickets through our website. Simply visit <a href="https://night-of-laughter.com" style="color: #1176d6; font-weight: bold; text-decoration: none;">night-of-laughter.com</a>, select your event, choose your tickets, and complete the payment. Your digital tickets will be available immediately for download.</p>
-                        <div style="display: flex; align-items: center; gap: 1rem; margin-top: 1rem; background: #f0f7ff; padding: 1rem; border-radius: 8px;">
-                            <span style="font-size: 1.5rem; color: #1176d6;">⚡</span>
-                            <div>
-                                <strong style="color: #333;">Benefits of Digital Tickets:</strong>
-                                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; color: #666;">
-                                    <li>Instant delivery - no waiting</li>
-                                    <li>No physical delivery fees</li>
-                                    <li>Easy to store on your phone</li>
-                                    <li>Environmentally friendly</li>
-                                    <li>QR code for quick entry</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FAQ Item 2 -->
-            <div class="faq-item" data-category="events" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
-                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
-                    <span>2. Can other comedians have events posted on the Night of Laughter website?</span>
-                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                <button class="faq-category" data-category="tickets" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                    Tickets
                 </button>
-                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
-                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
-                        <p><strong>Yes, they can!</strong> We welcome collaborations with comedians across Zambia and beyond. If you're a comedian interested in hosting an event through our platform, please get in touch with our team.</p>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
-                            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px;">
-                                <h4 style="margin: 0 0 0.5rem 0; color: #333; display: flex; align-items: center; gap: 0.5rem;">
-                                    <span style="color: #1176d6;">📧</span>
-                                    Email Us
-                                </h4>
-                                <p style="margin: 0; color: #666;">
-                                    Send your proposal to:<br>
-                                    <a href="mailto:bookings@nightoflaughter.com" style="color: #1176d6; font-weight: bold;">bookings@nightoflaughter.com</a>
-                                </p>
-                            </div>
-                            
-                            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px;">
-                                <h4 style="margin: 0 0 0.5rem 0; color: #333; display: flex; align-items: center; gap: 0.5rem;">
-                                    <span style="color: #1176d6;">📱</span>
-                                    Call/WhatsApp
-                                </h4>
-                                <p style="margin: 0; color: #666;">
-                                    Contact our bookings team:<br>
-                                    <a href="tel:+260973299759" style="color: #1176d6; font-weight: bold;">+260 973 299 759</a>
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32; display: flex; align-items: center; gap: 0.5rem;">
-                                <span>🎭</span>
-                                What We Offer Comedians
-                            </h4>
-                            <ul style="margin: 0; padding-left: 1.2rem; color: #666;">
-                                <li>Professional event promotion</li>
-                                <li>Digital ticketing system</li>
-                                <li>Venue booking assistance</li>
-                                <li>Marketing support</li>
-                                <li>Payment processing</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FAQ Item 3 -->
-            <div class="faq-item" data-category="tickets" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
-                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
-                    <span>3. What payment methods do you accept for tickets?</span>
-                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                <button class="faq-category" data-category="events" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                    Events
                 </button>
-                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
-                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
-                        <p>We accept various payment methods to make ticket purchasing convenient for everyone:</p>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                                <span style="font-size: 1.5rem; color: #1176d6;">💳</span>
-                                <div>
-                                    <strong style="color: #333;">Card Payments</strong>
-                                    <p style="margin: 0.2rem 0 0 0; color: #666; font-size: 0.9rem;">Visa, Mastercard, UnionPay</p>
-                                </div>
-                            </div>
-                            
-                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                                <span style="font-size: 1.5rem; color: #1176d6;">🤝</span>
-                                <div>
-                                    <strong style="color: #333;">Mobile Money</strong>
-                                    <p style="margin: 0.2rem 0 0 0; color: #666; font-size: 0.9rem;">Zamtel Kwacha, MTN, Airtel Money</p>
-                                </div>
-                            </div>
-                            
-                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                                <span style="font-size: 1.5rem; color: #1176d6;">💬</span>
-                                <div>
-                                    <strong style="color: #333;">WhatsApp Payments</strong>
-                                    <p style="margin: 0.2rem 0 0 0; color: #666; font-size: 0.9rem;">Via our WhatsApp business</p>
-                                </div>
-                            </div>
-                            
-                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                                <span style="font-size: 1.5rem; color: #1176d6;">🏦</span>
-                                <div>
-                                    <strong style="color: #333;">Bank Transfer</strong>
-                                    <p style="margin: 0.2rem 0 0 0; color: #666; font-size: 0.9rem;">Direct bank deposits</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="background: #fff3e0; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-                            <p style="margin: 0; color: #e65100; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <span>🔒</span>
-                                All payments are processed securely through our encrypted payment gateway.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FAQ Item 4 -->
-            <div class="faq-item" data-category="booking" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
-                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
-                    <span>4. Can I get a refund if I can't attend an event?</span>
-                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                <button class="faq-category" data-category="booking" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                    Booking
                 </button>
-                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
-                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
-                        <p><strong>Our refund policy is as follows:</strong></p>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
-                            <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px;">
-                                <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32;">✅ Full Refund</h4>
-                                <ul style="margin: 0; padding-left: 1.2rem; color: #666;">
-                                    <li>Event cancellation by organizers</li>
-                                    <li>Date changes you can't attend</li>
-                                    <li>Within 24 hours of purchase</li>
-                                </ul>
-                            </div>
-                            
-                            <div style="background: #ffebee; padding: 1.5rem; border-radius: 10px;">
-                                <h4 style="margin: 0 0 0.5rem 0; color: #c62828;">❌ No Refund</h4>
-                                <ul style="margin: 0; padding-left: 1.2rem; color: #666;">
-                                    <li>Change of mind</li>
-                                    <li>Personal schedule conflicts</li>
-                                    <li>Last-minute cancellations</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #1565c0;">🔄 Ticket Transfer Option</h4>
-                            <p style="margin: 0; color: #666;">
-                                If you can't attend, you can transfer your ticket to someone else! Contact us at least 24 hours before the event, and we'll help transfer the ticket to another person's name.
-                            </p>
-                            <button style="margin-top: 1rem; background: #1565c0; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
-                                Request Ticket Transfer
-                            </button>
-                        </div>
-                        
-                        <p style="margin-top: 1.5rem; color: #666; font-size: 0.9rem;">
-                            For refund requests, please email <a href="mailto:support@nightoflaughter.com" style="color: #1176d6;">support@nightoflaughter.com</a> with your booking reference.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FAQ Item 5 -->
-            <div class="faq-item" data-category="general" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
-                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
-                    <span>5. Are your events suitable for all ages?</span>
-                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
+                <button class="faq-category" data-category="general" style="background: white; color: #333; border: 2px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;">
+                    General
                 </button>
-                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
-                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
-                        <p>We host different types of events suitable for various age groups:</p>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
-                            <div style="background: #f3e5f5; padding: 1.5rem; border-radius: 10px;">
-                                <h4 style="margin: 0 0 0.5rem 0; color: #7b1fa2; display: flex; align-items: center; gap: 0.5rem;">
-                                    <span>👨‍👩‍👧‍👦</span>
-                                    Family-Friendly
-                                </h4>
-                                <p style="margin: 0; color: #666;">
-                                    Selected afternoon shows with clean comedy suitable for all ages
-                                </p>
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
-                                    <span style="color: #4caf50; font-weight: bold;">✓</span>
-                                    <span style="color: #666; font-size: 0.9rem;">Ages 8+ welcome</span>
-                                </div>
-                            </div>
-                            
-                            <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px;">
-                                <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32; display: flex; align-items: center; gap: 0.5rem;">
-                                    <span>🎓</span>
-                                    Teen & Adult
-                                </h4>
-                                <p style="margin: 0; color: #666;">
-                                    Evening shows suitable for ages 16+ with some mature content
-                                </p>
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
-                                    <span style="color: #ff9800; font-weight: bold;">16+</span>
-                                    <span style="color: #666; font-size: 0.9rem;">Parental guidance suggested</span>
-                                </div>
-                            </div>
-                            
-                            <div style="background: #fff3e0; padding: 1.5rem; border-radius: 10px;">
-                                <h4 style="margin: 0 0 0.5rem 0; color: #ef6c00; display: flex; align-items: center; gap: 0.5rem;">
-                                    <span>🎭</span>
-                                    Adults Only
-                                </h4>
-                                <p style="margin: 0; color: #666;">
-                                    Late night shows for ages 18+ with mature themes
-                                </p>
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
-                                    <span style="color: #f44336; font-weight: bold;">18+</span>
-                                    <span style="color: #666; font-size: 0.9rem;">Strict age enforcement</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #1565c0;">ℹ️ How to Check Event Rating</h4>
-                            <p style="margin: 0; color: #666;">
-                                Each event page clearly indicates the age rating. Look for the age icon on the event card or check the event details page. We also include content warnings where appropriate.
-                            </p>
-                        </div>
-                        
-                        <p style="margin-top: 1.5rem; color: #666; font-size: 0.9rem;">
-                            <strong>Note:</strong> All attendees must present valid ID for 18+ events. Underage attendees will not be admitted to adult-only shows, and no refunds will be given.
-                        </p>
-                    </div>
-                </div>
             </div>
 
-            <!-- FAQ Item 6 -->
-            <div class="faq-item" data-category="tickets" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s;">
-                <button class="faq-question" style="width: 100%; padding: 1.5rem 2rem; background: white; border: none; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 1.1rem; font-weight: bold; color: #333;">
-                    <span>6. What should I do if I lose my digital ticket?</span>
-                    <span class="faq-icon" style="font-size: 1.5rem; color: #1176d6; transition: transform 0.3s;">+</span>
-                </button>
-                <div class="faq-answer" style="padding: 0 2rem; max-height: 0; overflow: hidden; transition: all 0.3s;">
-                    <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
-                        <p><strong>Don't worry! We can help you retrieve your ticket.</strong> Here's what to do:</p>
-                        
-                        <div style="display: flex; align-items: flex-start; gap: 1rem; background: #f0f7ff; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
-                            <span style="font-size: 2rem; color: #1176d6;">1</span>
-                            <div>
-                                <h4 style="margin: 0 0 0.5rem 0; color: #333;">Check Your Email</h4>
-                                <p style="margin: 0; color: #666;">
-                                    Search your inbox for "Night of Laughter" or "Ticket Confirmation". All digital tickets are sent to your email address.
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: flex-start; gap: 1rem; background: #f0f7ff; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
-                            <span style="font-size: 2rem; color: #1176d6;">2</span>
-                            <div>
-                                <h4 style="margin: 0 0 0.5rem 0; color: #333;">Contact Support</h4>
-                                <p style="margin: 0; color: #666;">
-                                    Email us at <a href="mailto:support@nightoflaughter.com" style="color: #1176d6;">support@nightoflaughter.com</a> with:
-                                </p>
-                                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; color: #666;">
-                                    <li>Your full name</li>
-                                    <li>Event name and date</li>
-                                    <li>Email used for booking</li>
-                                    <li>Phone number if available</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; align-items: flex-start; gap: 1rem; background: #f0f7ff; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
-                            <span style="font-size: 2rem; color: #1176d6;">3</span>
-                            <div>
-                                <h4 style="margin: 0 0 0.5rem 0; color: #333;">Visit the Venue</h4>
-                                <p style="margin: 0; color: #666;">
-                                    If you can't retrieve your ticket before the event, visit the venue's ticket desk with your ID and booking confirmation email (or phone number). We can look up your purchase.
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #2e7d32;">💡 Pro Tips</h4>
-                            <ul style="margin: 0; padding-left: 1.2rem; color: #666;">
-                                <li>Save your ticket to your phone's wallet app</li>
-                                <li>Take a screenshot of the QR code</li>
-                                <li>Forward the confirmation email to a friend</li>
-                                <li>Save our support number: +260 973 299 759</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <!-- FAQ Items Container -->
+            <div id="faqContainer"></div>
         </div>
-
-        <!-- Still Have Questions? -->
-        <div style="text-align: center; margin-top: 4rem;">
-            <div style="background: linear-gradient(135deg, #1176d6 0%, #0d5bb5 100%); padding: 3rem; border-radius: 20px; color: white; max-width: 800px; margin: 0 auto;">
-                <h3 style="margin: 0 0 1rem 0; font-size: 1.8rem;">Still Have Questions?</h3>
-                <p style="margin: 0 0 2rem 0; opacity: 0.9; font-size: 1.1rem;">
-                    Can't find what you're looking for? Our team is here to help!
-                </p>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="#contactSection" style="background: white; color: #1176d6; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: transform 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;">
-                        <span>Contact Us</span>
-                        <span>→</span>
-                    </a>
-                    <a href="https://wa.me/260973299759" target="_blank" style="background: rgba(255,255,255,0.2); color: white; border: 2px solid white; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: background 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;">
-                        <span>💬</span>
-                        <span>WhatsApp Chat</span>
-                    </a>
-                </div>
-                <p style="margin: 2rem 0 0 0; opacity: 0.8; font-size: 0.9rem;">
-                    Average response time: 1-2 hours during business hours
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-    /* FAQ Animation Styles */
-    .faq-item.active {
-        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
-    }
-    
-    .faq-item.active .faq-question {
-        background: #f0f7ff !important;
-    }
-    
-    .faq-item.active .faq-icon {
-        transform: rotate(45deg) !important;
-    }
-    
-    .faq-item.active .faq-answer {
-        max-height: 1000px !important;
-        padding-bottom: 2rem !important;
-    }
-    
-    /* Category Button Styles */
-    .faq-category:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    
-    .faq-category.active {
-        border-color: #1176d6 !important;
-        box-shadow: 0 4px 10px rgba(17, 118, 214, 0.2);
-    }
-    
-    /* Question Hover Effect */
-    .faq-question:hover {
-        background: #f8f9fa !important;
-    }
-    
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .faq-question {
-            padding: 1.25rem 1.5rem !important;
-            font-size: 1rem !important;
-        }
-        
-        .faq-answer {
-            padding: 0 1.5rem !important;
-        }
-        
-        .faq-answer > div {
-            padding: 0 0 1.5rem 0 !important;
-        }
-        
-        .faq-category {
-            padding: 0.6rem 1rem !important;
-            font-size: 0.8rem !important;
-        }
-        
-        #faqContainer {
-            gap: 0.75rem !important;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .faq-question {
-            padding: 1rem 1.25rem !important;
-        }
-        
-        .faq-question span:first-child {
-            padding-right: 1rem;
-        }
-        
-        .faq-answer > div {
-            padding: 0 0 1rem 0 !important;
-        }
-    }
-</style>
-
-<script>
-    // FAQ Section Script
-    document.addEventListener('DOMContentLoaded', function() {
-        const faqItems = document.querySelectorAll('.faq-item');
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        const categoryButtons = document.querySelectorAll('.faq-category');
-        const faqContainer = document.getElementById('faqContainer');
-        
-        // Toggle FAQ item
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', function() {
-                const item = this.closest('.faq-item');
-                const isActive = item.classList.contains('active');
-                
-                // Close all items
-                faqItems.forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // If it wasn't active, open it
-                if (!isActive) {
-                    item.classList.add('active');
-                    
-                    // Scroll into view if needed
-                    if (window.innerWidth < 768) {
-                        item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }
-            });
-        });
-        
-        // Category filtering
-        categoryButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const category = this.getAttribute('data-category');
-                
-                // Update active category button
-                categoryButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Show/hide FAQ items based on category
-                faqItems.forEach(item => {
-                    const itemCategory = item.getAttribute('data-category');
-                    
-                    if (category === 'all' || itemCategory === category) {
-                        item.style.display = 'block';
-                        // Add slight delay for animation
-                        setTimeout(() => {
-                            item.style.opacity = '1';
-                            item.style.transform = 'translateY(0)';
-                        }, 10);
-                    } else {
-                        item.style.opacity = '0';
-                        item.style.transform = 'translateY(10px)';
-                        setTimeout(() => {
-                            item.style.display = 'none';
-                        }, 300);
-                    }
-                });
-                
-                // Close all items when switching categories
-                faqItems.forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Scroll to top of FAQ section on mobile
-                if (window.innerWidth < 768) {
-                    faqContainer.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-        
-        // Open first FAQ item by default
-        if (faqItems.length > 0) {
-            faqItems[0].classList.add('active');
-        }
-        
-        // Search functionality (optional enhancement)
-        const searchInput = document.createElement('input');
-        searchInput.type = 'text';
-        searchInput.placeholder = 'Search FAQs...';
-        searchInput.style.cssText = `
-            display: block;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto 2rem auto;
-            padding: 0.8rem 1.5rem;
-            border: 2px solid #ddd;
-            border-radius: 25px;
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s;
-        `;
-        
-        // Insert search after categories
-        const categoriesDiv = document.querySelector('.faq-category').parentElement;
-        categoriesDiv.parentElement.insertBefore(searchInput, categoriesDiv.nextSibling);
-        
-        // Search functionality
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase().trim();
-            
-            if (searchTerm.length < 2) {
-                // Reset to current category view
-                const activeCategory = document.querySelector('.faq-category.active');
-                if (activeCategory) {
-                    activeCategory.click();
-                }
-                return;
-            }
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question').textContent.toLowerCase();
-                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
-                
-                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-                    item.style.display = 'block';
-                    setTimeout(() => {
-                        item.style.opacity = '1';
-                        item.style.transform = 'translateY(0)';
-                    }, 10);
-                } else {
-                    item.style.opacity = '0';
-                    item.style.transform = 'translateY(10px)';
-                    setTimeout(() => {
-                        item.style.display = 'none';
-                    }, 300);
-                }
-                
-                // Close all items during search
-                item.classList.remove('active');
-            });
-        });
-        
-        // Search input focus styles
-        searchInput.addEventListener('focus', function() {
-            this.style.borderColor = '#1176d6';
-            this.style.boxShadow = '0 0 0 3px rgba(17, 118, 214, 0.1)';
-        });
-        
-        searchInput.addEventListener('blur', function() {
-            this.style.borderColor = '#ddd';
-            this.style.boxShadow = 'none';
-        });
-        
-        // Keyboard navigation for FAQ
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                e.preventDefault();
-                const activeItems = Array.from(faqItems).filter(item => 
-                    getComputedStyle(item).display !== 'none'
-                );
-                
-                const currentIndex = activeItems.findIndex(item => 
-                    item.classList.contains('active')
-                );
-                
-                let nextIndex;
-                if (e.key === 'ArrowDown') {
-                    nextIndex = currentIndex < activeItems.length - 1 ? currentIndex + 1 : 0;
-                } else {
-                    nextIndex = currentIndex > 0 ? currentIndex - 1 : activeItems.length - 1;
-                }
-                
-                // Close current, open next
-                faqItems.forEach(item => item.classList.remove('active'));
-                if (activeItems[nextIndex]) {
-                    activeItems[nextIndex].classList.add('active');
-                    activeItems[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }
-        });
-        
-        // Smooth scroll for "Contact Us" button
-        document.querySelector('a[href="#contactSection"]').addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetElement = document.querySelector('#contactSection');
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-</script>
-    <section id="contactSection">
-        <h2>Contact</h2>
-       <!-- Contact Section -->
-<section id="contactSection" style="padding: 5rem 5vw; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-    <div style="max-width: 1200px; margin: 0 auto;">
-        <div style="text-align: center; margin-bottom: 3rem;">
-            <h2 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 1rem; color: #1176d6; position: relative; display: inline-block;">
-                <span style="position: relative; z-index: 2;">Get In Touch</span>
-                <span style="position: absolute; bottom: 5px; left: 0; width: 100%; height: 8px; background: rgba(17, 118, 214, 0.2); z-index: 1;"></span>
-            </h2>
-            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 1rem auto 2rem;">
-                Connect with us for inquiries, partnerships, or just to share a laugh!
-            </p>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem;">
-            <!-- Contact Information -->
-            <div>
-                <div style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); height: 100%;">
-                    <h3 style="font-size: 1.5rem; color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
-                        <span style="display: inline-block; width: 8px; height: 30px; background: #1176d6; border-radius: 4px;"></span>
-                        Contact Information
-                    </h3>
-                    
-                    <!-- Email -->
-                    <div style="display: flex; align-items: flex-start; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-                            <span style="color: white; font-size: 1.5rem;">✉️</span>
-                        </div>
-                        <div style="flex: 1;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #333; font-size: 1.1rem;">Email Address</h4>
-                            <p style="margin: 0; color: #666; font-size: 1rem; line-height: 1.6;">
-                                <a href="mailto:info@nightoflaughter.com" style="color: #1176d6; text-decoration: none; font-weight: bold;">
-                                    info@nightoflaughter.com
-                                </a>
-                            </p>
-                            <p style="margin: 0.5rem 0 0 0; color: #888; font-size: 0.9rem;">
-                                For general inquiries, ticket support, and partnership opportunities
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Phone -->
-                    <div style="display: flex; align-items: flex-start; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 12px; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-                            <span style="color: white; font-size: 1.5rem;">📱</span>
-                        </div>
-                        <div style="flex: 1;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #333; font-size: 1.1rem;">Phone & WhatsApp</h4>
-                            <p style="margin: 0; color: #666; font-size: 1rem; line-height: 1.6;">
-                                <a href="tel:+260973299759" style="color: #1176d6; text-decoration: none; font-weight: bold;">
-                                    +260-973-299-759
-                                </a>
-                            </p>
-                            <p style="margin: 0.5rem 0 0 0; color: #888; font-size: 0.9rem;">
-                                Available Mon-Fri: 9AM-5PM • Sat: 10AM-2PM
-                            </p>
-                            <div style="margin-top: 1rem;">
-                                <a href="https://wa.me/260973299759" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
-                                    <span style="font-size: 1.2rem;">💬</span>
-                                    Message on WhatsApp
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Social Media -->
-                    <div style="display: flex; align-items: flex-start;">
-                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 12px; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-                            <span style="color: white; font-size: 1.5rem;">🌐</span>
-                        </div>
-                        <div style="flex: 1;">
-                            <h4 style="margin: 0 0 0.5rem 0; color: #333; font-size: 1.1rem;">Social Media</h4>
-                            <p style="margin: 0; color: #666; font-size: 1rem; line-height: 1.6;">
-                                Connect with us on social media for updates
-                            </p>
-                            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                                <!-- Facebook -->
-                                <a href="https://facebook.com/NightOfLaughterZM" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; background: #1877F2; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; flex: 1; justify-content: center;">
-                                    <span style="font-size: 1.2rem;">📘</span>
-                                    Facebook
-                                </a>
-                                
-                                <!-- WhatsApp Group -->
-                                <a href="https://chat.whatsapp.com/GPoHenhxx2XGaztn4DcGXw" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; background: #25D366; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; flex: 1; justify-content: center;">
-                                    <span style="font-size: 1.2rem;">👥</span>
-                                    WhatsApp Group
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Quick Contact Form -->
-            <div>
-                <div style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); height: 100%;">
-                    <h3 style="font-size: 1.5rem; color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
-                        <span style="display: inline-block; width: 8px; height: 30px; background: #1176d6; border-radius: 4px;"></span>
-                        Send Us a Message
-                    </h3>
-                    
-                    <form id="contactForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <div>
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Name</label>
-                            <input type="text" id="contactName" placeholder="Enter your full name" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;" required>
-                        </div>
-                        
-                        <div>
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Email Address</label>
-                            <input type="email" id="contactEmail" placeholder="Enter your email" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;" required>
-                        </div>
-                        
-                        <div>
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Phone Number</label>
-                            <input type="tel" id="contactPhone" placeholder="Enter your phone number" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
-                        </div>
-                        
-                        <div>
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Subject</label>
-                            <select id="contactSubject" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;" required>
-                                <option value="">Select a subject</option>
-                                <option value="ticket">Ticket Inquiry</option>
-                                <option value="event">Event Information</option>
-                                <option value="partnership">Partnership Opportunity</option>
-                                <option value="booking">Artist Booking</option>
-                                <option value="corporate">Corporate Event</option>
-                                <option value="feedback">Feedback & Suggestions</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Message</label>
-                            <textarea id="contactMessage" placeholder="Type your message here..." rows="5" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; resize: vertical;" required></textarea>
-                        </div>
-                        
-                        <button type="submit" style="background: #1176d6; color: white; border: none; padding: 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: background 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                            <span>Send Message</span>
-                            <span style="font-size: 1.2rem;">→</span>
-                        </button>
-                        
-                        <p style="color: #888; font-size: 0.9rem; text-align: center; margin: 0;">
-                            We'll respond within 24-48 hours
-                        </p>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Business Hours & FAQ -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-            <!-- Business Hours -->
-            <div style="background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
-                <h3 style="font-size: 1.3rem; color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
-                    <span style="display: inline-block; width: 6px; height: 24px; background: #1176d6; border-radius: 3px;"></span>
-                    Business Hours
-                </h3>
-                
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div style="display: flex; justify-content: space-between; padding-bottom: 0.8rem; border-bottom: 1px solid #eee;">
-                        <span style="color: #555; font-weight: 500;">sunday - saturday</span>
-                        <span style="color: #1176d6; font-weight: bold;">24/7</span>
-                    </div>
-                  
-                
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
-                    <p style="color: #666; font-size: 0.9rem; margin: 0;">
-                        <span style="color: #1176d6; font-weight: bold;">Note:</span> 
-                        For events, our team is available until the event ends
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Quick Links -->
-            <div style="background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
-                <h3 style="font-size: 1.3rem; color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
-                    <span style="display: inline-block; width: 6px; height: 24px; background: #1176d6; border-radius: 3px;"></span>
-                    Quick Links
-                </h3>
-                
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <a href="#eventsSection" style="display: flex; align-items: center; gap: 0.8rem; color: #555; text-decoration: none; padding: 0.8rem; border-radius: 8px; transition: background 0.3s;">
-                        <span style="color: #1176d6; font-size: 1.2rem;">🎫</span>
-                        <div>
-                            <div style="font-weight: bold; color: #333;">Buy Tickets</div>
-                            <div style="font-size: 0.9rem; color: #888;">Browse upcoming events</div>
-                        </div>
-                        <span style="margin-left: auto; color: #1176d6;">→</span>
-                    </a>
-                    
-                    <a href="#faqSection" style="display: flex; align-items: center; gap: 0.8rem; color: #555; text-decoration: none; padding: 0.8rem; border-radius: 8px; transition: background 0.3s;">
-                        <span style="color: #1176d6; font-size: 1.2rem;">❓</span>
-                        <div>
-                            <div style="font-weight: bold; color: #333;">FAQs</div>
-                            <div style="font-size: 0.9rem; color: #888;">Common questions answered</div>
-                        </div>
-                        <span style="margin-left: auto; color: #1176d6;">→</span>
-                    </a>
-                    
-                    <a href="#testimonialsSection" style="display: flex; align-items: center; gap: 0.8rem; color: #555; text-decoration: none; padding: 0.8rem; border-radius: 8px; transition: background 0.3s;">
-                        <span style="color: #1176d6; font-size: 1.2rem;">⭐</span>
-                        <div>
-                            <div style="font-weight: bold; color: #333;">Testimonials</div>
-                            <div style="font-size: 0.9rem; color: #888;">See what others say</div>
-                        </div>
-                        <span style="margin-left: auto; color: #1176d6;">→</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Location Map Placeholder -->
-        <div style="margin-top: 3rem; text-align: center;">
-            <div style="background: white; border-radius: 15px; padding: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
-                <h3 style="font-size: 1.3rem; color: #333; margin-bottom: 1.5rem;">
-                    Based in Lusaka, Zambia
-                </h3>
-                <div style="background: #f0f7ff; border-radius: 10px; padding: 2rem; margin-bottom: 1.5rem;">
-                    <div style="font-size: 4rem; color: #1176d6; margin-bottom: 1rem;">📍</div>
-                    <p style="color: #666; margin: 0; font-size: 1.1rem;">
-                        Serving comedy fans across Zambia with events in major cities
-                    </p>
-                </div>
-                <p style="color: #888; font-size: 0.9rem; margin: 0;">
-                    Our events take place at various venues across Zambia. Check individual event pages for specific locations.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-    /* Hover effects */
-    #contactForm input:focus,
-    #contactForm select:focus,
-    #contactForm textarea:focus {
-        outline: none;
-        border-color: #1176d6 !important;
-        box-shadow: 0 0 0 3px rgba(17, 118, 214, 0.1);
-    }
-    
-    #contactForm button:hover {
-        background: #0d5bb5 !important;
-        transform: translateY(-2px);
-    }
-    
-    /* Link hover effects */
-    a[href^="mailto"]:hover,
-    a[href^="tel"]:hover {
-        text-decoration: underline !important;
-    }
-    
-    /* Social button hover effects */
-    a[style*="background: #1877F2"]:hover {
-        background: #166FE5 !important;
-        transform: translateY(-2px);
-    }
-    
-    a[style*="background: #25D366"]:hover {
-        background: #1DA851 !important;
-        transform: translateY(-2px);
-    }
-    
-    /* Quick links hover effects */
-    a[href^="#"]:hover {
-        background: #f8f9fa !important;
-    }
-    
-    /* Responsive design */
-    @media (max-width: 992px) {
-        #contactSection > div > div:first-child {
-            grid-template-columns: 1fr !important;
-            gap: 2rem !important;
-        }
-        
-        #contactSection > div > div:nth-child(3) {
-            grid-template-columns: 1fr !important;
-            gap: 2rem !important;
-        }
-    }
-    
-    @media (max-width: 768px) {
-        #contactSection {
-            padding: 3rem 5vw !important;
-        }
-        
-        .contact-info-card,
-        .contact-form-card {
-            padding: 2rem !important;
-        }
-        
-        .contact-detail {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-        }
-        
-        .contact-detail > div:first-child {
-            margin-bottom: 1rem !important;
-            margin-right: 0 !important;
-        }
-        
-        .social-buttons {
-            flex-direction: column !important;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .contact-info-card,
-        .contact-form-card {
-            padding: 1.5rem !important;
-        }
-        
-        h2 {
-            font-size: 1.8rem !important;
-        }
-        
-        h3 {
-            font-size: 1.3rem !important;
-        }
-    }
-</style>
-
-<script>
-    // Contact Form Script
-    document.addEventListener('DOMContentLoaded', function() {
-        const contactForm = document.getElementById('contactForm');
-        const contactName = document.getElementById('contactName');
-        const contactEmail = document.getElementById('contactEmail');
-        const contactPhone = document.getElementById('contactPhone');
-        const contactSubject = document.getElementById('contactSubject');
-        const contactMessage = document.getElementById('contactMessage');
-        
-        // Form validation
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(String(email).toLowerCase());
-        }
-        
-        function validatePhone(phone) {
-            if (!phone) return true; // Phone is optional
-            const re = /^(\+?260|0)?[97]\d{8}$/;
-            return re.test(String(phone).replace(/\s/g, ''));
-        }
-        
-        // Form submission
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = contactName.value.trim();
-            const email = contactEmail.value.trim();
-            const phone = contactPhone.value.trim();
-            const subject = contactSubject.value;
-            const message = contactMessage.value.trim();
-            
-            // Validate form
-            const errors = [];
-            
-            if (!name) errors.push('Name is required');
-            if (!email) errors.push('Email is required');
-            else if (!validateEmail(email)) errors.push('Invalid email address');
-            if (phone && !validatePhone(phone)) errors.push('Invalid phone number. Use Zambian format');
-            if (!subject) errors.push('Please select a subject');
-            if (!message) errors.push('Message is required');
-            if (message.length < 10) errors.push('Message should be at least 10 characters');
-            
-            // Show errors if any
-            if (errors.length > 0) {
-                alert('Please fix the following errors:\n\n' + errors.join('\n'));
-                return;
-            }
-            
-            // Submit button animation
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span>Sending...</span>';
-            submitBtn.disabled = true;
-            
-            // Simulate form submission (in real app, this would be a fetch request)
-            setTimeout(() => {
-                // Success message
-                alert(`Thank you, ${name}! Your message has been sent.\n\nWe'll get back to you within 24-48 hours.`);
-                
-                // Reset form
-                contactForm.reset();
-                
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                
-                // In a real application, you would send the data to your server:
-                /*
-                fetch('/api/contact', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, phone, subject, message })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Message sent successfully!');
-                        contactForm.reset();
-                    } else {
-                        alert('Error sending message. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    alert('Network error. Please try again.');
-                })
-                .finally(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                });
-                */
-                
-            }, 1500);
-        });
-        
-        // Add input focus styles
-        const formInputs = contactForm.querySelectorAll('input, select, textarea');
-        formInputs.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.style.borderColor = '#1176d6';
-                this.style.boxShadow = '0 0 0 3px rgba(17, 118, 214, 0.1)';
-            });
-            
-            input.addEventListener('blur', function() {
-                this.style.borderColor = '#ddd';
-                this.style.boxShadow = 'none';
-            });
-        });
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Copy phone number on click
-        document.querySelector('a[href^="tel"]').addEventListener('click', function(e) {
-            // Prevent immediate calling on mobile
-            if (window.innerWidth > 768) {
-                e.preventDefault();
-                const phoneNumber = this.getAttribute('href').replace('tel:', '');
-                
-                // Copy to clipboard
-                navigator.clipboard.writeText(phoneNumber)
-                    .then(() => {
-                        const originalText = this.innerHTML;
-                        this.innerHTML = 'Copied!';
-                        this.style.color = '#28a745';
-                        
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                            this.style.color = '#1176d6';
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy: ', err);
-                    });
-            }
-        });
-        
-        // Copy email on click
-        document.querySelector('a[href^="mailto"]').addEventListener('click', function(e) {
-            if (window.innerWidth > 768) {
-                e.preventDefault();
-                const email = this.getAttribute('href').replace('mailto:', '');
-                
-                // Copy to clipboard
-                navigator.clipboard.writeText(email)
-                    .then(() => {
-                        const originalText = this.innerHTML;
-                        this.innerHTML = 'Copied!';
-                        this.style.color = '#28a745';
-                        
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                            this.style.color = '#1176d6';
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy: ', err);
-                    });
-            }
-        });
-    });
-</script>
     </section>
     
-    <!-- Ticket Purchase Modal -->
-    <div id="ticketModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            
-            <!-- Step 1: Select Ticket Type -->
-            <div id="step1" class="modal-step active">
-                <h2>Select Ticket Type</h2>
-                <p id="modalEventName" style="color: #666; margin-bottom: 20px;"></p>
-                
-                <div class="form-group">
-                    <label for="ticketType">Choose your ticket:</label>
-                    <select id="ticketType" class="ticket-select">
-                        <option value="">-- Select Ticket Type --</option>
-                        <option value="vip_single">VIP Single</option>
-                        <option value="vip_double">VIP Double</option>
-                        <option value="ordinary_single">Ordinary Single</option>
-                        <option value="ordinary_double">Ordinary Double</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="ticketQuantity">Number of Tickets:</label>
-                    <select id="ticketQuantity">
-                        <option value="1">1 Ticket</option>
-                        <option value="2">2 Tickets</option>
-                        <option value="3">3 Tickets</option>
-                        <option value="4">4 Tickets</option>
-                        <option value="5">5 Tickets</option>
-                    </select>
-                </div>
-                
-                <div id="priceDisplay" style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin: 20px 0; display: none;">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2em;">
-                        <span>Total Price:</span>
-                        <span id="totalPrice">K0</span>
-                    </div>
-                </div>
-                
-                <div class="modal-nav">
-                    <button class="btn-prev" disabled>Back</button>
-                    <button class="btn-next" onclick="nextStep(1)">Continue</button>
-                </div>
-            </div>
-            
-            <!-- Step 2: Enter Personal Info -->
-            <div id="step2" class="modal-step">
-                <h2>Your Information</h2>
-                <p style="color: #666; margin-bottom: 20px;">Please enter your details for the ticket</p>
-                
-                <div class="form-group">
-                    <label for="fullName">Full Name:</label>
-                    <input type="text" id="fullName" placeholder="Enter your full name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address:</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Phone Number:</label>
-                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
-                </div>
-                
-                <div class="modal-nav">
-                    <button class="btn-prev" onclick="prevStep(2)">Back</button>
-                    <button class="btn-next" onclick="nextStep(2)">Continue</button>
-                </div>
-            </div>
-            
-            <!-- Step 3: Confirmation -->
-            <div id="step3" class="modal-step">
-                <h2>Confirm Your Booking</h2>
-                <p style="color: #666; margin-bottom: 20px;">Please review your information before proceeding to payment</p>
-                
-                <div class="confirmation-details">
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Event:</span>
-                        <span class="confirmation-value" id="confirmEvent"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Ticket Type:</span>
-                        <span class="confirmation-value" id="confirmTicketType"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Quantity:</span>
-                        <span class="confirmation-value" id="confirmQuantity"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Total Price:</span>
-                        <span class="confirmation-value" id="confirmPrice"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Name:</span>
-                        <span class="confirmation-value" id="confirmName"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Email:</span>
-                        <span class="confirmation-value" id="confirmEmail"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Phone:</span>
-                        <span class="confirmation-value" id="confirmPhone"></span>
-                    </div>
-                </div>
-                
-                <div class="modal-nav">
-                    <button class="btn-prev" onclick="prevStep(3)">Back</button>
-                    <button class="btn-pay" onclick="proceedToPayment()">Proceed to Payment</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Success Modal -->
-    <div id="successModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeSuccessModal()">&times;</span>
-            <div id="ticketContainer">
-    <div class="ticket-template">
-        <div class="ticket-header">
-            <h2 style="color:#1176d6;margin:0">Night of Laughter</h2>
-            <div style="font-weight:bold;margin-top:8px">
-                Booking ID: <span id="bookingId"></span>
-            </div>
-        </div>
+    <!-- Contact Section -->
+    <section id="contactSection" class="section-content section-bg-light">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">Get In Touch</h2>
+            <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 1rem auto 2rem; text-align: center;">
+                Connect with us for inquiries, partnerships, or just to share a laugh!
+            </p>
 
-        <div class="ticket-body">
-            <!-- Event, ticket type, customer details -->
-        </div>
-
-        <div class="ticket-qr">
-            <div id="qrcode-placeholder"></div>
-            <p style="margin-top:10px;color:#666;font-size:14px">Scan for verification</p>
-        </div>
-    </div>
-</div>
-
-            
-            <div style="text-align: center; padding: 20px;">
-                <div style="color: #28a745; font-size: 48px; margin-bottom: 20px;">✓</div>
-                <h2 style="color: #28a745;">Payment Successful!</h2>
-                <p style="color: #666; margin: 20px 0;">Your ticket has been generated and is ready to download.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem;">
+                <!-- Contact Information -->
+                <div>
+                    <div style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); height: 100%;">
+                        <h3 style="font-size: 1.5rem; color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                            <span style="display: inline-block; width: 8px; height: 30px; background: #1176d6; border-radius: 4px;"></span>
+                            Contact Information
+                        </h3>
+                        
+                        <!-- Email -->
+                        <div style="display: flex; align-items: flex-start; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee;">
+                            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                <span style="color: white; font-size: 1.5rem;">✉️</span>
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #333; font-size: 1.1rem;">Email Address</h4>
+                                <p style="margin: 0; color: #666; font-size: 1rem; line-height: 1.6;">
+                                    <a href="mailto:info@nightoflaughter.com" style="color: #1176d6; text-decoration: none; font-weight: bold;">
+                                        info@nightoflaughter.com
+                                    </a>
+                                </p>
+                                <p style="margin: 0.5rem 0 0 0; color: #888; font-size: 0.9rem;">
+                                    For general inquiries, ticket support, and partnership opportunities
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Phone -->
+                        <div style="display: flex; align-items: flex-start; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee;">
+                            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 12px; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                <span style="color: white; font-size: 1.5rem;">📱</span>
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: #333; font-size: 1.1rem;">Phone & WhatsApp</h4>
+                                <p style="margin: 0; color: #666; font-size: 1rem; line-height: 1.6;">
+                                    <a href="tel:+260973299759" style="color: #1176d6; text-decoration: none; font-weight: bold;">
+                                        +260-973-299-759
+                                    </a>
+                                </p>
+                                <p style="margin: 0.5rem 0 0 0; color: #888; font-size: 0.9rem;">
+                                    Available Mon-Fri: 9AM-5PM • Sat: 10AM-2PM
+                                </p>
+                                <div style="margin-top: 1rem;">
+                                    <a href="https://wa.me/260973299759" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: white; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
+                                        <span style="font-size: 1.2rem;">💬</span>
+                                        Message on WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
-                <div id="ticketContainer" style="margin: 30px 0;"></div>
-                
-                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 30px;">
-                    <button class="btn" onclick="downloadTicket()" style="background: var(--blue);">
-                        Download Ticket
-                    </button>
-                    <button class="btn" onclick="printTicket()" style="background: #17a2b8;">
-                        Print Ticket
-                    </button>
-                    <button class="btn" onclick="closeSuccessModal()" style="background: #6c757d;">
-                        Close
-                    </button>
+                <!-- Quick Contact Form -->
+                <div>
+                    <div style="background: white; border-radius: 15px; padding: 2.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.08); height: 100%;">
+                        <h3 style="font-size: 1.5rem; color: #333; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
+                            <span style="display: inline-block; width: 8px; height: 30px; background: #1176d6; border-radius: 4px;"></span>
+                            Send Us a Message
+                        </h3>
+                        
+                        <form id="contactForm" class="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Name</label>
+                                <input type="text" id="contactName" placeholder="Enter your full name" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;" required>
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Email Address</label>
+                                <input type="email" id="contactEmail" placeholder="Enter your email" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;" required>
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Phone Number</label>
+                                <input type="tel" id="contactPhone" placeholder="Enter your phone number" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+                            </div>
+                            
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333;">Your Message</label>
+                                <textarea id="contactMessage" placeholder="Type your message here..." rows="5" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; resize: vertical;" required></textarea>
+                            </div>
+                            
+                            <button type="submit" style="background: #1176d6; color: white; border: none; padding: 1rem; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: background 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                <span>Send Message</span>
+                                <span style="font-size: 1.2rem;">→</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Add Event Form Modal -->
-    <div id="addEventModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAddEventModal()">&times;</span>
-            <h2>Add New Event</h2>
-            <p style="color: #666; margin-bottom: 20px;">Fill in the event details below. This will add to your Google Sheet.</p>
-            
-            <form id="addEventForm">
-                <div class="form-group">
-                    <label for="eventName">Event Name *</label>
-                    <input type="text" id="eventName" placeholder="ZED Laugh Festival 2025" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventType">Event Type *</label>
-                    <select id="eventType" required>
-                        <option value="">-- Select Type --</option>
-                        <option value="featured">Featured</option>
-                        <option value="upcoming">Upcoming</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventDate">Date *</label>
-                    <input type="text" id="eventDate" placeholder="March 15, 2025" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventTime">Time *</label>
-                    <input type="text" id="eventTime" placeholder="6:00 PM" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventVenue">Venue *</label>
-                    <input type="text" id="eventVenue" placeholder="Lusaka Playhouse" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventImage">Image URL *</label>
-                    <input type="url" id="eventImage" placeholder="https://example.com/image.jpg" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventDescription">Description *</label>
-                    <input type="text" id="eventDescription" placeholder="Biggest comedy festival in Zambia" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="vipSingle">VIP Single Price (K)</label>
-                    <input type="number" id="vipSingle" placeholder="500" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="vipDouble">VIP Double Price (K)</label>
-                    <input type="number" id="vipDouble" placeholder="800" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="ordinarySingle">Ordinary Single Price (K)</label>
-                    <input type="number" id="ordinarySingle" placeholder="300" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="ordinaryDouble">Ordinary Double Price (K)</label>
-                    <input type="number" id="ordinaryDouble" placeholder="500" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventLineup">Lineup (Optional)</label>
-                    <input type="text" id="eventLineup" placeholder="Chingliz, Ba Emma, Smoke">
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventTerms">Terms (Optional)</label>
-                    <input type="text" id="eventTerms" placeholder="No refunds, 18+ only">
-                </div>
-                
-                <div class="modal-nav">
-                    <button type="button" class="btn-prev" onclick="closeAddEventModal()">Cancel</button>
-                    <button type="submit" class="btn-pay">Add Event to Sheet</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    </section>
     
     <footer>
         NIGHT OF LAUGHTER© 2025 • All Rights Reserved
     </footer>
 
-<script>
-// ============================================
-// CONFIGURATION
-// ============================================
-const SHEETDB_API_URL = "https://sheetdb.io/api/v1/datk69lw1162m";
-const ADMIN_PASSWORD = "nol2025";
-const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd69gVqCrIRoLYt56gaZN6ZUW_ZuwLFeIKnHAkUtqys4NSLaA/viewform?usp=header";
+    <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+        const SHEETDB_API_URL = "https://sheetdb.io/api/v1/datk69lw1162m";
+        const ADMIN_PASSWORD = "nol2025";
+        const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd69gVqCrIRoLYt56gaZN6ZUW_ZuwLFeIKnHAkUtqys4NSLaA/viewform?usp=header";
 
-// ============================================
-// ADMIN PANEL FUNCTIONS
-// ============================================
-function toggleAdminPanel() {
-    const panel = document.getElementById('adminPanel');
-    const password = prompt("Enter admin password:");
-    if (password === ADMIN_PASSWORD) {
-        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-    } else if (password !== null) {
-        alert("Incorrect password");
-    }
-}
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('apiUrl').value = SHEETDB_API_URL;
+            fetchEvents();
+            initializeTestimonials();
+            initializeFAQ();
+            initializeContactForm();
+            smoothScrollNavigation();
+        });
 
-function refreshEvents() {
-    document.getElementById('featuredLoader').style.display = 'block';
-    document.getElementById('eventsLoader').style.display = 'block';
-    const featuredSection = document.getElementById("featuredSection");
-    const eventsSection = document.getElementById("eventsSection");
-    featuredSection.innerHTML = '<div class="loader" id="featuredLoader"></div>';
-    eventsSection.innerHTML = '<div class="loader" id="eventsLoader"></div>';
-    fetchEvents();
-    alert('Events refreshed successfully!');
-}
+        // ============================================
+        // NAVIGATION IMPROVEMENTS
+        // ============================================
+        function smoothScrollNavigation() {
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        window.scrollTo({
+                            top: targetElement.offsetTop - headerHeight - 20,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active navigation link
+                        document.querySelectorAll('nav a').forEach(link => {
+                            link.style.backgroundColor = '';
+                        });
+                        this.style.backgroundColor = '#eaeaea';
+                    }
+                });
+            });
 
-function openAddEventForm() {
-    document.getElementById('addEventModal').style.display = 'flex';
-    document.getElementById('adminPanel').style.display = 'none';
-}
+            // Add active class to nav links on scroll
+            window.addEventListener('scroll', function() {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('nav a');
+                
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
 
-function closeAddEventModal() {
-    document.getElementById('addEventModal').style.display = 'none';
-    document.getElementById('addEventForm').reset();
-}
-
-function copyApiUrl() {
-    const apiUrlInput = document.getElementById('apiUrl');
-    apiUrlInput.value = SHEETDB_API_URL;
-    apiUrlInput.select();
-    apiUrlInput.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(SHEETDB_API_URL);
-    alert('API URL copied to clipboard!');
-}
-
-// ============================================
-// HELPER FUNCTIONS
-// ============================================
-function toggleDescription(id) {
-    const desc = document.getElementById(id);
-    if (desc) {
-        desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
-    }
-}
-
-function formatCurrency(amount) {
-    return 'K' + parseInt(amount).toLocaleString();
-}
-
-// ============================================
-// SIMPLE BUY TICKET FUNCTION
-// ============================================
-function buyTicket(eventData) {
-    // Direct redirect to Google Form
-    window.open(GOOGLE_FORM_URL, '_blank');
-    
-    // Optional: Show a quick message
-    alert(`Redirecting to booking form for: ${eventData.name}`);
-}
-
-// ============================================
-// FETCH EVENTS FROM SHEETDB
-// ============================================
-async function fetchEvents() {
-    try {
-        const response = await fetch(SHEETDB_API_URL);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+                navLinks.forEach(link => {
+                    link.style.backgroundColor = '';
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.style.backgroundColor = '#eaeaea';
+                    }
+                });
+            });
         }
-        const data = await response.json();
-        if (data && data.length > 0) {
-            renderEvents(data);
-        } else {
-            showEmptyState();
+
+        // ============================================
+        // ADMIN PANEL FUNCTIONS
+        // ============================================
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            const password = prompt("Enter admin password:");
+            if (password === ADMIN_PASSWORD) {
+                panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+            } else if (password !== null) {
+                alert("Incorrect password");
+            }
         }
-    } catch (error) {
-        console.error('Error fetching events:', error);
-        showErrorState();
-    }
-}
 
-function showEmptyState() {
-    const featuredSection = document.getElementById("featuredSection");
-    const eventsSection = document.getElementById("eventsSection");
-    
-    document.getElementById("featuredLoader").style.display = 'none';
-    document.getElementById("eventsLoader").style.display = 'none';
-    
-    featuredSection.innerHTML = `
-        <h2>Featured Events</h2>
-        <p style="text-align: center; color: #666; padding: 40px 0;">
-            No featured events yet. Use the admin panel (⚙️) to add events.
-        </p>
-    `;
-    
-    eventsSection.innerHTML = `
-        <h2>Upcoming Events</h2>
-        <p style="text-align: center; color: #666; padding: 40px 0;">
-            No upcoming events scheduled. Stay tuned!
-        </p>
-    `;
-}
+        function refreshEvents() {
+            document.getElementById('featuredLoader').style.display = 'block';
+            document.getElementById('eventsLoader').style.display = 'block';
+            const featuredSection = document.getElementById("featuredSection");
+            const eventsSection = document.getElementById("eventsSection");
+            featuredSection.innerHTML = '<div class="loader" id="featuredLoader"></div>';
+            eventsSection.innerHTML = '<div class="loader" id="eventsLoader"></div>';
+            fetchEvents();
+            alert('Events refreshed successfully!');
+        }
 
-function showErrorState() {
-    const featuredSection = document.getElementById("featuredSection");
-    const eventsSection = document.getElementById("eventsSection");
-    
-    document.getElementById("featuredLoader").style.display = 'none';
-    document.getElementById("eventsLoader").style.display = 'none';
-    
-    featuredSection.innerHTML = `
-        <h2>Featured Events</h2>
-        <div style="text-align: center; color: #666; padding: 40px 0;">
-            <p>Unable to load events. Please check:</p>
-            <p>1. Your SheetDB API URL is correct</p>
-            <p>2. Your Google Sheet is publicly accessible</p>
-            <p>3. You have internet connection</p>
-            <button onclick="refreshEvents()" style="margin-top: 20px; padding: 10px 20px; background: var(--blue); color: white; border: none; border-radius: 5px; cursor: pointer;">
-                Retry
-            </button>
-        </div>
-    `;
-    
-    eventsSection.innerHTML = '';
-}
+        function openAddEventForm() {
+            alert('This feature would open a form to add events. Implementation depends on your backend.');
+        }
 
-// ============================================
-// EVENT RENDERING
-// ============================================
-function renderEventCard(ev, idx) {
-    const moreId = `desc_${idx}`;
-    
-    return `<div class="event-card">
-        <div class="event-thumb">
-            <img src="${ev.image || 'https://via.placeholder.com/400x400?text=Event+Image'}" 
-                 loading="lazy" 
-                 alt="${ev.name || 'Event'}" 
-                 onerror="this.src='https://via.placeholder.com/400x400?text=Event+Image'">
-        </div>
-        <div class="event-content">
-            <div class="event-title">${ev.name || "Event Name"}</div>
-            <div><span class="info-label">Date:</span> ${ev.date || "TBA"}</div>
-            <div><span class="info-label">Time:</span> ${ev.time || "TBA"}</div>
-            <div><span class="info-label">Venue:</span> ${ev.venue || "TBA"}</div>
-            <div class="price-box">
-                <div><b>Ticket Prices:</b></div>
-                ${ev.vip_single && ev.vip_single !== '0' ? `<div>VIP Single: K${ev.vip_single}</div>` : ''}
-                ${ev.vip_double && ev.vip_double !== '0' ? `<div>VIP Double: K${ev.vip_double}</div>` : ''}
-                ${ev.ordinary_single && ev.ordinary_single !== '0' ? `<div>Ordinary Single: K${ev.ordinary_single}</div>` : ''}
-                ${ev.ordinary_double && ev.ordinary_double !== '0' ? `<div>Ordinary Double: K${ev.ordinary_double}</div>` : ''}
-            </div>
-            <div class="btn-row">
-                <button class="btn" onclick="buyTicket(${JSON.stringify(ev).replace(/"/g, '&quot;')})">
-                    Buy Ticket
-                </button>
-                <button class="btn info" onclick="toggleDescription('${moreId}')">
-                    More Info
-                </button>
-            </div>
-            <div id="${moreId}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #eee;">
-                <p><strong>Description:</strong> ${ev.description || ev.desc || "No description available."}</p>
-                ${ev.lineup ? `<p><strong>Lineup:</strong> ${ev.lineup}</p>` : ''}
-                ${ev.terms ? `<p><strong>Terms:</strong> ${ev.terms}</p>` : ''}
-            </div>
-        </div>
-    </div>`;
-}
+        function copyApiUrl() {
+            const apiUrlInput = document.getElementById('apiUrl');
+            apiUrlInput.select();
+            apiUrlInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(SHEETDB_API_URL);
+            alert('API URL copied to clipboard!');
+        }
 
-function renderEvents(eventsData) {
-    const featuredSection = document.getElementById("featuredSection");
-    const eventsSection = document.getElementById("eventsSection");
-    
-    document.getElementById("featuredLoader").style.display = 'none';
-    document.getElementById("eventsLoader").style.display = 'none';
-    
-    if (!eventsData || eventsData.length === 0) {
-        showEmptyState();
-        return;
-    }
-    
-    const featured = eventsData.filter(ev => 
-        ev.type && ev.type.toLowerCase().includes('featured')
-    );
-    
-    const upcoming = eventsData.filter(ev => 
-        !ev.type || !ev.type.toLowerCase().includes('featured')
-    );
-    
-    if (featured.length > 0) {
-        featuredSection.innerHTML = `
-            <h2>Featured Events</h2>
-            <div class="event-list">
-                ${featured.map((ev, idx) => renderEventCard(ev, idx)).join('')}
-            </div>
-        `;
-    } else {
-        featuredSection.innerHTML = `
-            <h2>Featured Events</h2>
-            <p style="text-align: center; color: #666; padding: 40px 0;">
-                No featured events at the moment. Check back soon!
-            </p>
-        `;
-    }
-    
-    if (upcoming.length > 0) {
-        eventsSection.innerHTML = `
-            <h2>Upcoming Events</h2>
-            <div class="event-list">
-                ${upcoming.map((ev, idx) => renderEventCard(ev, idx)).join('')}
-            </div>
-        `;
-    } else {
-        eventsSection.innerHTML = `
-            <h2>Upcoming Events</h2>
-            <p style="text-align: center; color: #666; padding: 40px 0;">
-                No upcoming events scheduled. Stay tuned for announcements!
-            </p>
-        `;
-    }
-}
+        // ============================================
+        // HELPER FUNCTIONS
+        // ============================================
+        function toggleDescription(id) {
+            const desc = document.getElementById(id);
+            if (desc) {
+                desc.style.display = (desc.style.display === 'block') ? 'none' : 'block';
+            }
+        }
 
-// ============================================
-// INITIALIZE APPLICATION
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('apiUrl').value = SHEETDB_API_URL;
-    fetchEvents();
-});
-</script>
-            </body>
-            </html>
-        
+        function formatCurrency(amount) {
+            return 'K' + parseInt(amount).toLocaleString();
+        }
+
+        // ============================================
+        // SIMPLE BUY TICKET FUNCTION
+        // ============================================
+        function buyTicket(eventData) {
+            window.open(GOOGLE_FORM_URL, '_blank');
+            alert(`Redirecting to booking form for: ${eventData.name}`);
+        }
+
+        // ============================================
+        // FETCH EVENTS FROM SHEETDB
+        // ============================================
+        async function fetchEvents() {
+            try {
+                const response = await fetch(SHEETDB_API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data && data.length > 0) {
+                    renderEvents(data);
+                } else {
+                    showEmptyState();
+                }
+            } catch (error) {
+                console.error('Error fetching events:', error);
+                showErrorState();
+            }
+        }
+
+        function showEmptyState() {
+            const featuredSection = document.getElementById("featuredSection");
+            const eventsSection = document.getElementById("eventsSection");
+            
+            document.getElementById("featuredLoader").style.display = 'none';
+            document.getElementById("eventsLoader").style.display = 'none';
+            
+            featuredSection.innerHTML = `
+                <h2>Featured Events</h2>
+                <p style="text-align: center; color: #666; padding: 40px 0;">
+                    No featured events yet. Check back soon!
+                </p>
+            `;
+            
+            eventsSection.innerHTML = `
+                <h2>Upcoming Events</h2>
+                <p style="text-align: center; color: #666; padding: 40px 0;">
+                    No upcoming events scheduled. Stay tuned!
+                </p>
+            `;
+        }
+
+        function showErrorState() {
+            const featuredSection = document.getElementById("featuredSection");
+            const eventsSection = document.getElementById("eventsSection");
+            
+            document.getElementById("featuredLoader").style.display = 'none';
+            document.getElementById("eventsLoader").style.display = 'none';
+            
+            featuredSection.innerHTML = `
+                <h2>Featured Events</h2>
+                <div style="text-align: center; color: #666; padding: 40px 0;">
+                    <p>Unable to load events. Please check your connection.</p>
+                    <button onclick="refreshEvents()" style="margin-top: 20px; padding: 10px 20px; background: var(--blue); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        Retry
+                    </button>
+                </div>
+            `;
+            
+            eventsSection.innerHTML = '';
+        }
+
+        // ============================================
+        // EVENT RENDERING
+        // ============================================
+        function renderEventCard(ev, idx) {
+            const moreId = `desc_${idx}`;
+            
+            return `<div class="event-card">
+                <div class="event-thumb">
+                    <img src="${ev.image || 'https://via.placeholder.com/400x400?text=Event+Image'}" 
+                         loading="lazy" 
+                         alt="${ev.name || 'Event'}" 
+                         onerror="this.src='https://via.placeholder.com/400x400?text=Event+Image'">
+                </div>
+                <div class="event-content">
+                    <div class="event-title">${ev.name || "Event Name"}</div>
+                    <div><span class="info-label">Date:</span> ${ev.date || "TBA"}</div>
+                    <div><span class="info-label">Time:</span> ${ev.time || "TBA"}</div>
+                    <div><span class="info-label">Venue:</span> ${ev.venue || "TBA"}</div>
+                    <div class="price-box">
+                        <div><b>Ticket Prices:</b></div>
+                        ${ev.vip_single && ev.vip_single !== '0' ? `<div>VIP Single: K${ev.vip_single}</div>` : ''}
+                        ${ev.vip_double && ev.vip_double !== '0' ? `<div>VIP Double: K${ev.vip_double}</div>` : ''}
+                        ${ev.ordinary_single && ev.ordinary_single !== '0' ? `<div>Ordinary Single: K${ev.ordinary_single}</div>` : ''}
+                        ${ev.ordinary_double && ev.ordinary_double !== '0' ? `<div>Ordinary Double: K${ev.ordinary_double}</div>` : ''}
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn" onclick="buyTicket(${JSON.stringify(ev).replace(/"/g, '&quot;')})">
+                            Buy Ticket
+                        </button>
+                        <button class="btn info" onclick="toggleDescription('${moreId}')">
+                            More Info
+                        </button>
+                    </div>
+                    <div id="${moreId}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #eee;">
+                        <p><strong>Description:</strong> ${ev.description || ev.desc || "No description available."}</p>
+                        ${ev.lineup ? `<p><strong>Lineup:</strong> ${ev.lineup}</p>` : ''}
+                        ${ev.terms ? `<p><strong>Terms:</strong> ${ev.terms}</p>` : ''}
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function renderEvents(eventsData) {
+            const featuredSection = document.getElementById("featuredSection");
+            const eventsSection = document.getElementById("eventsSection");
+            
+            document.getElementById("featuredLoader").style.display = 'none';
+            document.getElementById("eventsLoader").style.display = 'none';
+            
+            if (!eventsData || eventsData.length === 0) {
+                showEmptyState();
+                return;
+            }
+            
+            const featured = eventsData.filter(ev => 
+                ev.type && ev.type.toLowerCase().includes('featured')
+            );
+            
+            const upcoming = eventsData.filter(ev => 
+                !ev.type || !ev.type.toLowerCase().includes('featured')
+            );
+            
+            if (featured.length > 0) {
+                featuredSection.innerHTML = `
+                    <h2>Featured Events</h2>
+                    <div class="event-list">
+                        ${featured.map((ev, idx) => renderEventCard(ev, idx)).join('')}
+                    </div>
+                `;
+            } else {
+                featuredSection.innerHTML = `
+                    <h2>Featured Events</h2>
+                    <p style="text-align: center; color: #666; padding: 40px 0;">
+                        No featured events at the moment. Check back soon!
+                    </p>
+                `;
+            }
+            
+            if (upcoming.length > 0) {
+                eventsSection.innerHTML = `
+                    <h2>Upcoming Events</h2>
+                    <div class="event-list">
+                        ${upcoming.map((ev, idx) => renderEventCard(ev, idx)).join('')}
+                    </div>
+                `;
+            } else {
+                eventsSection.innerHTML = `
+                    <h2>Upcoming Events</h2>
+                    <p style="text-align: center; color: #666; padding: 40px 0;">
+                        No upcoming events scheduled. Stay tuned for announcements!
+                    </p>
+                `;
+            }
+        }
+
+        // ============================================
+        // TESTIMONIALS
+        // ============================================
+        function initializeTestimonials() {
+            const testimonials = [
+                {
+                    name: "Sarah Mwale",
+                    date: "March 15, 2025",
+                    location: "Regular Attendee • Lusaka",
+                    initials: "SM",
+                    event: "ZED Laugh Festival 2025",
+                    text: "Night of Laughter has completely transformed the comedy scene in Zambia! The ZED Laugh Festival was the funniest night I've had all year. The lineup was incredible, and the digital ticketing made everything so easy. Can't wait for the next one!",
+                    rating: 5
+                },
+                {
+                    name: "John Banda",
+                    date: "April 5, 2025",
+                    location: "First-time Attendee • Kitwe",
+                    initials: "JB",
+                    event: "Comedy Night Special 2024",
+                    text: "I was skeptical about buying tickets online, but the process was seamless! The instant digital tickets saved me from queuing. The comedy show itself was top-notch - Chingliz had us in stitches all night. Will definitely be coming back!",
+                    rating: 5
+                }
+            ];
+
+            const testimonialsList = document.getElementById('testimonialsList');
+            testimonials.forEach((testimonial, index) => {
+                const testimonialHTML = `
+                    <div class="testimonial-item" style="animation-delay: ${index * 0.1}s">
+                        <div style="position: absolute; top: 20px; right: 30px; font-size: 5rem; color: rgba(17, 118, 214, 0.1); font-family: Georgia, serif; line-height: 1;">"</div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin-right: 1.5rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2rem;">
+                                ${testimonial.initials}
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                    <h3 style="margin: 0; color: #333; font-size: 1.3rem;">${testimonial.name}</h3>
+                                    <span style="color: #888; font-size: 0.9rem;">${testimonial.date}</span>
+                                </div>
+                                <p style="margin: 0; color: #666; font-size: 0.95rem;">${testimonial.location}</p>
+                                <div style="display: flex; margin-top: 0.5rem;">
+                                    ${'<span style="color: #FFD700; font-size: 1.2rem;">★</span>'.repeat(testimonial.rating)}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p style="font-size: 1.1rem; line-height: 1.7; color: #555; margin: 0 0 1rem 0; position: relative; z-index: 1;">
+                            ${testimonial.text}
+                        </p>
+                        
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                            <span style="color: #1176d6; font-weight: bold; font-size: 0.9rem; background: rgba(17, 118, 214, 0.1); padding: 0.3rem 1rem; border-radius: 20px;">
+                                ${testimonial.event}
+                            </span>
+                            <span style="color: #888; font-size: 0.9rem;">
+                                <span style="color: #1176d6; font-weight: bold;">Verified</span> • Attended in person
+                            </span>
+                        </div>
+                    </div>
+                `;
+                testimonialsList.innerHTML += testimonialHTML;
+            });
+
+            // Animate testimonials on scroll
+            const testimonialObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.testimonial-item').forEach(item => {
+                testimonialObserver.observe(item);
+            });
+
+            // Load more button
+            document.getElementById('loadMoreBtn').addEventListener('click', function() {
+                alert('This would load more testimonials from your database.');
+            });
+        }
+
+        // ============================================
+        // FAQ
+        // ============================================
+        function initializeFAQ() {
+            const faqs = [
+                {
+                    category: "tickets",
+                    question: "1. Is there a way to get tickets online instead of waiting for delivery?",
+                    answer: `<p><strong>Yes, absolutely!</strong> We offer instant digital tickets through our website. Simply select your event, choose your tickets, and complete the payment. Your digital tickets will be available immediately for download.</p>`
+                },
+                {
+                    category: "events",
+                    question: "2. Can other comedians have events posted on the Night of Laughter website?",
+                    answer: `<p><strong>Yes, they can!</strong> We welcome collaborations with comedians across Zambia and beyond. If you're a comedian interested in hosting an event through our platform, please get in touch with our team.</p>`
+                },
+                {
+                    category: "tickets",
+                    question: "3. What payment methods do you accept for tickets?",
+                    answer: `<p>We accept various payment methods including Visa/Mastercard, mobile money (Zamtel Kwacha, MTN, Airtel Money), WhatsApp payments, and bank transfers.</p>`
+                }
+            ];
+
+            const faqContainer = document.getElementById('faqContainer');
+            faqs.forEach((faq, index) => {
+                const faqHTML = `
+                    <div class="faq-item" data-category="${faq.category}">
+                        <button class="faq-question">
+                            <span>${faq.question}</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div style="padding: 0 0 2rem 0; color: #555; line-height: 1.7;">
+                                ${faq.answer}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                faqContainer.innerHTML += faqHTML;
+            });
+
+            // FAQ functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            const categoryButtons = document.querySelectorAll('.faq-category');
+
+            // Toggle FAQ items
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all items
+                    faqItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Open clicked item if it wasn't active
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // Category filtering
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Update active category button
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show/hide FAQ items
+                    faqItems.forEach(item => {
+                        const itemCategory = item.getAttribute('data-category');
+                        if (category === 'all' || itemCategory === category) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Open first FAQ item by default
+            if (faqItems.length > 0) {
+                faqItems[0].classList.add('active');
+            }
+        }
+
+        // ============================================
+        // CONTACT FORM
+        // ============================================
+        function initializeContactForm() {
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('contactName').value.trim();
+                const email = document.getElementById('contactEmail').value.trim();
+                const phone = document.getElementById('contactPhone').value.trim();
+                const message = document.getElementById('contactMessage').value.trim();
+                
+                // Simple validation
+                if (!name || !email || !message) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                if (!validateEmail(email)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+                
+                // Submit button animation
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'Sending...';
+                submitBtn.disabled = true;
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    alert(`Thank you, ${name}! Your message has been sent.\n\nWe'll get back to you within 24-48 hours.`);
+                    contactForm.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 1500);
+            });
+            
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(String(email).toLowerCase());
+            }
+        }
+    </script>
+</body>
+</html>
