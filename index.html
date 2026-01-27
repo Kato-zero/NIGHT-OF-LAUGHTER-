@@ -331,33 +331,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Admin Panel */
-        .admin-panel {
-            display: none;
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            z-index: 2000;
-            max-width: 300px;
-        }
-        .admin-toggle {
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            background: var(--blue);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 2001;
-            font-weight: bold;
-        }
-        
         /* Payment Status Styles */
         .payment-status {
             padding: 20px;
@@ -397,7 +370,6 @@
             .hero p{ font-size: 1rem;}
             .event-card{ max-width:98vw; margin:24px 0;}
             .modal-content{ max-width:95vw; padding: 20px 15px;}
-            .admin-toggle { top: 120px; right: 10px; }
         }
     </style>
     <!-- QR Code library -->
@@ -406,29 +378,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <!-- Admin Panel Toggle -->
-    <button class="admin-toggle" onclick="toggleAdminPanel()">⚙️</button>
-    
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel">
-        <h3 style="margin-top: 0; margin-bottom: 15px;">Event Management</h3>
-        <div style="margin-bottom: 15px;">
-            <button class="btn" onclick="refreshEvents()" style="width: 100%; margin-bottom: 10px;">
-                🔄 Refresh Events
-            </button>
-            <button class="btn" onclick="openAddEventForm()" style="width: 100%; background: #28a745;">
-                ➕ Add New Event
-            </button>
-        </div>
-        <div style="font-size: 12px; color: #666;">
-            <p><strong>Current API URL:</strong></p>
-            <input type="text" id="apiUrl" style="width: 100%; padding: 5px; font-size: 11px; margin-bottom: 10px;" 
-                   value="https://sheetdb.io/api/v1/YOUR_API_ID_HERE" readonly>
-            <button onclick="copyApiUrl()" style="width: 100%; padding: 8px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                Copy API URL
-            </button>
-        </div>
-    </div>
 
     <header>
         <div class="header-left">
@@ -1216,11 +1165,7 @@
                 
                 // Reset button
                 submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                
-                // In a real app, you would add the testimonial to the list
-                // after admin approval
-                
+                submitBtn.disabled = false;    
             }, 1500);
         });
         
@@ -2208,31 +2153,48 @@
             const re = /^(\+?260|0)?[97]\d{8}$/;
             return re.test(String(phone).replace(/\s/g, ''));
         }
-                // In a real application, you would send the data to your server:
-                /*
-                fetch('/api/contact', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, phone, subject, message })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Message sent successfully!');
-                        contactForm.reset();
-                    } else {
-                        alert('Error sending message. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    alert('Network error. Please try again.');
-                })
-                .finally(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                });
-                */
-                
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            if (!contactName.value.trim()) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            if (!validateEmail(contactEmail.value)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            if (contactPhone.value && !validatePhone(contactPhone.value)) {
+                alert('Please enter a valid Zambian phone number (e.g., 0973299759)');
+                return;
+            }
+            
+            if (!contactSubject.value) {
+                alert('Please select a subject');
+                return;
+            }
+            
+            if (!contactMessage.value.trim() || contactMessage.value.trim().length < 10) {
+                alert('Please enter a message of at least 10 characters');
+                return;
+            }
+            
+            // In a real app, you would send to your server here
+            // For now, simulate success
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Thank you for your message! We\'ll respond within 24-48 hours.');
+                contactForm.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             }, 1500);
         });
         
@@ -2266,303 +2228,47 @@
                 }
             });
         });
-        
-        // Copy phone number on click
-        document.querySelector('a[href^="tel"]').addEventListener('click', function(e) {
-            // Prevent immediate calling on mobile
-            if (window.innerWidth > 768) {
-                e.preventDefault();
-                const phoneNumber = this.getAttribute('href').replace('tel:', '');
-                
-                // Copy to clipboard
-                navigator.clipboard.writeText(phoneNumber)
-                    .then(() => {
-                        const originalText = this.innerHTML;
-                        this.innerHTML = 'Copied!';
-                        this.style.color = '#28a745';
-                        
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                            this.style.color = '#1176d6';
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy: ', err);
-                    });
-            }
-        });
-        
-        // Copy email on click
-        document.querySelector('a[href^="mailto"]').addEventListener('click', function(e) {
-            if (window.innerWidth > 768) {
-                e.preventDefault();
-                const email = this.getAttribute('href').replace('mailto:', '');
-                
-                // Copy to clipboard
-                navigator.clipboard.writeText(email)
-                    .then(() => {
-                        const originalText = this.innerHTML;
-                        this.innerHTML = 'Copied!';
-                        this.style.color = '#28a745';
-                        
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                            this.style.color = '#1176d6';
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Failed to copy: ', err);
-                    });
-            }
-        });
     });
 </script>
     </section>
     
-    <!-- Ticket Purchase Modal -->
+    <!-- Ticket Purchase Modal (simplified) -->
     <div id="ticketModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            
-            <!-- Step 1: Select Ticket Type -->
-            <div id="step1" class="modal-step active">
-                <h2>Select Ticket Type</h2>
-                <p id="modalEventName" style="color: #666; margin-bottom: 20px;"></p>
-                
-                <div class="form-group">
-                    <label for="ticketType">Choose your ticket:</label>
-                    <select id="ticketType" class="ticket-select">
-                        <option value="">-- Select Ticket Type --</option>
-                        <option value="vip_single">VIP Single</option>
-                        <option value="vip_double">VIP Double</option>
-                        <option value="ordinary_single">Ordinary Single</option>
-                        <option value="ordinary_double">Ordinary Double</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="ticketQuantity">Number of Tickets:</label>
-                    <select id="ticketQuantity">
-                        <option value="1">1 Ticket</option>
-                        <option value="2">2 Tickets</option>
-                        <option value="3">3 Tickets</option>
-                        <option value="4">4 Tickets</option>
-                        <option value="5">5 Tickets</option>
-                    </select>
-                </div>
-                
-                <div id="priceDisplay" style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin: 20px 0; display: none;">
-                    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2em;">
-                        <span>Total Price:</span>
-                        <span id="totalPrice">K0</span>
-                    </div>
-                </div>
-                
-                <div class="modal-nav">
-                    <button class="btn-prev" disabled>Back</button>
-                    <button class="btn-next" onclick="nextStep(1)">Continue</button>
-                </div>
-            </div>
-            
-            <!-- Step 2: Enter Personal Info -->
-            <div id="step2" class="modal-step">
-                <h2>Your Information</h2>
-                <p style="color: #666; margin-bottom: 20px;">Please enter your details for the ticket</p>
-                
-                <div class="form-group">
-                    <label for="fullName">Full Name:</label>
-                    <input type="text" id="fullName" placeholder="Enter your full name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address:</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="phone">Phone Number:</label>
-                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
-                </div>
-                
-                <div class="modal-nav">
-                    <button class="btn-prev" onclick="prevStep(2)">Back</button>
-                    <button class="btn-next" onclick="nextStep(2)">Continue</button>
-                </div>
-            </div>
-            
-            <!-- Step 3: Confirmation -->
-            <div id="step3" class="modal-step">
-                <h2>Confirm Your Booking</h2>
-                <p style="color: #666; margin-bottom: 20px;">Please review your information before proceeding to payment</p>
-                
-                <div class="confirmation-details">
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Event:</span>
-                        <span class="confirmation-value" id="confirmEvent"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Ticket Type:</span>
-                        <span class="confirmation-value" id="confirmTicketType"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Quantity:</span>
-                        <span class="confirmation-value" id="confirmQuantity"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Total Price:</span>
-                        <span class="confirmation-value" id="confirmPrice"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Name:</span>
-                        <span class="confirmation-value" id="confirmName"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Email:</span>
-                        <span class="confirmation-value" id="confirmEmail"></span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Phone:</span>
-                        <span class="confirmation-value" id="confirmPhone"></span>
-                    </div>
-                </div>
-                
-                <div class="modal-nav">
-                    <button class="btn-prev" onclick="prevStep(3)">Back</button>
-                    <button class="btn-pay" onclick="proceedToPayment()">Proceed to Payment</button>
-                </div>
+            <h2>Redirecting to Booking Form</h2>
+            <div style="text-align: center; padding: 30px 0;">
+                <div style="font-size: 48px; color: #1176d6; margin-bottom: 20px;">🎫</div>
+                <p style="color: #666; font-size: 1.1rem; margin-bottom: 20px;">
+                    You're being redirected to our secure booking form to complete your ticket purchase.
+                </p>
+                <p style="color: #888; font-size: 0.9rem; margin-bottom: 30px;">
+                    If you're not redirected automatically, please click the button below.
+                </p>
+                <button onclick="proceedToBooking()" style="background: #1176d6; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;">
+                    Go to Booking Form
+                </button>
             </div>
         </div>
     </div>
     
-    <!-- Success Modal -->
+    <!-- Success Modal (simplified) -->
     <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeSuccessModal()">&times;</span>
-            <div id="ticketContainer">
-    <div class="ticket-template">
-        <div class="ticket-header">
-            <h2 style="color:#1176d6;margin:0">Night of Laughter</h2>
-            <div style="font-weight:bold;margin-top:8px">
-                Booking ID: <span id="bookingId"></span>
-            </div>
-        </div>
-
-        <div class="ticket-body">
-            <!-- Event, ticket type, customer details -->
-        </div>
-
-        <div class="ticket-qr">
-            <div id="qrcode-placeholder"></div>
-            <p style="margin-top:10px;color:#666;font-size:14px">Scan for verification</p>
-        </div>
-    </div>
-</div>
-
-            
             <div style="text-align: center; padding: 20px;">
                 <div style="color: #28a745; font-size: 48px; margin-bottom: 20px;">✓</div>
-                <h2 style="color: #28a745;">Payment Successful!</h2>
-                <p style="color: #666; margin: 20px 0;">Your ticket has been generated and is ready to download.</p>
-                
-                <div id="ticketContainer" style="margin: 30px 0;"></div>
-                
-                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 30px;">
-                    <button class="btn" onclick="downloadTicket()" style="background: var(--blue);">
-                        Download Ticket
-                    </button>
-                    <button class="btn" onclick="printTicket()" style="background: #17a2b8;">
-                        Print Ticket
-                    </button>
-                    <button class="btn" onclick="closeSuccessModal()" style="background: #6c757d;">
-                        Close
-                    </button>
+                <h2 style="color: #28a745;">Redirecting to Payment</h2>
+                <p style="color: #666; margin: 20px 0;">
+                    You're being redirected to complete your payment securely.
+                </p>
+                <div style="margin: 30px 0;">
+                    <div class="loader" style="margin: 0 auto;"></div>
                 </div>
+                <p style="color: #888; font-size: 0.9rem;">
+                    Please complete the payment form to receive your digital tickets.
+                </p>
             </div>
-        </div>
-    </div>
-    
-    <!-- Add Event Form Modal -->
-    <div id="addEventModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAddEventModal()">&times;</span>
-            <h2>Add New Event</h2>
-            <p style="color: #666; margin-bottom: 20px;">Fill in the event details below. This will add to your Google Sheet.</p>
-            
-            <form id="addEventForm">
-                <div class="form-group">
-                    <label for="eventName">Event Name *</label>
-                    <input type="text" id="eventName" placeholder="ZED Laugh Festival 2025" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventType">Event Type *</label>
-                    <select id="eventType" required>
-                        <option value="">-- Select Type --</option>
-                        <option value="featured">Featured</option>
-                        <option value="upcoming">Upcoming</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventDate">Date *</label>
-                    <input type="text" id="eventDate" placeholder="March 15, 2025" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventTime">Time *</label>
-                    <input type="text" id="eventTime" placeholder="6:00 PM" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventVenue">Venue *</label>
-                    <input type="text" id="eventVenue" placeholder="Lusaka Playhouse" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventImage">Image URL *</label>
-                    <input type="url" id="eventImage" placeholder="https://example.com/image.jpg" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventDescription">Description *</label>
-                    <input type="text" id="eventDescription" placeholder="Biggest comedy festival in Zambia" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="vipSingle">VIP Single Price (K)</label>
-                    <input type="number" id="vipSingle" placeholder="500" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="vipDouble">VIP Double Price (K)</label>
-                    <input type="number" id="vipDouble" placeholder="800" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="ordinarySingle">Ordinary Single Price (K)</label>
-                    <input type="number" id="ordinarySingle" placeholder="300" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="ordinaryDouble">Ordinary Double Price (K)</label>
-                    <input type="number" id="ordinaryDouble" placeholder="500" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventLineup">Lineup (Optional)</label>
-                    <input type="text" id="eventLineup" placeholder="Chingliz, Ba Emma, Smoke">
-                </div>
-                
-                <div class="form-group">
-                    <label for="eventTerms">Terms (Optional)</label>
-                    <input type="text" id="eventTerms" placeholder="No refunds, 18+ only">
-                </div>
-                
-                <div class="modal-nav">
-                    <button type="button" class="btn-prev" onclick="closeAddEventModal()">Cancel</button>
-                    <button type="submit" class="btn-pay">Add Event to Sheet</button>
-                </div>
-            </form>
         </div>
     </div>
     
@@ -2575,51 +2281,7 @@
 // CONFIGURATION
 // ============================================
 const SHEETDB_API_URL = "https://sheetdb.io/api/v1/datk69lw1162m";
-const ADMIN_PASSWORD = "nol2025";
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd69gVqCrIRoLYt56gaZN6ZUW_ZuwLFeIKnHAkUtqys4NSLaA/viewform?usp=header";
-
-// ============================================
-// ADMIN PANEL FUNCTIONS
-// ============================================
-function toggleAdminPanel() {
-    const panel = document.getElementById('adminPanel');
-    const password = prompt("Enter admin password:");
-    if (password === ADMIN_PASSWORD) {
-        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-    } else if (password !== null) {
-        alert("Incorrect password");
-    }
-}
-
-function refreshEvents() {
-    document.getElementById('featuredLoader').style.display = 'block';
-    document.getElementById('eventsLoader').style.display = 'block';
-    const featuredSection = document.getElementById("featuredSection");
-    const eventsSection = document.getElementById("eventsSection");
-    featuredSection.innerHTML = '<div class="loader" id="featuredLoader"></div>';
-    eventsSection.innerHTML = '<div class="loader" id="eventsLoader"></div>';
-    fetchEvents();
-    alert('Events refreshed successfully!');
-}
-
-function openAddEventForm() {
-    document.getElementById('addEventModal').style.display = 'flex';
-    document.getElementById('adminPanel').style.display = 'none';
-}
-
-function closeAddEventModal() {
-    document.getElementById('addEventModal').style.display = 'none';
-    document.getElementById('addEventForm').reset();
-}
-
-function copyApiUrl() {
-    const apiUrlInput = document.getElementById('apiUrl');
-    apiUrlInput.value = SHEETDB_API_URL;
-    apiUrlInput.select();
-    apiUrlInput.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(SHEETDB_API_URL);
-    alert('API URL copied to clipboard!');
-}
 
 // ============================================
 // HELPER FUNCTIONS
@@ -2636,14 +2298,60 @@ function formatCurrency(amount) {
 }
 
 // ============================================
-// SIMPLE BUY TICKET FUNCTION
+// BUY TICKET FUNCTION (Simple Redirect)
 // ============================================
 function buyTicket(eventData) {
-    // Direct redirect to Google Form
+    // Store event data for later reference
+    sessionStorage.setItem('selectedEvent', JSON.stringify({
+        name: eventData.name,
+        date: eventData.date,
+        venue: eventData.venue
+    }));
+    
+    // Open Google Form in new tab
     window.open(GOOGLE_FORM_URL, '_blank');
     
-    // Optional: Show a quick message
-    alert(`Redirecting to booking form for: ${eventData.name}`);
+    // Optional: Show confirmation message
+    showPaymentStatus('Redirecting to booking form...', 'info');
+}
+
+function proceedToBooking() {
+    window.open(GOOGLE_FORM_URL, '_blank');
+    closeModal();
+}
+
+// ============================================
+// MODAL FUNCTIONS
+// ============================================
+function closeModal() {
+    document.getElementById('ticketModal').style.display = 'none';
+}
+
+function closeSuccessModal() {
+    document.getElementById('successModal').style.display = 'none';
+}
+
+// ============================================
+// PAYMENT STATUS DISPLAY
+// ============================================
+function showPaymentStatus(message, type = 'info') {
+    const banner = document.getElementById('paymentStatusBanner');
+    banner.innerHTML = `
+        <div class="payment-status ${type === 'success' ? 'payment-success' : type === 'error' ? 'payment-failed' : ''}" 
+             style="text-align: center; padding: 15px; margin: 10px 5vw; border-radius: 8px; background: ${type === 'success' ? '#d4edda' : type === 'error' ? '#f8d7da' : '#fff3cd'}; 
+                    color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#856404'}; 
+                    border: 1px solid ${type === 'success' ? '#c3e6cb' : type === 'error' ? '#f5c6cb' : '#ffeeba'};">
+            ${message}
+        </div>
+    `;
+    banner.style.display = 'block';
+    
+    // Auto-hide after 5 seconds if not an error
+    if (type !== 'error') {
+        setTimeout(() => {
+            banner.style.display = 'none';
+        }, 5000);
+    }
 }
 
 // ============================================
@@ -2677,14 +2385,14 @@ function showEmptyState() {
     featuredSection.innerHTML = `
         <h2>Featured Events</h2>
         <p style="text-align: center; color: #666; padding: 40px 0;">
-            No featured events yet. Use the admin panel (⚙️) to add events.
+            No featured events at the moment. Check back soon!
         </p>
     `;
     
     eventsSection.innerHTML = `
         <h2>Upcoming Events</h2>
         <p style="text-align: center; color: #666; padding: 40px 0;">
-            No upcoming events scheduled. Stay tuned!
+            No upcoming events scheduled. Stay tuned for announcements!
         </p>
     `;
 }
@@ -2699,12 +2407,10 @@ function showErrorState() {
     featuredSection.innerHTML = `
         <h2>Featured Events</h2>
         <div style="text-align: center; color: #666; padding: 40px 0;">
-            <p>Unable to load events. Please check:</p>
-            <p>1. Your SheetDB API URL is correct</p>
-            <p>2. Your Google Sheet is publicly accessible</p>
-            <p>3. You have internet connection</p>
-            <button onclick="refreshEvents()" style="margin-top: 20px; padding: 10px 20px; background: var(--blue); color: white; border: none; border-radius: 5px; cursor: pointer;">
-                Retry
+            <p>Unable to load events at the moment.</p>
+            <p>Please check back later or contact us for information.</p>
+            <button onclick="fetchEvents()" style="margin-top: 20px; padding: 10px 20px; background: var(--blue); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Try Again
             </button>
         </div>
     `;
@@ -2726,16 +2432,16 @@ function renderEventCard(ev, idx) {
                  onerror="this.src='https://via.placeholder.com/400x400?text=Event+Image'">
         </div>
         <div class="event-content">
-            <div class="event-title">${ev.name || "Event Name"}</div>
-            <div><span class="info-label">Date:</span> ${ev.date || "TBA"}</div>
-            <div><span class="info-label">Time:</span> ${ev.time || "TBA"}</div>
-            <div><span class="info-label">Venue:</span> ${ev.venue || "TBA"}</div>
+            <div class="event-title">${escapeHtml(ev.name || "Event Name")}</div>
+            <div><span class="info-label">Date:</span> ${escapeHtml(ev.date || "TBA")}</div>
+            <div><span class="info-label">Time:</span> ${escapeHtml(ev.time || "TBA")}</div>
+            <div><span class="info-label">Venue:</span> ${escapeHtml(ev.venue || "TBA")}</div>
             <div class="price-box">
                 <div><b>Ticket Prices:</b></div>
-                ${ev.vip_single && ev.vip_single !== '0' ? `<div>VIP Single: K${ev.vip_single}</div>` : ''}
-                ${ev.vip_double && ev.vip_double !== '0' ? `<div>VIP Double: K${ev.vip_double}</div>` : ''}
-                ${ev.ordinary_single && ev.ordinary_single !== '0' ? `<div>Ordinary Single: K${ev.ordinary_single}</div>` : ''}
-                ${ev.ordinary_double && ev.ordinary_double !== '0' ? `<div>Ordinary Double: K${ev.ordinary_double}</div>` : ''}
+                ${ev.vip_single && ev.vip_single !== '0' ? `<div>VIP Single: K${escapeHtml(ev.vip_single)}</div>` : ''}
+                ${ev.vip_double && ev.vip_double !== '0' ? `<div>VIP Double: K${escapeHtml(ev.vip_double)}</div>` : ''}
+                ${ev.ordinary_single && ev.ordinary_single !== '0' ? `<div>Ordinary Single: K${escapeHtml(ev.ordinary_single)}</div>` : ''}
+                ${ev.ordinary_double && ev.ordinary_double !== '0' ? `<div>Ordinary Double: K${escapeHtml(ev.ordinary_double)}</div>` : ''}
             </div>
             <div class="btn-row">
                 <button class="btn" onclick="buyTicket(${JSON.stringify(ev).replace(/"/g, '&quot;')})">
@@ -2746,12 +2452,18 @@ function renderEventCard(ev, idx) {
                 </button>
             </div>
             <div id="${moreId}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid #eee;">
-                <p><strong>Description:</strong> ${ev.description || ev.desc || "No description available."}</p>
-                ${ev.lineup ? `<p><strong>Lineup:</strong> ${ev.lineup}</p>` : ''}
-                ${ev.terms ? `<p><strong>Terms:</strong> ${ev.terms}</p>` : ''}
+                <p><strong>Description:</strong> ${escapeHtml(ev.description || ev.desc || "No description available.")}</p>
+                ${ev.lineup ? `<p><strong>Lineup:</strong> ${escapeHtml(ev.lineup)}</p>` : ''}
+                ${ev.terms ? `<p><strong>Terms:</strong> ${escapeHtml(ev.terms)}</p>` : ''}
             </div>
         </div>
     </div>`;
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 function renderEvents(eventsData) {
@@ -2808,13 +2520,26 @@ function renderEvents(eventsData) {
 }
 
 // ============================================
+// AUTO-REFRESH EVENTS (Optional)
+// ============================================
+function autoRefreshEvents() {
+    // Auto-refresh every 5 minutes
+    setInterval(fetchEvents, 300000);
+}
+
+// ============================================
 // INITIALIZE APPLICATION
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('apiUrl').value = SHEETDB_API_URL;
     fetchEvents();
+    autoRefreshEvents();
+    
+    // Check if returning from payment
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('payment') && urlParams.get('payment') === 'success') {
+        showPaymentStatus('Payment completed successfully!', 'success');
+    }
 });
 </script>
-            </body>
-            </html>
-        
+</body>
+</html>
