@@ -4,9 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Night of Laughter · tickets</title>
-    <!-- favicon kept minimal -->
     <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
-    <!-- essential meta -->
     <meta name="description" content="Zambia's comedy hub – Chingliz, Ba Emma, Smoke, Juss. Instant digital tickets.">
     <style>
         /* ----- simplified & clean ----- */
@@ -158,7 +156,7 @@
             font-size:0.95rem; margin-top:3rem;
         }
 
-        /* simple modal loader / payment banner (reused without bloat) */
+        /* payment banner */
         .payment-banner{
             text-align:center; padding:1rem; margin:1rem 5vw 0; border-radius:60px;
             background:#d1ecf1; color:#0c5460; border:1px solid #bee5eb; display:none;
@@ -168,19 +166,6 @@
             width: 45px; height: 45px; animation: spin 1s linear infinite; margin:2rem auto;
         }
         @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-
-        /* modal (only one simplified) */
-        .modal{display:none; position:fixed; inset:0; background:#000000aa; z-index:2000;
-               align-items:center; justify-content:center;}
-        .modal-card{
-            background:white; max-width:400px; width:90%; padding:2rem; border-radius:32px;
-            text-align:center; box-shadow:0 30px 50px #00000050;
-        }
-        .modal-card .close{
-            float:right; font-size:2rem; font-weight:bold; cursor:pointer; line-height:1;
-        }
-        .btn-green{background:#28a745; color:white; padding:0.8rem 2rem; border:none;
-                   border-radius:40px; font-weight:bold; margin-top:1rem; cursor:pointer;}
     </style>
 </head>
 <body>
@@ -227,28 +212,26 @@
         <div class="loader" style="margin:2rem auto;"></div>
     </div>
 </section>
+
+<!-- TESTIMONIALS (brief) -->
+<section id="testimonials" class="testimonials">
+    <h2>What comedians say</h2>
+    <p style="max-width:700px; color:#2d3e50;">“Night of Laughter brings the best crowds — and digital tickets mean fans just show their phone. Genius.” — Chingliz</p>
+    <p style="margin-top:1.5rem; font-style:italic;">“Packed houses, smooth entry. No paper, no fuss.” — Ba Emma</p>
+</section>
+
 <!-- CONTACT (short) -->
 <section id="contact" class="contact">
     <h2>Contact / bookings</h2>
-    <p>📧 <a href="" style="color:var(--blue);">events@nightoflaughter.com</a></p>
+    <p>📧 <a href="mailto:events@nightoflaughter.com" style="color:var(--blue);">events@nightoflaughter.com</a></p>
     <p>📞 +260 97 123 4567 (10am–4pm)</p>
 </section>
-
-<!-- SIMPLE MODAL for redirect (only one) -->
-<div id="redirectModal" class="modal">
-    <div class="modal-card">
-        <span class="close" onclick="document.getElementById('redirectModal').style.display='none'">&times;</span>
-        <h3>Secure booking</h3>
-        <p style="margin:1rem 0;">You’ll be redirected to our booking partner.</p>
-        <button class="btn-green" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd69gVqCrIRoLYt56gaZN6ZUW_ZuwLFeIKnHAkUtqys4NSLaA/viewform?usp=header', '_blank'); document.getElementById('redirectModal').style.display='none';">Proceed</button>
-    </div>
-</div>
 
 <footer>
     NIGHT OF LAUGHTER © 2025 · by cmk web solutions
 </footer>
 
-<!-- minimal javascript: fetch + render + buy handler, no excess -->
+<!-- minimal javascript: fetch + render + buy handler (direct Google Form redirect) -->
 <script>
 // ---------- CONFIG ----------
 const SHEETDB_API = "https://sheetdb.io/api/v1/7179rrjol2p9o";
@@ -272,12 +255,14 @@ function showBanner(msg, isSuccess = true) {
     setTimeout(() => banner.style.display = 'none', 4000);
 }
 
-// ---------- BUY HANDLER ----------
+// ---------- BUY HANDLER: DIRECT REDIRECT TO GOOGLE FORM ----------
 function buyTicket(eventData) {
-    // store minimal info (optional)
-    sessionStorage.setItem('lastEvent', JSON.stringify({name:eventData.name || 'event'}));
-    // show redirect modal
-    document.getElementById('redirectModal').style.display = 'flex';
+    // optional: store event name for conversion tracking
+    sessionStorage.setItem('lastEvent', JSON.stringify({name: eventData.name || 'Event'}));
+    // DIRECT REDIRECT: open Google Form in new tab
+    window.open(FORM_URL, '_blank');
+    // small confirmation banner (optional)
+    showBanner('📋 Booking form opened in new tab', true);
 }
 
 function toggleDesc(id) {
@@ -318,6 +303,7 @@ function renderEventCard(ev, index) {
             <div class="event-detail"><span class="detail-label">Venue</span> ${venue}</div>
             ${priceHTML}
             <div class="btn-group">
+                <!-- BUY BUTTON now directly calls buyTicket (which opens Google Form) -->
                 <button class="btn" onclick="buyTicket(${JSON.stringify(ev).replace(/"/g, '&quot;')})">🎟️ Buy</button>
                 <button class="btn btn-info" onclick="toggleDesc('${descId}')">ℹ️ More</button>
             </div>
@@ -362,7 +348,7 @@ async function fetchAndRender() {
     }
 }
 
-// ---------- check payment return (simulate) ----------
+// ---------- check payment return (simulate from url) ----------
 function checkPaymentReturn() {
     const params = new URLSearchParams(location.search);
     if (params.get('payment') === 'success') {
@@ -378,14 +364,9 @@ document.addEventListener('DOMContentLoaded', () => {
     checkPaymentReturn();
     // auto refresh every 5min (optional but harmless)
     setInterval(fetchAndRender, 300000);
-    // close modal when clicking outside simple
-    window.onclick = (e) => {
-        const modal = document.getElementById('redirectModal');
-        if (e.target === modal) modal.style.display = 'none';
-    };
 });
 </script>
 
-<!-- small extra style for active menu if needed (no JS hamburger already works) -->
+<!-- No modal or extra overlay – Buy now opens Google Form directly -->
 </body>
 </html>
