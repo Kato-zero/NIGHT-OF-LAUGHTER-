@@ -151,6 +151,270 @@
         }
         .testimonials h2, .contact h2{font-size:1.8rem; border-left-color:#2b6c94;}
 
+        /* ----- NEW: YouTube Video Section ----- */
+        .video-section{
+            background:var(--white); border-radius:28px; padding:2.5rem 2rem;
+            margin:2rem 5vw 3rem; box-shadow:0 5px 18px rgba(0,0,0,0.03);
+        }
+        .video-section h2{
+            font-size:1.8rem; margin-bottom:2rem; border-left:6px solid #ff0000; padding-left:1.2rem;
+        }
+        .video-grid{
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;
+        }
+        .video-card{
+            background:#f8f9fa; border-radius:16px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);
+            cursor:pointer; transition:transform 0.3s ease;
+        }
+        .video-card:hover{
+            transform:scale(1.02);
+        }
+        .video-thumbnail{
+            position:relative; aspect-ratio:16/9; overflow:hidden;
+        }
+        .video-thumbnail img{
+            width:100%; height:100%; object-fit:cover;
+        }
+        .play-button{
+            position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+            width:60px; height:60px; background:rgba(255,0,0,0.9); border-radius:50%;
+            display:flex; align-items:center; justify-content:center; color:white;
+            font-size:30px; transition:all 0.3s ease;
+        }
+        .video-card:hover .play-button{
+            transform:translate(-50%, -50%) scale(1.1);
+            background:#ff0000;
+        }
+        .video-info{
+            padding:1.2rem;
+        }
+        .video-info h3{
+            font-size:1.2rem; margin-bottom:0.5rem; color:var(--black);
+        }
+        .video-info p{
+            color:#666; font-size:0.9rem;
+        }
+
+        /* ----- NEW: Photo Gallery ----- */
+        .gallery-section{
+            background:var(--white); border-radius:28px; padding:2.5rem 2rem;
+            margin:2rem 5vw 3rem; box-shadow:0 5px 18px rgba(0,0,0,0.03);
+        }
+        .gallery-section h2{
+            font-size:1.8rem; margin-bottom:2rem; border-left:6px solid #28a745; padding-left:1.2rem;
+        }
+        .gallery-grid{
+            display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:1.5rem;
+        }
+        .gallery-item{
+            position:relative; border-radius:16px; overflow:hidden; cursor:pointer;
+            aspect-ratio:1/1; box-shadow:0 4px 12px rgba(0,0,0,0.1);
+            transition:transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover{
+            transform:scale(1.03); box-shadow:0 8px 24px rgba(0,0,0,0.15);
+        }
+        .gallery-item img{
+            width:100%; height:100%; object-fit:cover; display:block;
+            transition:transform 0.5s ease;
+        }
+        .gallery-item:hover img{
+            transform:scale(1.1);
+        }
+        .gallery-caption{
+            position:absolute; bottom:0; left:0; right:0; background:linear-gradient(transparent, rgba(0,0,0,0.7));
+            color:white; padding:1rem; font-size:0.9rem; transform:translateY(100%);
+            transition:transform 0.3s ease;
+        }
+        .gallery-item:hover .gallery-caption{
+            transform:translateY(0);
+        }
+
+        /* Unified Lightbox for Images and Videos */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-content iframe {
+            width: 80vw;
+            height: 45vw;
+            max-width: 1200px;
+            max-height: 675px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 2001;
+            transition: color 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            color: #ff0000;
+        }
+
+        .lightbox-prev, .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+            padding: 20px;
+            user-select: none;
+            z-index: 2001;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-prev:hover, .lightbox-next:hover {
+            background: var(--blue);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 16px;
+            border-radius: 20px;
+            z-index: 2001;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
+            max-width: 80%;
+            margin: 0 auto;
+            border-radius: 8px;
+            z-index: 2001;
+        }
+
+        /* ----- BACK TO TOP BUTTON ----- */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--deep-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+        .back-to-top:active {
+            transform: translateY(0);
+        }
+
+        /* Mobile adjustment for back to top button */
+        @media (max-width: 640px) {
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .lightbox-prev, .lightbox-next {
+                width: 40px;
+                height: 40px;
+                font-size: 30px;
+            }
+            
+            .lightbox-content iframe {
+                width: 95vw;
+                height: 53.44vw;
+            }
+        }
+
         footer{
             background:#1a2634; color:#adb5bd; text-align:center; padding:2rem;
             font-size:0.95rem; margin-top:3rem;
@@ -181,6 +445,8 @@
     <nav class="nav-menu">
         <a href="#featured">Featured</a>
         <a href="#upcoming">Upcoming</a>
+        <a href="#videos">Videos</a>
+        <a href="#gallery">Gallery</a>
         <a href="#testimonials">Stories</a>
         <a href="#contact">Contact</a>
     </nav>
@@ -213,6 +479,24 @@
     </div>
 </section>
 
+<!-- YOUTUBE VIDEOS SECTION -->
+<section id="videos" class="video-section">
+    <h2>🎥 Latest Comedy Highlights</h2>
+    <div class="video-grid" id="videoGrid">
+        <!-- Videos will be loaded here via JavaScript -->
+        <div class="loader" style="margin:2rem auto;"></div>
+    </div>
+</section>
+
+<!-- PHOTO GALLERY SECTION -->
+<section id="gallery" class="gallery-section">
+    <h2>📸 Event Gallery</h2>
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- Gallery images will be loaded here via JavaScript -->
+        <div class="loader" style="margin:2rem auto;"></div>
+    </div>
+</section>
+
 <!-- TESTIMONIALS (brief) -->
 <section id="testimonials" class="testimonials">
     <h2>What comedians say</h2>
@@ -227,15 +511,100 @@
     <p>📞 +260 97 123 4567 (10am–4pm)</p>
 </section>
 
-<footer>
+<footer id="footer">
     NIGHT OF LAUGHTER © 2025 · by cmk web solutions
 </footer>
 
-<!-- minimal javascript: fetch + render + buy handler (direct Google Form redirect) -->
+<!-- BACK TO TOP BUTTON -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Back to top">↑</button>
+
+<!-- Unified Lightbox for Images and Videos -->
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <span class="lightbox-prev" onclick="changeLightboxItem(-1)">&#10094;</span>
+    <span class="lightbox-next" onclick="changeLightboxItem(1)">&#10095;</span>
+    <div class="lightbox-content" id="lightboxContent">
+        <!-- Content loaded dynamically -->
+    </div>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- JavaScript for all functionality -->
 <script>
 // ---------- CONFIG ----------
-const SHEETDB_API = "https://sheetdb.io/api/v1/7179rrjol2p9o";
+const SHEETDB_API = "https://sheetdb.io/api/v1/sh60n2rxqi0zo";
 const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd69gVqCrIRoLYt56gaZN6ZUW_ZuwLFeIKnHAkUtqys4NSLaA/viewform?usp=header";
+
+// ---------- YOUTUBE VIDEOS CONFIG ----------
+const YOUTUBE_VIDEOS = [
+   
+    {
+        id: "Vd2TRJRQAxk", // From: https://youtu.be/Vd2TRJRQAxk?si=vn5L1d5B0ZUq3ldr
+        title: "Best of Chingliz - Live at Night of Laughter",
+        description: "Highlights from our latest show featuring Chingliz",
+        thumbnail: "https://img.youtube.com/vi/Vd2TRJRQAxk/maxresdefault.jpg"
+    },
+    {
+        id: "cluxU57wDYw", // From: https://youtu.be/cluxU57wDYw?si=r0ZixTXT9XdY6h69
+        title: "Ba Emma's Hilarious Set",
+        description: "Watch Ba Emma kill it on stage",
+        thumbnail: "https://img.youtube.com/vi/cluxU57wDYw/maxresdefault.jpg"
+    },
+];
+
+// ---------- GALLERY IMAGES CONFIG ----------
+const GALLERY_IMAGES = [
+    {
+        url: "https://i.postimg.cc/L6J9YnQR/DEW-1.jpg",
+        thumbnail: "https://i.postimg.cc/L6J9YnQR/DEW-1.jpg",
+        caption: "Night of Laughter performance"
+    },
+    {
+        url: "https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg",
+        thumbnail: "https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg",
+        caption: "Crowd enjoying the show"
+    },
+    {
+        url: "https://i.postimg.cc/KvCZnxCj/DEW-22.jpg",
+        thumbnail: "https://i.postimg.cc/KvCZnxCj/DEW-22.jpg",
+        caption: "Comedy moment"
+    },
+    {
+        url: "https://i.postimg.cc/8CmNQWcv/DEW-17.jpg",
+        thumbnail: "https://i.postimg.cc/8CmNQWcv/DEW-17.jpg",
+        caption: "Audience laughter"
+    },
+    {  
+        url: "https://i.postimg.cc/zX4Jn86s/DEW-26.jpg",
+        thumbnail: "https://i.postimg.cc/zX4Jn86s/DEW-26.jpg",
+        caption: "Night of Laughter performance"
+    },
+    {
+        url: "https://i.postimg.cc/zX4Jn845/DEW-28.jpg",
+        thumbnail: "https://i.postimg.cc/zX4Jn845/DEW-28.jpg",
+        caption: "Crowd enjoying the show"
+    },
+    {
+        url: "https://i.postimg.cc/wT1qy74q/DEW-30.jpg",
+        thumbnail: "https://i.postimg.cc/wT1qy74q/DEW-30.jpg",
+        caption: "Comedy moment"
+    },
+    {
+        url: "https://i.postimg.cc/J0vWc56Q/DEW-4.jpg",
+        thumbnail: "https://i.postimg.cc/J0vWc56Q/DEW-4.jpg",
+        caption: "Audience laughter"
+    },
+    {
+        url: "https://i.postimg.cc/5NDxwbDc/DEW-36.jpg",
+        thumbnail: "https://i.postimg.cc/5NDxwbDc/DEW-36.jpg",
+        caption: "Stage performance"
+    },
+    
+];
+// Combined array for lightbox navigation
+let lightboxItems = [];
+let currentLightboxIndex = 0;
 
 // ---------- UTILS ----------
 function escapeHTML(str) {
@@ -255,13 +624,106 @@ function showBanner(msg, isSuccess = true) {
     setTimeout(() => banner.style.display = 'none', 4000);
 }
 
+// ---------- BACK TO TOP FUNCTIONALITY ----------
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Show back to top button only when footer is visible
+window.addEventListener('scroll', function() {
+    const backToTop = document.getElementById('backToTop');
+    const footer = document.getElementById('footer');
+    const footerRect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Show button when footer comes into view
+    if (footerRect.top <= windowHeight) {
+        backToTop.classList.add('visible');
+    } else {
+        backToTop.classList.remove('visible');
+    }
+});
+
+// ---------- UNIFIED LIGHTBOX FUNCTIONS ----------
+function openLightbox(index) {
+    currentLightboxIndex = index;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Stop video if playing
+    const lightboxContent = document.getElementById('lightboxContent');
+    lightboxContent.innerHTML = '';
+}
+
+function changeLightboxItem(direction) {
+    currentLightboxIndex += direction;
+    
+    if (currentLightboxIndex < 0) {
+        currentLightboxIndex = lightboxItems.length - 1;
+    } else if (currentLightboxIndex >= lightboxItems.length) {
+        currentLightboxIndex = 0;
+    }
+    
+    updateLightbox();
+}
+
+function updateLightbox() {
+    const item = lightboxItems[currentLightboxIndex];
+    const lightboxContent = document.getElementById('lightboxContent');
+    const counter = document.getElementById('lightboxCounter');
+    const caption = document.getElementById('lightboxCaption');
+    
+    // Clear previous content
+    lightboxContent.innerHTML = '';
+    
+    if (item.type === 'image') {
+        // Display image
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.alt = item.caption;
+        lightboxContent.appendChild(img);
+        caption.textContent = item.caption;
+    } else if (item.type === 'video') {
+        // Display YouTube video
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${item.id}?autoplay=1`;
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        lightboxContent.appendChild(iframe);
+        caption.textContent = item.title;
+    }
+    
+    // Update counter
+    counter.textContent = `${currentLightboxIndex + 1} / ${lightboxItems.length}`;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox.classList.contains('active')) return;
+    
+    if (e.key === 'Escape') {
+        closeLightbox();
+    } else if (e.key === 'ArrowLeft') {
+        changeLightboxItem(-1);
+    } else if (e.key === 'ArrowRight') {
+        changeLightboxItem(1);
+    }
+});
+
 // ---------- BUY HANDLER: DIRECT REDIRECT TO GOOGLE FORM ----------
 function buyTicket(eventData) {
-    // optional: store event name for conversion tracking
     sessionStorage.setItem('lastEvent', JSON.stringify({name: eventData.name || 'Event'}));
-    // DIRECT REDIRECT: open Google Form in new tab
     window.open(FORM_URL, '_blank');
-    // small confirmation banner (optional)
     showBanner('📋 Booking form opened in new tab', true);
 }
 
@@ -270,10 +732,9 @@ function toggleDesc(id) {
     if(el) el.classList.toggle('show');
 }
 
-// ---------- RENDER CARDS ----------
+// ---------- RENDER EVENT CARDS ----------
 function renderEventCard(ev, index) {
     const descId = `desc_${Date.now()}_${index}`;
-    // safe fields
     const name = escapeHTML(ev.name) || 'Laughter night';
     const date = escapeHTML(ev.date) || 'TBA';
     const time = escapeHTML(ev.time) || '19:00';
@@ -303,8 +764,7 @@ function renderEventCard(ev, index) {
             <div class="event-detail"><span class="detail-label">Venue</span> ${venue}</div>
             ${priceHTML}
             <div class="btn-group">
-                <!-- BUY BUTTON now directly calls buyTicket (which opens Google Form) -->
-                <button class="btn" onclick="buyTicket(${JSON.stringify(ev).replace(/"/g, '&quot;')})">🎟️ Buy</button>
+                <button class="btn" onclick='buyTicket(${JSON.stringify(ev).replace(/'/g, "\\'")})'>🎟️ Buy</button>
                 <button class="btn btn-info" onclick="toggleDesc('${descId}')">ℹ️ More</button>
             </div>
             <div id="${descId}" class="more-desc">
@@ -315,14 +775,86 @@ function renderEventCard(ev, index) {
     </div>`;
 }
 
-// ---------- FETCH + RENDER ----------
+// ---------- RENDER YOUTUBE VIDEOS ----------
+function renderVideos() {
+    const videoGrid = document.getElementById('videoGrid');
+    
+    if (!YOUTUBE_VIDEOS || YOUTUBE_VIDEOS.length === 0) {
+        videoGrid.innerHTML = '<p style="text-align:center; color:#666;">No videos available yet.</p>';
+        return;
+    }
+    
+    // Add videos to lightbox items
+    YOUTUBE_VIDEOS.forEach(video => {
+        lightboxItems.push({
+            type: 'video',
+            id: video.id,
+            title: video.title,
+            description: video.description
+        });
+    });
+    
+    videoGrid.innerHTML = YOUTUBE_VIDEOS.map((video, index) => {
+        // Calculate the correct index in lightboxItems
+        const lightboxIndex = index; // Videos come first in lightboxItems
+        return `
+            <div class="video-card" onclick="openLightbox(${lightboxIndex})">
+                <div class="video-thumbnail">
+                    <img src="${video.thumbnail || `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}" 
+                         alt="${escapeHTML(video.title)}"
+                         onerror="this.src='https://via.placeholder.com/320x180?text=Video+Thumbnail'">
+                    <div class="play-button">▶</div>
+                </div>
+                <div class="video-info">
+                    <h3>${escapeHTML(video.title)}</h3>
+                    <p>${escapeHTML(video.description)}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ---------- RENDER GALLERY ----------
+function renderGallery() {
+    const galleryGrid = document.getElementById('galleryGrid');
+    
+    if (!GALLERY_IMAGES || GALLERY_IMAGES.length === 0) {
+        galleryGrid.innerHTML = '<p style="text-align:center; color:#666;">No gallery images yet.</p>';
+        return;
+    }
+    
+    // Get current lightbox items length before adding images
+    const videoCount = lightboxItems.length;
+    
+    // Add images to lightbox items (after videos)
+    GALLERY_IMAGES.forEach(image => {
+        lightboxItems.push({
+            type: 'image',
+            url: image.url,
+            thumbnail: image.thumbnail,
+            caption: image.caption
+        });
+    });
+    
+    galleryGrid.innerHTML = GALLERY_IMAGES.map((image, index) => {
+        // Calculate the correct index in lightboxItems (videos + images)
+        const lightboxIndex = videoCount + index;
+        return `
+            <div class="gallery-item" onclick="openLightbox(${lightboxIndex})">
+                <img src="${escapeHTML(image.thumbnail)}" loading="lazy" alt="${escapeHTML(image.caption)}">
+                <div class="gallery-caption">${escapeHTML(image.caption)}</div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ---------- FETCH + RENDER EVENTS ----------
 async function fetchAndRender() {
     try {
         const resp = await fetch(SHEETDB_API);
         if (!resp.ok) throw new Error('Network');
         const events = await resp.json();
         
-        // filter featured vs regular (any type includes 'featured')
         const featured = events.filter(ev => ev.type && ev.type.toLowerCase().includes('featured'));
         const upcoming = events.filter(ev => !ev.type || !ev.type.toLowerCase().includes('featured'));
 
@@ -358,15 +890,14 @@ function checkPaymentReturn() {
     }
 }
 
-// start
+// ---------- INITIALIZE ----------
 document.addEventListener('DOMContentLoaded', () => {
     fetchAndRender();
+    renderVideos();  // This adds videos to lightboxItems
+    renderGallery(); // This adds images to lightboxItems
     checkPaymentReturn();
-    // auto refresh every 5min (optional but harmless)
-    setInterval(fetchAndRender, 300000);
+    setInterval(fetchAndRender, 300000); // Refresh events every 5 minutes
 });
 </script>
-
-<!-- No modal or extra overlay – Buy now opens Google Form directly -->
 </body>
 </html>
