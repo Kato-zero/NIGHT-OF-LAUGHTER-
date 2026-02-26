@@ -22,7 +22,7 @@
         .hero{
             width:100%; height:70vh; min-height:460px;
             background:linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), 
-                       url('https://i.postimg.cc/28FNfrwW/1764496645079.jpg') center/cover no-repeat;
+                       url('https://i.postimg.cc/Rh0W4dZr/Zed-Laugh-Festival-2025-193.jpg') center/cover no-repeat;
             display:flex; align-items:center; justify-content:center; text-align:center;
             position:relative; isolation:isolate;
         }
@@ -123,6 +123,14 @@
             font-size:0.95rem;
         }
         .price-line{display:flex; justify-content:space-between; margin:0.2rem 0;}
+        .early-bird {
+            color: #28a745;
+            font-weight: 600;
+        }
+        .standard {
+            color: #dc3545;
+            font-weight: 600;
+        }
         .btn-group{
             display:flex; gap:0.7rem; margin-top:1rem; flex-wrap:wrap;
         }
@@ -532,8 +540,9 @@
 <!-- JavaScript for all functionality -->
 <script>
 // ---------- CONFIG ----------
-const SHEETDB_API = "https://sheetdb.io/api/v1/sh60n2rxqi0zo";
-const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd69gVqCrIRoLYt56gaZN6ZUW_ZuwLFeIKnHAkUtqys4NSLaA/viewform?usp=header";
+// Updated to use SheetBest API instead of SheetDB
+const SHEETBEST_API = "https://api.sheetbest.com/sheets/c8c28303-35b7-45d3-93a0-2f33b8cfaee3"; // Replace with your actual SheetBest URL
+const FORM_URL = "https://forms.gle/QPpnbkSpNA7HT7vG9";
 
 // ---------- YOUTUBE VIDEOS CONFIG ----------
 const YOUTUBE_VIDEOS = [
@@ -731,28 +740,26 @@ function toggleDesc(id) {
     if(el) el.classList.toggle('show');
 }
 
-// ---------- RENDER EVENT CARDS ----------
+// ---------- RENDER EVENT CARDS WITH EARLY BIRD & STANDARD PRICING ----------
 function renderEventCard(ev, index) {
     const descId = `desc_${Date.now()}_${index}`;
     const name = escapeHTML(ev.name) || 'Laughter night';
     const date = escapeHTML(ev.date) || 'TBA';
     const time = escapeHTML(ev.time) || '19:00';
     const venue = escapeHTML(ev.venue) || 'Lusaka';
-    const vipS = ev.vip_single && ev.vip_single != '0' ? `K${escapeHTML(ev.vip_single)}` : null;
-    const vipD = ev.vip_double && ev.vip_double != '0' ? `K${escapeHTML(ev.vip_double)}` : null;
-    const ordS = ev.ordinary_single && ev.ordinary_single != '0' ? `K${escapeHTML(ev.ordinary_single)}` : null;
-    const ordD = ev.ordinary_double && ev.ordinary_double != '0' ? `K${escapeHTML(ev.ordinary_double)}` : null;
+    
+    // Updated pricing: early bird and standard instead of VIP
+    const earlyBird = ev.early_bird && ev.early_bird != '0' ? `K${escapeHTML(ev.early_bird)}` : null;
+    const standard = ev.standard && ev.standard != '0' ? `K${escapeHTML(ev.standard)}` : null;
     
     const img = ev.image && ev.image.trim() !== '' ? escapeHTML(ev.image) : 'https://via.placeholder.com/400x400?text=COMEDY';
     const description = escapeHTML(ev.description || ev.desc || 'Get ready to laugh!');
     const lineup = ev.lineup ? escapeHTML(ev.lineup) : '';
 
     let priceHTML = '<div class="price-box">';
-    if (vipS) priceHTML += `<div class="price-line"><span>VIP single</span> <strong>${vipS}</strong></div>`;
-    if (vipD) priceHTML += `<div class="price-line"><span>VIP double</span> <strong>${vipD}</strong></div>`;
-    if (ordS) priceHTML += `<div class="price-line"><span>Ordinary single</span> <strong>${ordS}</strong></div>`;
-    if (ordD) priceHTML += `<div class="price-line"><span>Ordinary double</span> <strong>${ordD}</strong></div>`;
-    if (!vipS && !vipD && !ordS && !ordD) priceHTML += '<div>Prices at venue</div>';
+    if (earlyBird) priceHTML += `<div class="price-line"><span>🐦 Early Bird</span> <strong class="early-bird">${earlyBird}</strong></div>`;
+    if (standard) priceHTML += `<div class="price-line"><span>🎫 Standard</span> <strong class="standard">${standard}</strong></div>`;
+    if (!earlyBird && !standard) priceHTML += '<div>Prices at venue</div>';
     priceHTML += '</div>';
 
     return `<div class="event-card">
@@ -847,13 +854,15 @@ function renderGallery() {
     }).join('');
 }
 
-// ---------- FETCH + RENDER EVENTS ----------
+// ---------- FETCH + RENDER EVENTS FROM SHEETBEST ----------
 async function fetchAndRender() {
     try {
-        const resp = await fetch(SHEETDB_API);
-        if (!resp.ok) throw new Error('Network');
+        // Fetch from SheetBest instead of SheetDB
+        const resp = await fetch(SHEETBEST_API);
+        if (!resp.ok) throw new Error('Network response was not ok');
         const events = await resp.json();
         
+        // SheetBest returns data similar to SheetDB, so filtering logic remains the same
         const featured = events.filter(ev => ev.type && ev.type.toLowerCase().includes('featured'));
         const upcoming = events.filter(ev => !ev.type || !ev.type.toLowerCase().includes('featured'));
 
@@ -872,7 +881,7 @@ async function fetchAndRender() {
             upcomingGrid.innerHTML = '<p style="width:100%; text-align:center; color:#556;">📆 Next events announced soon</p>';
         }
     } catch (e) {
-        console.warn(e);
+        console.warn('Error fetching from SheetBest:', e);
         document.getElementById('featuredGrid').innerHTML = '<p style="color:#b33;">Could not load events. Refresh or contact us.</p>';
         document.getElementById('upcomingGrid').innerHTML = '';
         showBanner('⚠️ Events offline, but tickets via contact', false);
