@@ -3,21 +3,36 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Night of Laughter</title>
+    <title>Night of Laughter | Zambia's Comedy Hub</title>
     <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
     <meta name="description" content="Zambia's comedy hub – Chingliz, Ba Emma, Smoke, Juss. Instant digital tickets.">
     <style>
-        /* ----- simplified & clean ----- */
+        /* ----- MAIN STYLES (from first file) ----- */
         *{box-sizing:border-box;margin:0;padding:0;}
         :root{
             --blue:#007bff; --deep-blue:#1176d6; --gray-bg:#f2f2f2;
             --white:#fff; --black:#333; --offwhite:#f9f9f9;
             --card-shadow:0 4px 10px rgba(0,0,0,.08);
+            
+            /* Form styles integration */
+            --primary: #000000;
+            --accent: #d4a500;
+            --accent-light: #ffd700;
+            --bg: #cc8b41;
+            --bg-light: #f8f9fa;
+            --text: #1a1a1a;
+            --text-light: #666666;
+            --border: #e0e0e0;
+            --border-light: #f0f0f0;
+            --error: #dc3545;
+            --success: #28a745;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
         body{
             font-family:system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background:var(--gray-bg); color:var(--black); line-height:1.5;
         }
+        
         /* ----- HERO (covers header) ----- */
         .hero{
             width:100%; height:70vh; min-height:460px;
@@ -36,16 +51,17 @@
         .hero-text p{
             font-size:clamp(1.1rem, 4vw, 1.7rem); font-weight:300; opacity:0.95;
         }
-        /* ----- navigation – hamburger mobile, horizontal desktop (no fixed header) ----- */
+        
+        /* ----- navigation – hamburger mobile, horizontal desktop ----- */
         .page-header{
             position:absolute; top:0; left:0; width:100%; z-index:100;
             padding:1.5rem 5vw; display:flex; align-items:center; justify-content:space-between;
             background:transparent; color:white; pointer-events:none;
         }
         .header-logo{
-            height:70px; width:auto; filter:drop-shadow(0 2px 6px #00000040); pointer-events:auto;
+            height:150px; width:auto; filter:drop-shadow(0 10px 10px #f6f4f4eb); pointer-events:conain;
         }
-        /* hamburger (mobile only) – hidden on larger screens */
+        /* hamburger (mobile only) */
         #menu-toggle{display:none;}
         .menu-icon{
             display:none; pointer-events:auto; cursor:pointer;
@@ -64,7 +80,7 @@
             background:rgba(0,123,255,0.8); border-color:white; color:white;
         }
 
-        /* mobile navigation: hidden by default, toggled by checkbox */
+        /* mobile navigation */
         @media (max-width: 640px){
             .menu-icon{display:block;}
             .nav-menu{
@@ -79,13 +95,10 @@
                 border-bottom:1px solid #ffffff30; border-radius:0;
             }
             #menu-toggle:checked ~ .nav-menu{right:0;}
-            /* close overlay hint */
-            .menu-icon{position:relative; z-index:1001;}
-            /* push hero top slightly */
             .hero{height:65vh; min-height:400px;}
         }
 
-        /* ----- main sections (clean, no unused blocks) ----- */
+        /* ----- main sections ----- */
         .section{
             width:100%; padding:3rem 5vw 2rem; max-width:1400px; margin:0 auto;
         }
@@ -152,18 +165,13 @@
         }
         .more-desc.show{display:block;}
 
-        /* testimonials & contact – kept minimal */
-        .testimonials, .contact{
+        /* testimonials & contact */
+        .testimonials, .contact, .video-section, .gallery-section{
             background:var(--white); border-radius:28px; padding:2.5rem 2rem;
             margin:2rem 5vw 3rem; box-shadow:0 5px 18px rgba(0,0,0,0.03);
         }
-        .testimonials h2, .contact h2{font-size:1.8rem; border-left-color:#2b6c94;}
-
-        /* ----- NEW: YouTube Video Section ----- */
-        .video-section{
-            background:var(--white); border-radius:28px; padding:2.5rem 2rem;
-            margin:2rem 5vw 3rem; box-shadow:0 5px 18px rgba(0,0,0,0.03);
-        }
+        
+        /* Video Section */
         .video-section h2{
             font-size:1.8rem; margin-bottom:2rem; border-left:6px solid #ff0000; padding-left:1.2rem;
         }
@@ -203,11 +211,7 @@
             color:#666; font-size:0.9rem;
         }
 
-        /* ----- NEW: Photo Gallery ----- */
-        .gallery-section{
-            background:var(--white); border-radius:28px; padding:2.5rem 2rem;
-            margin:2rem 5vw 3rem; box-shadow:0 5px 18px rgba(0,0,0,0.03);
-        }
+        /* Gallery Section */
         .gallery-section h2{
             font-size:1.8rem; margin-bottom:2rem; border-left:6px solid #28a745; padding-left:1.2rem;
         }
@@ -238,7 +242,7 @@
             transform:translateY(0);
         }
 
-        /* Unified Lightbox for Images and Videos */
+        /* Lightbox */
         .lightbox {
             display: none;
             position: fixed;
@@ -252,11 +256,9 @@
             align-items: center;
             flex-direction: column;
         }
-
         .lightbox.active {
             display: flex;
         }
-
         .lightbox-content {
             position: relative;
             max-width: 90%;
@@ -265,7 +267,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .lightbox-content img {
             max-width: 100%;
             max-height: 80vh;
@@ -273,7 +274,6 @@
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
-
         .lightbox-content iframe {
             width: 80vw;
             height: 45vw;
@@ -283,7 +283,6 @@
             border-radius: 8px;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
-
         .lightbox-close {
             position: absolute;
             top: 20px;
@@ -295,11 +294,9 @@
             z-index: 2001;
             transition: color 0.3s ease;
         }
-
         .lightbox-close:hover {
             color: #ff0000;
         }
-
         .lightbox-prev, .lightbox-next {
             position: absolute;
             top: 50%;
@@ -319,20 +316,12 @@
             justify-content: center;
             transition: all 0.3s ease;
         }
-
-        .lightbox-prev {
-            left: 20px;
-        }
-
-        .lightbox-next {
-            right: 20px;
-        }
-
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
         .lightbox-prev:hover, .lightbox-next:hover {
             background: var(--blue);
             transform: translateY(-50%) scale(1.1);
         }
-
         .lightbox-counter {
             position: absolute;
             bottom: 20px;
@@ -346,23 +335,336 @@
             z-index: 2001;
         }
 
-        .lightbox-caption {
-            position: absolute;
-            bottom: 70px;
+        /* ----- TICKET FORM STYLES (from second file) ----- */
+        .form-modal {
+            display: none;
+            position: fixed;
+            top: 0;
             left: 0;
-            right: 0;
-            text-align: center;
-            color: white;
-            font-size: 16px;
-            padding: 10px;
-            background: rgba(0,0,0,0.5);
-            max-width: 80%;
-            margin: 0 auto;
-            border-radius: 8px;
-            z-index: 2001;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 1500;
+            overflow-y: auto;
+            padding: 20px;
         }
-
-        /* ----- BACK TO TOP BUTTON ----- */
+        
+        .form-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .form-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.2s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--bg-light);
+        }
+        
+        .form-close:hover {
+            color: var(--accent);
+            background: #e0e0e0;
+        }
+        
+        .event-detail-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-light);
+        }
+        
+        .event-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-light);
+        }
+        
+        .event-detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+        
+        .toast {
+            background: white;
+            border-radius: 8px;
+            padding: 12px 24px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--error); }
+        
+        .progress {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+        
+        .progress-step {
+            flex: 1;
+            height: 4px;
+            background: var(--border-light);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active { background: var(--accent); }
+        .progress-step.completed { background: var(--success); }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 16px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 14px 14px 14px 44px;
+            font-size: 15px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-light);
+            transition: all 0.2s ease;
+            color: var(--text);
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(212, 165, 0, 0.1);
+        }
+        
+        input.error, select.error {
+            border-color: var(--error);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .price-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .price-amount {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .price-breakdown {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            background: #b38f00;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 165, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-outline:hover {
+            background: var(--bg-light);
+        }
+        
+        .summary-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-label {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .summary-value {
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .summary-total {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .section.hidden {
+            display: none;
+        }
+        
+        .loader {
+            border: 2px solid var(--border-light);
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Back to Top Button */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -385,24 +687,31 @@
             visibility: hidden;
             border: 2px solid white;
         }
-
+        
         .back-to-top.visible {
             opacity: 1;
             visibility: visible;
         }
-
+        
         .back-to-top:hover {
             background: var(--deep-blue);
             transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
         }
-
-        .back-to-top:active {
-            transform: translateY(0);
+        
+        /* Payment banner */
+        .payment-banner{
+            text-align:center; padding:1rem; margin:1rem 5vw 0; border-radius:60px;
+            background:#d1ecf1; color:#0c5460; border:1px solid #bee5eb; display:none;
         }
-
-        /* Mobile adjustment for back to top button */
-        @media (max-width: 640px) {
+        
+        footer{
+            background:#1a2634; color:#adb5bd; text-align:center; padding:2rem;
+            font-size:0.95rem; margin-top:3rem;
+        }
+        
+        @media (max-width: 600px) {
+            .form-container { padding: 24px; }
+            .price-card { flex-direction: column; gap: 10px; text-align: center; }
             .back-to-top {
                 bottom: 20px;
                 right: 20px;
@@ -410,43 +719,20 @@
                 height: 45px;
                 font-size: 20px;
             }
-            
             .lightbox-prev, .lightbox-next {
                 width: 40px;
                 height: 40px;
                 font-size: 30px;
             }
-            
-            .lightbox-content iframe {
-                width: 95vw;
-                height: 53.44vw;
-            }
         }
-
-        footer{
-            background:#1a2634; color:#adb5bd; text-align:center; padding:2rem;
-            font-size:0.95rem; margin-top:3rem;
-        }
-
-        /* payment banner */
-        .payment-banner{
-            text-align:center; padding:1rem; margin:1rem 5vw 0; border-radius:60px;
-            background:#d1ecf1; color:#0c5460; border:1px solid #bee5eb; display:none;
-        }
-        .loader {
-            border: 4px solid #f3f3f3; border-top: 4px solid var(--blue); border-radius: 50%;
-            width: 45px; height: 45px; animation: spin 1s linear infinite; margin:2rem auto;
-        }
-        @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
     </style>
 </head>
 <body>
 
-<!-- header with logo + hamburger (absolute over hero) -->
+<!-- header with logo + hamburger -->
 <header class="page-header">
-    <img src="logo.png" alt="Night of Laughter" class="header-logo" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22120%22%20height%3D%2270%22%20viewBox%3D%220%200%20120%2070%22%3E%3Ctext%20x%3D%2210%22%20y%3D%2245%22%20font-size%3D%2224%22%20fill%3D%22%23ffffff%22%3ENoL%3C%2Ftext%3E%3C%2Fsvg%3E'">
+    <img src="logo.png" alt="Night of Laughter" class="header-logo" loading="lazy" onerror="this.src='https://i.postimg.cc/FKCPHGym/logo-(1).png'">
 
-    <!-- mobile hamburger (checkbox method, no js) -->
     <input type="checkbox" id="menu-toggle" style="display:none;">
     <label for="menu-toggle" class="menu-icon" aria-label="menu">☰</label>
 
@@ -460,18 +746,21 @@
     </nav>
 </header>
 
-<!-- HERO SECTION (image covers everything) -->
+<!-- HERO SECTION -->
 <section class="hero">
     <div class="hero-text">
         <h1>NIGHT OF LAUGHTER</h1>
-        <p>Events · tickets · payments</p>
+        <p>Happily after, everything to us is a laughing matter😂</p>
     </div>
 </section>
 
-<!-- payment banner placeholder (hidden by default) -->
+<!-- Toast Notifications -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Payment Banner -->
 <div class="payment-banner" id="paymentBanner"></div>
 
-<!-- FEATURED EVENTS section (loader visible until fetch) -->
+<!-- FEATURED EVENTS section -->
 <section class="section" id="featured">
     <h2>✨ Featured</h2>
     <div class="event-grid" id="featuredGrid">
@@ -491,7 +780,6 @@
 <section id="videos" class="video-section">
     <h2>🎥 Latest Comedy Highlights</h2>
     <div class="video-grid" id="videoGrid">
-        <!-- Videos will be loaded here via JavaScript -->
         <div class="loader" style="margin:2rem auto;"></div>
     </div>
 </section>
@@ -500,412 +788,776 @@
 <section id="gallery" class="gallery-section">
     <h2>📸 Event Gallery</h2>
     <div class="gallery-grid" id="galleryGrid">
-        <!-- Gallery images will be loaded here via JavaScript -->
         <div class="loader" style="margin:2rem auto;"></div>
     </div>
 </section>
 
-<!-- TESTIMONIALS (brief) -->
+<!-- TESTIMONIALS -->
 <section id="testimonials" class="testimonials">
     <h2>What comedians say</h2>
     <p style="max-width:700px; color:#2d3e50;">“Night of Laughter brings the best crowds — and digital tickets mean fans just show their phone. Genius.” — Chingliz</p>
     <p style="margin-top:1.5rem; font-style:italic;">“Packed houses, smooth entry. No paper, no fuss.” — Ba Emma</p>
 </section>
 
-<!-- CONTACT (short) -->
+<!-- CONTACT -->
 <section id="contact" class="contact">
     <h2>Contact / bookings</h2>
-    <p>📞 +260 97 123 4567 (10am–4pm)</p>
+    <p>📞 +260 973299759(10am–4pm)</p>
+    <p>📧 chingliz89@gmail.com</p>
 </section>
+
+<!-- Lightbox for Images and Videos -->
+<div class="lightbox" id="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <span class="lightbox-prev" onclick="changeLightboxItem(-1)">&#10094;</span>
+    <span class="lightbox-next" onclick="changeLightboxItem(1)">&#10095;</span>
+    <div class="lightbox-content" id="lightboxContent"></div>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+</div>
+
+<!-- TICKET PURCHASE MODAL (from second file) -->
+<div class="form-modal" id="ticketModal">
+    <div class="form-container">
+        <span class="form-close" onclick="closeTicketModal()">&times;</span>
+        
+        <!-- Selected Event Info -->
+        <div class="event-detail-card" id="selectedEventInfo">
+            <div class="event-detail-row">
+                <span class="detail-label">Event:</span>
+                <span id="modalEventName">ALL OUT COMEDY TOUR</span>
+            </div>
+            <div class="event-detail-row">
+                <span class="detail-label">Date:</span>
+                <span id="modalEventDate">March 27, 2026</span>
+            </div>
+            <div class="event-detail-row">
+                <span class="detail-label">Time:</span>
+                <span id="modalEventTime">19:30 hrs</span>
+            </div>
+            <div class="event-detail-row">
+                <span class="detail-label">Venue:</span>
+                <span id="modalEventVenue">Lowenthal Theatre, Ndola</span>
+            </div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="progress">
+            <div class="progress-step active" id="step1"></div>
+            <div class="progress-step" id="step2"></div>
+            <div class="progress-step" id="step3"></div>
+        </div>
+        
+        <!-- Form Section -->
+        <div id="formSection" class="section">
+            <div class="section-title">Your Details</div>
+            
+            <div class="form-group">
+                <label>Full Name</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="fullName" placeholder="John Doe" 
+                           oninput="validateField('fullName'); saveFormDataSilently();">
+                </div>
+                <div class="error-message" id="nameError">Please enter your full name</div>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">📧</span>
+                    <input type="email" id="email" placeholder="john@example.com"
+                           oninput="validateField('email'); saveFormDataSilently();">
+                </div>
+                <div class="error-message" id="emailError">Please enter a valid email</div>
+            </div>
+
+            <div class="form-group">
+                <label>WhatsApp Number</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">📱</span>
+                    <input type="tel" id="phone" placeholder="097 XXX XXX"
+                           oninput="formatPhoneNumber(this); validateField('phone'); saveFormDataSilently();">
+                </div>
+                <div class="error-message" id="phoneError">Please enter a valid number</div>                
+            </div>
+
+            <div class="section-title" style="margin-top: 24px;">Ticket Selection</div>
+
+            <div class="form-group">
+                <label>Ticket Type</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🎫</span>
+                    <select id="ticketType" onchange="updatePrice(); validateField('ticketType'); saveFormDataSilently();">
+                        <option value="">Select ticket type</option>
+                        <option value="Early Bird(online)" data-price="180" selected>Early Bird (Online) - ZMW 180</option>                                              
+                    </select>
+                </div>
+                <div class="error-message" id="ticketTypeError">Please select a ticket type</div>
+            </div>
+
+            <div class="form-group">
+                <label>Number of Tickets</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔢</span>
+                    <input type="number" id="numberOfTickets" min="1" max="10" value="1"
+                           onchange="updatePrice(); validateField('numberOfTickets'); saveFormDataSilently();">
+                </div>
+                <div class="error-message" id="ticketsError">Please enter 1-10 tickets</div>
+            </div>
+
+            <div class="price-card">
+                <div>
+                    <div class="price-label">Total Amount</div>
+                    <div class="price-breakdown" id="priceBreakdown">1 ticket × ZMW 180</div>
+                </div>
+                <div class="price-amount" id="totalPrice">ZMW 180</div>
+            </div>
+
+            <button class="btn-primary" onclick="validateAndShowSummary()" id="continueBtn">
+                Continue to Review
+            </button>
+        </div>
+
+        <!-- Summary Section -->
+        <div id="summarySection" class="section hidden">
+            <div class="section-title">Review Your Order</div>
+            
+            <div class="summary-card">
+                <div class="summary-row">
+                    <span class="summary-label">Full Name</span>
+                    <span class="summary-value" id="s_fullName"></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Email</span>
+                    <span class="summary-value" id="s_email"></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">WhatsApp</span>
+                    <span class="summary-value" id="s_phone"></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Ticket Type</span>
+                    <span class="summary-value" id="s_ticketType"></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Quantity</span>
+                    <span class="summary-value" id="s_numberOfTickets"></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Event</span>
+                    <span class="summary-value">ALL OUT COMEDY TOUR</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Date & Time</span>
+                    <span class="summary-value">March 27 • 7:30 PM</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Venue</span>
+                    <span class="summary-value">Lowenthal Theatre, Ndola</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Total</span>
+                    <span class="summary-value summary-total" id="s_totalPrice"></span>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button class="btn-outline" onclick="goBackToForm()" style="flex: 1;">
+                    Edit
+                </button>
+                <button class="btn-primary" onclick="proceedToPayment()" id="paymentBtn" style="flex: 2;">
+                    Confirm & Pay
+                </button>
+            </div>
+        </div>
+
+        <!-- Payment Section -->
+        <div id="paymentSection" class="section hidden">
+            <div style="text-align: center; padding: 40px 20px;">
+                <div class="loader" style="width: 40px; height: 40px; margin: 0 auto 24px;"></div>
+                <div class="section-title" style="border: none;">Processing Payment</div>
+                <p style="color: var(--text-light);">Proceeding to payment...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BACK TO TOP BUTTON -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Back to top">↑</button>
 
 <footer id="footer">
     NIGHT OF LAUGHTER © 2025 · by cmk web solutions
 </footer>
 
-<!-- BACK TO TOP BUTTON -->
-<button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Back to top">↑</button>
-
-<!-- Unified Lightbox for Images and Videos -->
-<div class="lightbox" id="lightbox">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-    <span class="lightbox-prev" onclick="changeLightboxItem(-1)">&#10094;</span>
-    <span class="lightbox-next" onclick="changeLightboxItem(1)">&#10095;</span>
-    <div class="lightbox-content" id="lightboxContent">
-        <!-- Content loaded dynamically -->
-    </div>
-    <div class="lightbox-counter" id="lightboxCounter"></div>
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-</div>
-
-<!-- JavaScript for all functionality -->
 <script>
-// ---------- CONFIG ----------
-// Updated to use SheetBest API instead of SheetDB
-const SHEETBEST_API = "https://api.sheetbest.com/sheets/c8c28303-35b7-45d3-93a0-2f33b8cfaee3"; // Replace with your actual SheetBest URL
-const FORM_URL = "https://forms.gle/QPpnbkSpNA7HT7vG9";
+    // ========== CONFIGURATION ==========
+    const CONFIG = {
+        SHEETBEST_API: "https://api.sheetbest.com/sheets/c8c28303-35b7-45d3-93a0-2f33b8cfaee3",
+        FORM_URL: "https://forms.gle/QPpnbkSpNA7HT7vG9",
+        SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyXSw_BuznrzIXO7_oqjgFEMSEXiYYmnEUWtdVr9CP4iz8deX9dBzmXR7ztvB9B0XKWbQ/exec',
+        PAYMENT_URL: 'https://dashboard.lipila.io/pay/?id=89D57F9F154F440',
+        STORAGE_KEY: 'nol_form_data',
+        PAYMENT_KEY: 'nol_payment_attempt'
+    };
 
-// ---------- YOUTUBE VIDEOS CONFIG ----------
-const YOUTUBE_VIDEOS = [
-   
-    {
-        id: "Vd2TRJRQAxk", // From: https://youtu.be/Vd2TRJRQAxk?si=vn5L1d5B0ZUq3ldr
-        title: "Best of Chingliz - Live at Night of Laughter",
-        description: "Highlights from our latest show featuring Chingliz",
-        thumbnail: "https://img.youtube.com/vi/Vd2TRJRQAxk/maxresdefault.jpg"
-    },
-    {
-        id: "cluxU57wDYw", // From: https://youtu.be/cluxU57wDYw?si=r0ZixTXT9XdY6h69
-        title: "Ba Emma's Hilarious Set",
-        description: "Watch Ba Emma kill it on stage",
-        thumbnail: "https://img.youtube.com/vi/cluxU57wDYw/maxresdefault.jpg"
-    },
-];
+    // YouTube Videos
+    const YOUTUBE_VIDEOS = [
+        {
+            id: "Vd2TRJRQAxk",
+            title: "Best of Chingliz - Live at Night of Laughter",
+            description: "Highlights from our latest show featuring Chingliz",
+            thumbnail: "https://img.youtube.com/vi/Vd2TRJRQAxk/maxresdefault.jpg"
+        },
+        {
+            id: "cluxU57wDYw",
+            title: "Ba Emma's Hilarious Set",
+            description: "Watch Ba Emma kill it on stage",
+            thumbnail: "https://img.youtube.com/vi/cluxU57wDYw/maxresdefault.jpg"
+        },
+    ];
 
-// ---------- GALLERY IMAGES CONFIG ----------
-const GALLERY_IMAGES = [
-    {
-        url: "https://i.postimg.cc/L6J9YnQR/DEW-1.jpg",
-        thumbnail: "https://i.postimg.cc/L6J9YnQR/DEW-1.jpg",
-        caption: "Night of Laughter performance"
-    },
-    {
-        url: "https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg",
-        thumbnail: "https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg",
-        caption: "Crowd enjoying the show"
-    },
-    {
-        url: "https://i.postimg.cc/KvCZnxCj/DEW-22.jpg",
-        thumbnail: "https://i.postimg.cc/KvCZnxCj/DEW-22.jpg",
-        caption: "Comedy moment"
-    },
-    {
-        url: "https://i.postimg.cc/8CmNQWcv/DEW-17.jpg",
-        thumbnail: "https://i.postimg.cc/8CmNQWcv/DEW-17.jpg",
-        caption: "Audience laughter"
-    },
-    {  
-        url: "https://i.postimg.cc/zX4Jn86s/DEW-26.jpg",
-        thumbnail: "https://i.postimg.cc/zX4Jn86s/DEW-26.jpg",
-        caption: "Night of Laughter performance"
-    },
-    {
-        url: "https://i.postimg.cc/zX4Jn845/DEW-28.jpg",
-        thumbnail: "https://i.postimg.cc/zX4Jn845/DEW-28.jpg",
-        caption: "Crowd enjoying the show"
-    },
-    {
-        url: "https://i.postimg.cc/wT1qy74q/DEW-30.jpg",
-        thumbnail: "https://i.postimg.cc/wT1qy74q/DEW-30.jpg",
-        caption: "Comedy moment"
-    },
-    {
-        url: "https://i.postimg.cc/J0vWc56Q/DEW-4.jpg",
-        thumbnail: "https://i.postimg.cc/J0vWc56Q/DEW-4.jpg",
-        caption: "Audience laughter"
-    },
-    {
-        url: "https://i.postimg.cc/5NDxwbDc/DEW-36.jpg",
-        thumbnail: "https://i.postimg.cc/5NDxwbDc/DEW-36.jpg",
-        caption: "Stage performance"
-    },
-    
-];
-// Combined array for lightbox navigation
-let lightboxItems = [];
-let currentLightboxIndex = 0;
+    // Gallery Images
+    const GALLERY_IMAGES = [
+        { url: "https://i.postimg.cc/L6J9YnQR/DEW-1.jpg", thumbnail: "https://i.postimg.cc/L6J9YnQR/DEW-1.jpg", caption: "Night of Laughter performance" },
+        { url: "https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg", thumbnail: "https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg", caption: "Crowd enjoying the show" },
+        { url: "https://i.postimg.cc/KvCZnxCj/DEW-22.jpg", thumbnail: "https://i.postimg.cc/KvCZnxCj/DEW-22.jpg", caption: "Comedy moment" },
+        { url: "https://i.postimg.cc/8CmNQWcv/DEW-17.jpg", thumbnail: "https://i.postimg.cc/8CmNQWcv/DEW-17.jpg", caption: "Audience laughter" },
+        { url: "https://i.postimg.cc/zX4Jn86s/DEW-26.jpg", thumbnail: "https://i.postimg.cc/zX4Jn86s/DEW-26.jpg", caption: "Night of Laughter performance" },
+        { url: "https://i.postimg.cc/zX4Jn845/DEW-28.jpg", thumbnail: "https://i.postimg.cc/zX4Jn845/DEW-28.jpg", caption: "Crowd enjoying the show" },
+        { url: "https://i.postimg.cc/wT1qy74q/DEW-30.jpg", thumbnail: "https://i.postimg.cc/wT1qy74q/DEW-30.jpg", caption: "Comedy moment" },
+        { url: "https://i.postimg.cc/J0vWc56Q/DEW-4.jpg", thumbnail: "https://i.postimg.cc/J0vWc56Q/DEW-4.jpg", caption: "Audience laughter" },
+        { url: "https://i.postimg.cc/5NDxwbDc/DEW-36.jpg", thumbnail: "https://i.postimg.cc/5NDxwbDc/DEW-36.jpg", caption: "Stage performance" },
+    ];
 
-// ---------- UTILS ----------
-function escapeHTML(str) {
-    if(!str) return '';
-    return String(str).replace(/[&<>"]/g, function(m){
-        return m === '&' ? '&amp;' : m === '<' ? '&lt;' : m === '>' ? '&gt;' : m === '"' ? '&quot;' : m;
-    });
-}
+    // ========== GLOBAL VARIABLES ==========
+    let lightboxItems = [];
+    let currentLightboxIndex = 0;
+    let selectedEvent = null;
 
-function showBanner(msg, isSuccess = true) {
-    const banner = document.getElementById('paymentBanner');
-    banner.style.display = 'block';
-    banner.textContent = msg;
-    banner.style.background = isSuccess ? '#d4edda' : '#f8d7da';
-    banner.style.color = isSuccess ? '#155724' : '#721c24';
-    banner.style.borderColor = isSuccess ? '#c3e6cb' : '#f5c6cb';
-    setTimeout(() => banner.style.display = 'none', 4000);
-}
-
-// ---------- BACK TO TOP FUNCTIONALITY ----------
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-// Show back to top button only when footer is visible
-window.addEventListener('scroll', function() {
-    const backToTop = document.getElementById('backToTop');
-    const footer = document.getElementById('footer');
-    const footerRect = footer.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    // Show button when footer comes into view
-    if (footerRect.top <= windowHeight) {
-        backToTop.classList.add('visible');
-    } else {
-        backToTop.classList.remove('visible');
-    }
-});
-
-// ---------- UNIFIED LIGHTBOX FUNCTIONS ----------
-function openLightbox(index) {
-    currentLightboxIndex = index;
-    updateLightbox();
-    document.getElementById('lightbox').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('active');
-    document.body.style.overflow = '';
-    
-    // Stop video if playing
-    const lightboxContent = document.getElementById('lightboxContent');
-    lightboxContent.innerHTML = '';
-}
-
-function changeLightboxItem(direction) {
-    currentLightboxIndex += direction;
-    
-    if (currentLightboxIndex < 0) {
-        currentLightboxIndex = lightboxItems.length - 1;
-    } else if (currentLightboxIndex >= lightboxItems.length) {
-        currentLightboxIndex = 0;
-    }
-    
-    updateLightbox();
-}
-
-function updateLightbox() {
-    const item = lightboxItems[currentLightboxIndex];
-    const lightboxContent = document.getElementById('lightboxContent');
-    const counter = document.getElementById('lightboxCounter');
-    const caption = document.getElementById('lightboxCaption');
-    
-    // Clear previous content
-    lightboxContent.innerHTML = '';
-    
-    if (item.type === 'image') {
-        // Display image
-        const img = document.createElement('img');
-        img.src = item.url;
-        img.alt = item.caption;
-        lightboxContent.appendChild(img);
-        caption.textContent = item.caption;
-    } else if (item.type === 'video') {
-        // Display YouTube video
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube.com/embed/${item.id}?autoplay=1`;
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-        iframe.allowFullscreen = true;
-        lightboxContent.appendChild(iframe);
-        caption.textContent = item.title;
-    }
-    
-    // Update counter
-    counter.textContent = `${currentLightboxIndex + 1} / ${lightboxItems.length}`;
-}
-
-// Keyboard navigation
-document.addEventListener('keydown', function(e) {
-    const lightbox = document.getElementById('lightbox');
-    if (!lightbox.classList.contains('active')) return;
-    
-    if (e.key === 'Escape') {
-        closeLightbox();
-    } else if (e.key === 'ArrowLeft') {
-        changeLightboxItem(-1);
-    } else if (e.key === 'ArrowRight') {
-        changeLightboxItem(1);
-    }
-});
-
-// ---------- BUY HANDLER: DIRECT REDIRECT TO GOOGLE FORM ----------
-function buyTicket(eventData) {
-    sessionStorage.setItem('lastEvent', JSON.stringify({name: eventData.name || 'Event'}));
-    window.open(FORM_URL, '_blank');
-    showBanner('📋 Booking form opened in new tab', true);
-}
-
-function toggleDesc(id) {
-    const el = document.getElementById(id);
-    if(el) el.classList.toggle('show');
-}
-
-// ---------- RENDER EVENT CARDS WITH EARLY BIRD & STANDARD PRICING ----------
-function renderEventCard(ev, index) {
-    const descId = `desc_${Date.now()}_${index}`;
-    const name = escapeHTML(ev.name) || 'Laughter night';
-    const date = escapeHTML(ev.date) || 'TBA';
-    const time = escapeHTML(ev.time) || '19:00';
-    const venue = escapeHTML(ev.venue) || 'Lusaka';
-    
-    // Updated pricing: early bird and standard instead of VIP
-    const earlyBird = ev.early_bird && ev.early_bird != '0' ? `K${escapeHTML(ev.early_bird)}` : null;
-    const standard = ev.standard && ev.standard != '0' ? `K${escapeHTML(ev.standard)}` : null;
-    
-    const img = ev.image && ev.image.trim() !== '' ? escapeHTML(ev.image) : 'https://via.placeholder.com/400x400?text=COMEDY';
-    const description = escapeHTML(ev.description || ev.desc || 'Get ready to laugh!');
-    const lineup = ev.lineup ? escapeHTML(ev.lineup) : '';
-
-    let priceHTML = '<div class="price-box">';
-    if (earlyBird) priceHTML += `<div class="price-line"><span>🐦 Early Bird</span> <strong class="early-bird">${earlyBird}</strong></div>`;
-    if (standard) priceHTML += `<div class="price-line"><span>🎫 Standard</span> <strong class="standard">${standard}</strong></div>`;
-    if (!earlyBird && !standard) priceHTML += '<div>Prices at venue</div>';
-    priceHTML += '</div>';
-
-    return `<div class="event-card">
-        <div class="event-thumb"><img src="${img}" loading="lazy" alt="${name}" onerror="this.src='https://via.placeholder.com/400x400?text=event'"></div>
-        <div class="event-content">
-            <div class="event-title">${name}</div>
-            <div class="event-detail"><span class="detail-label">Date</span> ${date} · ${time}</div>
-            <div class="event-detail"><span class="detail-label">Venue</span> ${venue}</div>
-            ${priceHTML}
-            <div class="btn-group">
-                <button class="btn" onclick='buyTicket(${JSON.stringify(ev).replace(/'/g, "\\'")})'>🎟️ Buy</button>
-                <button class="btn btn-info" onclick="toggleDesc('${descId}')">ℹ️ More</button>
-            </div>
-            <div id="${descId}" class="more-desc">
-                <p>${description}</p>
-                ${lineup ? '<p><strong>Lineup:</strong> '+lineup+'</p>' : ''}
-            </div>
-        </div>
-    </div>`;
-}
-
-// ---------- RENDER YOUTUBE VIDEOS ----------
-function renderVideos() {
-    const videoGrid = document.getElementById('videoGrid');
-    
-    if (!YOUTUBE_VIDEOS || YOUTUBE_VIDEOS.length === 0) {
-        videoGrid.innerHTML = '<p style="text-align:center; color:#666;">No videos available yet.</p>';
-        return;
-    }
-    
-    // Add videos to lightbox items
-    YOUTUBE_VIDEOS.forEach(video => {
-        lightboxItems.push({
-            type: 'video',
-            id: video.id,
-            title: video.title,
-            description: video.description
+    // ========== UTILITY FUNCTIONS ==========
+    function escapeHTML(str) {
+        if(!str) return '';
+        return String(str).replace(/[&<>"]/g, function(m){
+            return m === '&' ? '&amp;' : m === '<' ? '&lt;' : m === '>' ? '&gt;' : m === '"' ? '&quot;' : m;
         });
-    });
-    
-    videoGrid.innerHTML = YOUTUBE_VIDEOS.map((video, index) => {
-        // Calculate the correct index in lightboxItems
-        const lightboxIndex = index; // Videos come first in lightboxItems
-        return `
-            <div class="video-card" onclick="openLightbox(${lightboxIndex})">
-                <div class="video-thumbnail">
-                    <img src="${video.thumbnail || `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}" 
-                         alt="${escapeHTML(video.title)}"
-                         onerror="this.src='https://via.placeholder.com/320x180?text=Video+Thumbnail'">
-                    <div class="play-button">▶</div>
-                </div>
-                <div class="video-info">
-                    <h3>${escapeHTML(video.title)}</h3>
-                    <p>${escapeHTML(video.description)}</p>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
-// ---------- RENDER GALLERY ----------
-function renderGallery() {
-    const galleryGrid = document.getElementById('galleryGrid');
-    
-    if (!GALLERY_IMAGES || GALLERY_IMAGES.length === 0) {
-        galleryGrid.innerHTML = '<p style="text-align:center; color:#666;">No gallery images yet.</p>';
-        return;
     }
-    
-    // Get current lightbox items length before adding images
-    const videoCount = lightboxItems.length;
-    
-    // Add images to lightbox items (after videos)
-    GALLERY_IMAGES.forEach(image => {
-        lightboxItems.push({
-            type: 'image',
-            url: image.url,
-            thumbnail: image.thumbnail,
-            caption: image.caption
-        });
-    });
-    
-    galleryGrid.innerHTML = GALLERY_IMAGES.map((image, index) => {
-        // Calculate the correct index in lightboxItems (videos + images)
-        const lightboxIndex = videoCount + index;
-        return `
-            <div class="gallery-item" onclick="openLightbox(${lightboxIndex})">
-                <img src="${escapeHTML(image.thumbnail)}" loading="lazy" alt="${escapeHTML(image.caption)}">
-                <div class="gallery-caption">${escapeHTML(image.caption)}</div>
-            </div>
-        `;
-    }).join('');
-}
 
-// ---------- FETCH + RENDER EVENTS FROM SHEETBEST ----------
-async function fetchAndRender() {
-    try {
-        // Fetch from SheetBest instead of SheetDB
-        const resp = await fetch(SHEETBEST_API);
-        if (!resp.ok) throw new Error('Network response was not ok');
-        const events = await resp.json();
+    function showBanner(msg, isSuccess = true) {
+        const banner = document.getElementById('paymentBanner');
+        banner.style.display = 'block';
+        banner.textContent = msg;
+        banner.style.background = isSuccess ? '#d4edda' : '#f8d7da';
+        banner.style.color = isSuccess ? '#155724' : '#721c24';
+        banner.style.borderColor = isSuccess ? '#c3e6cb' : '#f5c6cb';
+        setTimeout(() => banner.style.display = 'none', 4000);
+    }
+
+    function showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+            <span>${message}</span>
+        `;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 5000);
+    }
+
+    // ========== BACK TO TOP ==========
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('scroll', function() {
+        const backToTop = document.getElementById('backToTop');
+        const footer = document.getElementById('footer');
+        const footerRect = footer.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
         
-        // SheetBest returns data similar to SheetDB, so filtering logic remains the same
-        const featured = events.filter(ev => ev.type && ev.type.toLowerCase().includes('featured'));
-        const upcoming = events.filter(ev => !ev.type || !ev.type.toLowerCase().includes('featured'));
-
-        const featuredGrid = document.getElementById('featuredGrid');
-        const upcomingGrid = document.getElementById('upcomingGrid');
-
-        if (featured.length) {
-            featuredGrid.innerHTML = featured.map((ev, i) => renderEventCard(ev, `f_${i}`)).join('');
+        if (footerRect.top <= windowHeight) {
+            backToTop.classList.add('visible');
         } else {
-            featuredGrid.innerHTML = '<p style="width:100%; text-align:center; color:#556;">🌟 Featured shows coming soon</p>';
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    // ========== LIGHTBOX FUNCTIONS ==========
+    function openLightbox(index) {
+        currentLightboxIndex = index;
+        updateLightbox();
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+        document.getElementById('lightboxContent').innerHTML = '';
+    }
+
+    function changeLightboxItem(direction) {
+        currentLightboxIndex += direction;
+        if (currentLightboxIndex < 0) {
+            currentLightboxIndex = lightboxItems.length - 1;
+        } else if (currentLightboxIndex >= lightboxItems.length) {
+            currentLightboxIndex = 0;
+        }
+        updateLightbox();
+    }
+
+    function updateLightbox() {
+        const item = lightboxItems[currentLightboxIndex];
+        const lightboxContent = document.getElementById('lightboxContent');
+        const counter = document.getElementById('lightboxCounter');
+        
+        lightboxContent.innerHTML = '';
+        
+        if (item.type === 'image') {
+            const img = document.createElement('img');
+            img.src = item.url;
+            img.alt = item.caption;
+            lightboxContent.appendChild(img);
+        } else if (item.type === 'video') {
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${item.id}?autoplay=1`;
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+            lightboxContent.appendChild(iframe);
+        }
+        
+        counter.textContent = `${currentLightboxIndex + 1} / ${lightboxItems.length}`;
+    }
+
+    // Keyboard navigation for lightbox
+    document.addEventListener('keydown', function(e) {
+        const lightbox = document.getElementById('lightbox');
+        if (!lightbox.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') {
+            closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+            changeLightboxItem(-1);
+        } else if (e.key === 'ArrowRight') {
+            changeLightboxItem(1);
+        }
+    });
+
+    // ========== TICKET MODAL FUNCTIONS ==========
+    function openTicketModal(eventData) {
+        selectedEvent = eventData;
+        
+        // Update modal with event data
+        document.getElementById('modalEventName').textContent = eventData.name || 'ALL OUT COMEDY TOUR';
+        document.getElementById('modalEventDate').textContent = eventData.date || 'March 27, 2026';
+        document.getElementById('modalEventTime').textContent = eventData.time || '19:30 hrs';
+        document.getElementById('modalEventVenue').textContent = eventData.venue || 'Lowenthal Theatre, Ndola';
+        
+        // Show modal
+        document.getElementById('ticketModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Reset form
+        resetForm();
+        
+        // Check for saved data
+        const saved = localStorage.getItem(CONFIG.STORAGE_KEY);
+        if (saved) {
+            if (confirm('You have saved form data. Would you like to load it?')) {
+                loadSavedData();
+            }
+        }
+    }
+
+    function closeTicketModal() {
+        document.getElementById('ticketModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // ========== BUY HANDLER ==========
+    function buyTicket(eventData) {
+        // Store event in session storage
+        sessionStorage.setItem('selectedEvent', JSON.stringify(eventData));
+        // Open the ticket modal instead of external form
+        openTicketModal(eventData);
+    }
+
+    // ========== FORM FUNCTIONS ==========
+    function saveFormDataSilently() {
+        const data = {
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            ticketType: document.getElementById('ticketType').value,
+            numberOfTickets: document.getElementById('numberOfTickets').value
+        };
+        localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function loadSavedData() {
+        const saved = localStorage.getItem(CONFIG.STORAGE_KEY);
+        if (saved) {
+            const data = JSON.parse(saved);
+            document.getElementById('fullName').value = data.fullName || '';
+            document.getElementById('email').value = data.email || '';
+            document.getElementById('phone').value = data.phone || '';
+            document.getElementById('ticketType').value = data.ticketType || '';
+            document.getElementById('numberOfTickets').value = data.numberOfTickets || '1';
+            updatePrice();
+            validateAllFields();
+            showToast('Data loaded', 'success');
+        }
+    }
+
+    function validateField(fieldId) {
+        const field = document.getElementById(fieldId);
+        const error = document.getElementById(fieldId + 'Error');
+        let valid = true;
+
+        switch(fieldId) {
+            case 'fullName':
+                valid = field.value.trim().length >= 2;
+                break;
+            case 'email':
+                valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+                break;
+            case 'phone':
+                valid = /^[0-9\s]{10,}$/.test(field.value.replace(/\s/g, ''));
+                break;
+            case 'ticketType':
+                valid = field.value !== '';
+                break;
+            case 'numberOfTickets':
+                const num = parseInt(field.value);
+                valid = num >= 1 && num <= 10;
+                break;
         }
 
-        if (upcoming.length) {
-            upcomingGrid.innerHTML = upcoming.map((ev, i) => renderEventCard(ev, `u_${i}`)).join('');
+        if (!valid && field.value) {
+            field.classList.add('error');
+            if (error) error.style.display = 'block';
         } else {
-            upcomingGrid.innerHTML = '<p style="width:100%; text-align:center; color:#556;">📆 Next events announced soon</p>';
+            field.classList.remove('error');
+            if (error) error.style.display = 'none';
         }
-    } catch (e) {
-        console.warn('Error fetching from SheetBest:', e);
-        document.getElementById('featuredGrid').innerHTML = '<p style="color:#b33;">Could not load events. Refresh or contact us.</p>';
-        document.getElementById('upcomingGrid').innerHTML = '';
-        showBanner('⚠️ Events offline, but tickets via contact', false);
+        return valid;
     }
-}
 
-// ---------- check payment return (simulate from url) ----------
-function checkPaymentReturn() {
-    const params = new URLSearchParams(location.search);
-    if (params.get('payment') === 'success') {
-        showBanner('✅ Payment successful! Check your email for tickets.', true);
-    } else if (params.get('payment') === 'fail') {
-        showBanner('❌ Payment incomplete, please try again.', false);
+    function validateAllFields() {
+        const fields = ['fullName', 'email', 'phone', 'ticketType', 'numberOfTickets'];
+        return fields.every(f => validateField(f));
     }
-}
 
-// ---------- INITIALIZE ----------
-document.addEventListener('DOMContentLoaded', () => {
-    fetchAndRender();
-    renderVideos();  // This adds videos to lightboxItems
-    renderGallery(); // This adds images to lightboxItems
-    checkPaymentReturn();
-    setInterval(fetchAndRender, 300000); // Refresh events every 5 minutes
-});
+    function updatePrice() {
+        const select = document.getElementById('ticketType');
+        const option = select.options[select.selectedIndex];
+        const price = option?.dataset?.price ? parseInt(option.dataset.price) : 0;
+        const qty = parseInt(document.getElementById('numberOfTickets').value) || 1;
+        const total = price * qty;
+        
+        document.getElementById('totalPrice').textContent = `ZMW ${total}`;
+        document.getElementById('priceBreakdown').textContent = 
+            `${qty} ticket${qty > 1 ? 's' : ''} × ZMW ${price}`;
+    }
+
+    function formatPhoneNumber(input) {
+        let v = input.value.replace(/\D/g, '');
+        if (v.length > 3) {
+            v = v.substring(0,3) + ' ' + v.substring(3,6) + ' ' + v.substring(6,10);
+        }
+        input.value = v;
+    }
+
+    function validateAndShowSummary() {
+        if (!validateAllFields()) {
+            showToast('Please enter full details', 'error');
+            return;
+        }
+
+        const fields = ['fullName', 'email', 'phone', 'ticketType', 'numberOfTickets'];
+        fields.forEach(f => {
+            if (f === 'ticketType') {
+                const select = document.getElementById(f);
+                document.getElementById('s_' + f).textContent = select.options[select.selectedIndex].text;
+            } else {
+                document.getElementById('s_' + f).textContent = document.getElementById(f).value;
+            }
+        });
+        
+        document.getElementById('s_totalPrice').textContent = document.getElementById('totalPrice').textContent;
+        
+        document.getElementById('step1').classList.add('completed');
+        document.getElementById('step2').classList.add('active');
+        
+        document.getElementById('formSection').classList.add('hidden');
+        document.getElementById('summarySection').classList.remove('hidden');
+    }
+
+    function goBackToForm() {
+        document.getElementById('step1').classList.remove('completed');
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('step1').classList.add('active');
+        
+        document.getElementById('summarySection').classList.add('hidden');
+        document.getElementById('formSection').classList.remove('hidden');
+    }
+
+    function resetForm() {
+        document.getElementById('formSection').classList.remove('hidden');
+        document.getElementById('summarySection').classList.add('hidden');
+        document.getElementById('paymentSection').classList.add('hidden');
+        
+        document.getElementById('fullName').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('ticketType').value = '';
+        document.getElementById('numberOfTickets').value = '1';
+        
+        document.getElementById('step1').classList.remove('completed', 'active');
+        document.getElementById('step2').classList.remove('completed', 'active');
+        document.getElementById('step3').classList.remove('completed', 'active');
+        document.getElementById('step1').classList.add('active');
+        
+        updatePrice();
+    }
+
+    async function proceedToPayment() {
+        if (!validateAllFields()) return;
+
+        document.getElementById('summarySection').classList.add('hidden');
+        document.getElementById('paymentSection').classList.remove('hidden');
+        
+        document.getElementById('step2').classList.add('completed');
+        document.getElementById('step3').classList.add('active');
+
+        const data = {
+            timestamp: new Date().toISOString(),
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            ticketType: document.getElementById('ticketType').value,
+            numberOfTickets: document.getElementById('numberOfTickets').value,
+            eventName: selectedEvent?.name || 'ALL OUT COMEDY TOUR',
+            eventTime: selectedEvent?.time || '19:30',
+            totalPrice: document.getElementById('totalPrice').textContent,
+            eventDate: selectedEvent?.date || 'March 27, 2026',
+            venue: selectedEvent?.venue || 'Lowenthal Theatre, Ndola',
+            receiptNumber: 'NOL-' + Math.random().toString(36).substring(2,10).toUpperCase(),
+            emailStatus: 'Pending',
+            qrCode: '',
+            paid: 'No'
+        };
+
+        localStorage.setItem(CONFIG.PAYMENT_KEY, JSON.stringify(data));
+
+        try {
+            const formData = new FormData();
+            Object.entries(data).forEach(([k, v]) => formData.append(k, v));
+            
+            await fetch(CONFIG.SCRIPT_URL, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            });
+            
+            localStorage.removeItem(CONFIG.PAYMENT_KEY);
+            showToast('Redirecting to payment...', 'success');
+            
+            setTimeout(() => {
+                window.location.href = CONFIG.PAYMENT_URL;
+            }, 1500);
+            
+        } catch (error) {
+            showToast('Connection error', 'error');
+            document.getElementById('paymentSection').classList.add('hidden');
+            document.getElementById('summarySection').classList.remove('hidden');
+        }
+    }
+
+    // ========== RENDER FUNCTIONS ==========
+    function renderEventCard(ev, index) {
+        const descId = `desc_${Date.now()}_${index}`;
+        const name = escapeHTML(ev.name) || 'Laughter night';
+        const date = escapeHTML(ev.date) || 'TBA';
+        const time = escapeHTML(ev.time) || '19:00';
+        const venue = escapeHTML(ev.venue) || 'Lusaka';
+        
+        const earlyBird = ev.early_bird && ev.early_bird != '0' ? `K${escapeHTML(ev.early_bird)}` : null;
+        const standard = ev.standard && ev.standard != '0' ? `K${escapeHTML(ev.standard)}` : null;
+        
+        const img = ev.image && ev.image.trim() !== '' ? escapeHTML(ev.image) : 'https://via.placeholder.com/400x400?text=COMEDY';
+        const description = escapeHTML(ev.description || ev.desc || 'Get ready to laugh!');
+        const lineup = ev.lineup ? escapeHTML(ev.lineup) : '';
+
+        let priceHTML = '<div class="price-box">';
+        if (earlyBird) priceHTML += `<div class="price-line"><span>🐦 Early Bird</span> <strong class="early-bird">${earlyBird}</strong></div>`;
+        if (standard) priceHTML += `<div class="price-line"><span>🎫 Standard</span> <strong class="standard">${standard}</strong></div>`;
+        if (!earlyBird && !standard) priceHTML += '<div>Prices at venue</div>';
+        priceHTML += '</div>';
+
+        return `<div class="event-card">
+            <div class="event-thumb"><img src="${img}" loading="lazy" alt="${name}" onerror="this.src='https://via.placeholder.com/400x400?text=event'"></div>
+            <div class="event-content">
+                <div class="event-title">${name}</div>
+                <div class="event-detail"><span class="detail-label">Date</span> ${date} · ${time}</div>
+                <div class="event-detail"><span class="detail-label">Venue</span> ${venue}</div>
+                ${priceHTML}
+                <div class="btn-group">
+                    <button class="btn" onclick='buyTicket(${JSON.stringify(ev).replace(/'/g, "\\'")})'>🎟️ Buy</button>
+                    <button class="btn btn-info" onclick="toggleDesc('${descId}')">ℹ️ More</button>
+                </div>
+                <div id="${descId}" class="more-desc">
+                    <p>${description}</p>
+                    ${lineup ? '<p><strong>Lineup:</strong> '+lineup+'</p>' : ''}
+                </div>
+            </div>
+        </div>`;
+    }
+
+    function toggleDesc(id) {
+        const el = document.getElementById(id);
+        if(el) el.classList.toggle('show');
+    }
+
+    function renderVideos() {
+        const videoGrid = document.getElementById('videoGrid');
+        
+        if (!YOUTUBE_VIDEOS || YOUTUBE_VIDEOS.length === 0) {
+            videoGrid.innerHTML = '<p style="text-align:center; color:#666;">No videos available yet.</p>';
+            return;
+        }
+        
+        YOUTUBE_VIDEOS.forEach(video => {
+            lightboxItems.push({
+                type: 'video',
+                id: video.id,
+                title: video.title,
+                description: video.description
+            });
+        });
+        
+        videoGrid.innerHTML = YOUTUBE_VIDEOS.map((video, index) => {
+            return `
+                <div class="video-card" onclick="openLightbox(${index})">
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${escapeHTML(video.title)}" onerror="this.src='https://via.placeholder.com/320x180?text=Video'">
+                        <div class="play-button">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3>${escapeHTML(video.title)}</h3>
+                        <p>${escapeHTML(video.description)}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderGallery() {
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        if (!GALLERY_IMAGES || GALLERY_IMAGES.length === 0) {
+            galleryGrid.innerHTML = '<p style="text-align:center; color:#666;">No gallery images yet.</p>';
+            return;
+        }
+        
+        const videoCount = lightboxItems.length;
+        
+        GALLERY_IMAGES.forEach(image => {
+            lightboxItems.push({
+                type: 'image',
+                url: image.url,
+                thumbnail: image.thumbnail,
+                caption: image.caption
+            });
+        });
+        
+        galleryGrid.innerHTML = GALLERY_IMAGES.map((image, index) => {
+            const lightboxIndex = videoCount + index;
+            return `
+                <div class="gallery-item" onclick="openLightbox(${lightboxIndex})">
+                    <img src="${escapeHTML(image.thumbnail)}" loading="lazy" alt="${escapeHTML(image.caption)}">
+                    <div class="gallery-caption">${escapeHTML(image.caption)}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ========== FETCH EVENTS ==========
+    async function fetchAndRender() {
+        try {
+            const resp = await fetch(CONFIG.SHEETBEST_API);
+            if (!resp.ok) throw new Error('Network response was not ok');
+            const events = await resp.json();
+            
+            const featured = events.filter(ev => ev.type && ev.type.toLowerCase().includes('featured'));
+            const upcoming = events.filter(ev => !ev.type || !ev.type.toLowerCase().includes('featured'));
+
+            const featuredGrid = document.getElementById('featuredGrid');
+            const upcomingGrid = document.getElementById('upcomingGrid');
+
+            if (featured.length) {
+                featuredGrid.innerHTML = featured.map((ev, i) => renderEventCard(ev, `f_${i}`)).join('');
+            } else {
+                featuredGrid.innerHTML = '<p style="width:100%; text-align:center; color:#556;">🌟 Featured shows coming soon</p>';
+            }
+
+            if (upcoming.length) {
+                upcomingGrid.innerHTML = upcoming.map((ev, i) => renderEventCard(ev, `u_${i}`)).join('');
+            } else {
+                upcomingGrid.innerHTML = '<p style="width:100%; text-align:center; color:#556;">📆 Next events announced soon</p>';
+            }
+        } catch (e) {
+            console.warn('Error fetching from SheetBest:', e);
+            document.getElementById('featuredGrid').innerHTML = '<p style="color:#b33;">Could not load events. Refresh or contact us.</p>';
+            document.getElementById('upcomingGrid').innerHTML = '';
+            showBanner('⚠️ Events offline, but tickets via contact', false);
+        }
+    }
+
+    // ========== CHECK PAYMENT RETURN ==========
+    function checkPaymentReturn() {
+        const params = new URLSearchParams(location.search);
+        if (params.get('payment') === 'success') {
+            showBanner('✅ Payment successful! Check your email for tickets.', true);
+        } else if (params.get('payment') === 'fail') {
+            showBanner('❌ Payment incomplete, please try again.', false);
+        }
+    }
+
+    // ========== INITIALIZE ==========
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchAndRender();
+        renderVideos();
+        renderGallery();
+        checkPaymentReturn();
+        updatePrice();
+        setInterval(fetchAndRender, 300000); // Refresh every 5 minutes
+        
+        // Check for event in session storage
+        const storedEvent = sessionStorage.getItem('selectedEvent');
+        if (storedEvent) {
+            try {
+                selectedEvent = JSON.parse(storedEvent);
+            } catch (e) {
+                console.error('Error parsing stored event:', e);
+            }
+        }
+    });
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('ticketModal');
+        if (event.target === modal) {
+            closeTicketModal();
+        }
+    }
+
+    // Keyboard shortcut to close modal
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeTicketModal();
+        }
+    });
 </script>
 </body>
 </html>
