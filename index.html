@@ -814,7 +814,7 @@
             const CONFIG = {
                 SHEETBEST_API: "https://sheetdb.io/api/v1/sh60n2rxqi0zo",
                 SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxauAcbMKy0kDX4-QDSRV3PBclv_tJCJpQ7WGkel5iOeyaWpUbo96IZ9RBOUSCMq2IvFw/exec',
-                PAYMENT_URL: 'https://dashboard.lipila.io/pay?id=35D5047043454A4'
+                PAYMENT_URL: ""
             };
             
             const YOUTUBE_VIDEOS = [
@@ -868,7 +868,16 @@
                 if(vip) priceBox+=`<div class="price-line"><span>👑 VIP</span> <strong class="vip">K${vip}</strong></div>`;
                 if(!single&&!double&&!vip) priceBox+='<div>Prices at gate</div>';
                 priceBox+='</div>';
-                const eventData={name,date,time,venue,single,double,vip};
+                const eventData={
+    name,
+    date,
+    time,
+    venue,
+    single,
+    double,
+    vip,
+    payment_link: ev.payment_link || ""
+};
                 const jsonEv=JSON.stringify(eventData).replace(/"/g,'&quot;');
                 return `<div class="event-card"><div class="event-thumb"><img src="${img}" loading="lazy" alt="${name}"></div><div class="event-content"><div class="event-title">${escapeHTML(name)}</div><div class="event-detail"><span class="detail-label">Date</span> ${date} · ${time}</div><div class="event-detail"><span class="detail-label">Venue</span> ${escapeHTML(venue)}</div>${priceBox}<div class="btn-group"><button class="btn" onclick='buyTicketHandler(${jsonEv})'>🎟️ Buy Tickets</button><button class="btn btn-info" onclick="toggleDesc('${descId}')">ℹ️ More</button></div><div id="${descId}" class="more-desc"><p>${escapeHTML(desc)}</p></div></div></div>`;
             }
@@ -1063,8 +1072,11 @@ showToast('Redirecting to secure payment...','success');
 
 setTimeout(()=>{
 
-window.location.href=
+const paymentUrl =
+selectedEvent?.payment_link ||
 CONFIG.PAYMENT_URL;
+
+window.location.href = paymentUrl;
 
 },1200);
 
