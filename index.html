@@ -1,1105 +1,1124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Night of Laughter | Zambia's Premier Comedy Experience</title>
-    <meta name="description" content="Book tickets for Zambia's biggest comedy shows featuring Chingliz, Ba Emma, Smoke & Juss. Instant digital tickets, exclusive highlights, and fan gallery.">
-     <link rel="icon" type="image/png" href="favicon.PNG">
-     <link rel="apple-touch-icon" href="favicon.PNG">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --gold: #f5b042;
-            --gold-dark: #d48f2b;
-            --charcoal: #121826;
-            --deep-slate: #1e293b;
-            --warm-gray: #f8fafc;
-            --success: #10b981;
-            --error: #ef4444;
-            --shadow-elevated: 0 20px 35px -12px rgba(222, 28, 28, 0.2);
-            --transition-smooth: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            background: var(--warm-gray);
-            color: var(--deep-slate);
-            line-height: 1.5;
-            scroll-behavior: smooth;
-        }
-
-        /* HERO SECTION - ENHANCED VISUALS */
-        .hero {
-            width: 100%;
-            height: 80vh;
-            min-height: 560px;
-            background: linear-gradient(105deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.3) 100%),
-                url('https://i.postimg.cc/Rh0W4dZr/Zed-Laugh-Festival-2025-193.jpg') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-        }
-
-        @keyframes slowZoom {
-            0% { background-size: 100% auto; }
-            100% { background-size: 110% auto; }
-        }
-
-        .hero-text {
-            color: white;
-            text-shadow: 0 8px 28px rgba(0, 0, 0, 0.7);
-            padding: 0 1.5rem;
-            backdrop-filter: blur(2px);
-        }
-
-        .hero-text h1 {
-            font-size: clamp(2.8rem, 11vw, 6rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, var(--gold));
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            text-shadow: none;
-        }
-
-        .hero-text p {
-            font-size: clamp(1.2rem, 4vw, 1.8rem);
-            font-weight: 500;
-            opacity: 0.95;
-        }
-
-        /* HEADER & NAVIGATION - IMPROVED ACCESSIBILITY */
-        .page-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 1rem 5vw;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
-            pointer-events: none;
-        }
-
-        .header-logo {
-            height: 130px;
-            width: auto;
-            filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
-            pointer-events: auto;
-            transition: transform 0.2s;
-        }
-
-        .header-logo:hover {
-            transform: scale(1.02);
-        }
-
-        .menu-icon {
-            display: none;
-            font-size: 2.2rem;
-            color: white;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
-            width: 52px;
-            height: 52px;
-            border-radius: 30px;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(12px);
-            pointer-events: auto;
-            transition: 0.2s;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-            pointer-events: auto;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.6rem 1.4rem;
-            border-radius: 60px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            transition: var(--transition-smooth);
-            font-size: 0.95rem;
-            letter-spacing: 0.3px;
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            background: var(--gold);
-            color: #121212;
-            border-color: white;
-            transform: translateY(-2px);
-        }
-
-        /* RESPONSIVE MENU */
-        @media (max-width: 720px) {
-            .menu-icon {
-                display: flex;
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: 0;
-                right: -320px;
-                width: 280px;
-                height: 100vh;
-                background: rgba(10, 14, 23, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 6rem 2rem 2rem;
-                gap: 1.8rem;
-                transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-                box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
-                border-left: 2px solid var(--gold);
-                overflow-y: auto;
-                z-index: 1100;
-            }
-
-            .nav-menu a {
-                background: transparent;
-                border: none;
-                font-size: 1.3rem;
-                padding: 0.8rem 0 !important;
-                border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-                border-radius: 0;
-                text-align: left;
-            }
-
-            #menu-toggle:checked~.nav-menu {
-                right: 0;
-            }
-
-            .hero {
-                height: 70vh;
-            }
-        }
-
-        #menu-toggle {
-            display: none;
-        }
-
-        /* SECTION STYLES */
-        .section,
-        .video-section,
-        .gallery-section,
-        .testimonials,
-        .contact {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 5vw 1rem;
-        }
-
-        h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            border-left: 7px solid var(--gold);
-            padding-left: 1.2rem;
-            color: #0f172a;
-            display: inline-block;
-        }
-
-        .event-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-        }
-
-        .event-card {
-            background: white;
-            border-radius: 32px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            max-width: 360px;
-            width: 100%;
-            transition: var(--transition-smooth);
-        }
-
-        .event-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-elevated);
-        }
-
-        .event-thumb {
-            aspect-ratio: 1/1;
-            background: #e2e8f0;
-        }
-
-        .event-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s;
-        }
-
-        .event-card:hover .event-thumb img {
-            transform: scale(1.03);
-        }
-
-        .event-content {
-            padding: 1.5rem;
-        }
-
-        .event-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.6rem;
-        }
-
-        .event-detail {
-            font-size: 0.9rem;
-            color: #475569;
-            margin: 0.4rem 0;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .detail-label {
-            font-weight: 700;
-            min-width: 55px;
-            color: #1e293b;
-        }
-
-        .price-box {
-            background: #fefce8;
-            border-radius: 24px;
-            padding: 0.9rem;
-            margin: 1rem 0;
-            border: 1px solid #fde68a;
-        }
-
-        .price-line {
-            display: flex;
-            justify-content: space-between;
-            margin: 0.3rem 0;
-        }
-
-        .early-bird {
-            color: var(--success);
-            font-weight: 800;
-        }
-
-        .standard {
-            color: #ea580c;
-            font-weight: 800;
-        }
-
-        .vip {
-            color: var(--gold-dark);
-            font-weight: 800;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 0.8rem;
-            margin-top: 1rem;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 0.75rem 0;
-            border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-            background: var(--gold);
-            color: #121212;
-            transition: 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .btn-info {
-            background: #334155;
-            color: white;
-        }
-
-        .btn-info:hover {
-            background: #1e293b;
-            transform: scale(0.98);
-        }
-
-        .btn:hover {
-            filter: brightness(0.92);
-            transform: translateY(-2px);
-        }
-
-        .more-desc {
-            display: none;
-            margin-top: 1rem;
-            padding-top: 0.8rem;
-            border-top: 1px solid #e2e8f0;
-            font-size: 0.9rem;
-        }
-
-        .more-desc.show {
-            display: block;
-            animation: fadeSlide 0.2s ease;
-        }
-
-        @keyframes fadeSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-6px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* VIDEO & GALLERY */
-        .video-section,
-        .gallery-section,
-        .testimonials,
-        .contact {
-            background: white;
-            border-radius: 40px;
-            margin: 2rem 5vw;
-            padding: 2rem 2rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            gap: 2rem;
-        }
-
-        .video-card {
-            background: #f1f5f9;
-            border-radius: 28px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.25s;
-        }
-
-        .video-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 25px -12px rgba(0, 0, 0, 0.2);
-        }
-
-        .video-thumbnail {
-            position: relative;
-            aspect-ratio: 16/9;
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.75);
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: var(--gold);
-            backdrop-filter: blur(5px);
-            transition: 0.2s;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .gallery-item {
-            aspect-ratio: 1/1;
-            border-radius: 24px;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
-            color: white;
-            width: 100%;
-            padding: 1rem;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-            font-weight: 500;
-        }
-
-        .gallery-item:hover .gallery-caption {
-            transform: translateY(0);
-        }
-
-        /* LIGHTBOX IMPROVED */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.96);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox-content img,
-        .lightbox-content iframe {
-            max-width: 90vw;
-            max-height: 85vh;
-            border-radius: 28px;
-            box-shadow: 0 25px 50px -12px black;
-        }
-
-        .lightbox-close,
-        .lightbox-prev,
-        .lightbox-next {
-            position: absolute;
-            color: white;
-            font-size: 2.5rem;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.6);
-            width: 54px;
-            height: 54px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-
-        .lightbox-close {
-            top: 24px;
-            right: 30px;
-        }
-
-        .lightbox-prev {
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .lightbox-next {
-            right: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        /* MODAL FORM - POLISHED */
-        .form-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 1500;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .form-modal.active {
-            display: flex;
-        }
-
-        .form-container {
-            background: white;
-            max-width: 620px;
-            width: 90%;
-            border-radius: 44px;
-            padding: 32px 32px 40px;
-            position: relative;
-            animation: fadeUp 0.3s;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes fadeUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .progress {
-            display: flex;
-            gap: 12px;
-            margin: 20px 0 24px;
-        }
-
-        .progress-step {
-            flex: 1;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 10px;
-            transition: 0.25s;
-        }
-
-        .progress-step.active {
-            background: var(--gold);
-        }
-
-        .progress-step.completed {
-            background: var(--success);
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 14px 16px 14px 46px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 60px;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(245, 176, 66, 0.2);
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2rem;
-        }
-
-        .price-card {
-            background: #fffbeb;
-            border-radius: 28px;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0;
-        }
-
-        .price-amount {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--gold-dark);
-        }
-
-        .btn-primary {
-            background: var(--gold);
-            border: none;
-            width: 100%;
-            padding: 14px;
-            border-radius: 60px;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-primary:hover {
-            background: var(--gold-dark);
-            transform: scale(0.99);
-        }
-
-        .toast-container {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 2200;
-        }
-
-        .toast {
-            background: white;
-            padding: 12px 24px;
-            border-radius: 60px;
-            margin-bottom: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            border-left: 6px solid var(--gold);
-            font-weight: 500;
-            backdrop-filter: blur(4px);
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 52px;
-            height: 52px;
-            background: var(--gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.7rem;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.25s;
-            border: none;
-            color: #1e1e1e;
-            z-index: 100;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        footer {
-            background: #0f172a;
-            color: #94a3b8;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Night of Laughter · Zambia's Premier Comedy</title>
+<meta name="description" content="Book tickets for Zambia's biggest comedy shows featuring Chingliz, Ba Emma, Smoke & Juss. Instant digital tickets.">
+<link rel="icon" type="image/png" href="favicon.PNG">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ink:#0a0a0c;
+  --ink-mid:#1a1a22;
+  --ink-soft:#2d2d3a;
+  --gold:#f0a500;
+  --gold-lt:#f5c842;
+  --gold-dk:#c47f00;
+  --curtain:#7a1a2e;
+  --cream:#faf6ef;
+  --cream-mid:#f2ece0;
+  --muted:#6b6b7a;
+  --border:#e8e0d0;
+  --white:#ffffff;
+  --success:#1a8f5a;
+  --error:#c0392b;
+  --r-sm:10px;
+  --r-md:18px;
+  --r-lg:28px;
+  --r-xl:40px;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --shadow-card:0 2px 12px rgba(10,10,12,0.08);
+  --shadow-float:0 12px 40px rgba(10,10,12,0.18);
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+
+body{
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* ── TYPOGRAPHY ── */
+.display{
+  font-family:'Bebas Neue',sans-serif;
+  letter-spacing:0.04em;
+  line-height:0.95;
+}
+
+h1.display{font-size:clamp(4rem,14vw,10rem)}
+h2.section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,5vw,3.2rem);
+  letter-spacing:0.06em;
+  color:var(--ink);
+  line-height:1;
+}
+
+/* ── HEADER ── */
+.site-header{
+  position:fixed;
+  top:0;left:0;width:100%;
+  z-index:900;
+  padding:0 5vw;
+  height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background 0.3s var(--ease),box-shadow 0.3s;
+}
+.site-header.scrolled{
+  background:rgba(74, 74, 81, 0.95);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 1px 0 rgba(240,165,0,0.2);
+}
+
+.logo-img{height:100px;width:auto;filter:drop-shadow(0 2px 12px rgba(0,0,0,0.5))}
+
+.nav-links{display:flex;gap:0.25rem;list-style:none}
+.nav-links a{
+  color:rgba(255,255,255,0.8);
+  text-decoration:none;
+  font-weight:500;
+  font-size:0.88rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  padding:0.5rem 1rem;
+  border-radius:var(--r-sm);
+  transition:color 0.2s,background 0.2s;
+}
+.nav-links a:hover{color:var(--gold);background:rgba(240,165,0,0.1)}
+
+#hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:white}
+#hamburger svg{width:28px;height:28px;stroke:currentColor;stroke-width:2;fill:none}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  height:100svh;
+  min-height:600px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('https://i.postimg.cc/Rh0W4dZr/Zed-Laugh-Festival-2025-193.jpg') center/cover no-repeat;
+  transform-origin:center;
+  animation:heroZoom 18s ease-in-out infinite alternate;
+}
+@keyframes heroZoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(10,10,12,0.55) 0%,rgba(10,10,12,0.2) 50%,rgba(10,10,12,0.85) 100%);
+}
+.hero-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:0 1.5rem;
+}
+.hero-eyebrow{
+  font-size:0.8rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;
+  color:var(--gold);
+  border:1px solid rgba(240,165,0,0.4);
+  padding:0.4rem 1.2rem;border-radius:60px;
+  background:rgba(240,165,0,0.08);
+}
+.hero h1{
+  color:white;
+  text-shadow:0 4px 40px rgba(0,0,0,0.6);
+}
+.hero-sub{
+  font-size:clamp(1rem,3vw,1.4rem);
+  color:rgba(255,255,255,0.85);
+  font-weight:400;
+  max-width:520px;
+}
+.hero-cta-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:0.5rem}
+.btn-hero{
+  padding:1rem 2.4rem;
+  border-radius:60px;
+  font-weight:700;font-size:1rem;
+  text-decoration:none;cursor:pointer;border:none;
+  display:inline-flex;align-items:center;gap:0.5rem;
+  transition:transform 0.2s var(--ease),filter 0.2s;
+}
+.btn-hero:hover{transform:translateY(-3px);filter:brightness(1.08)}
+.btn-hero:active{transform:translateY(0)}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-ghost{background:rgba(255,255,255,0.12);color:white;border:1.5px solid rgba(255,255,255,0.35);backdrop-filter:blur(8px)}
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;
+  animation:bounce 2s ease-in-out infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,0.4))}
+
+/* ── TICKET TEAR DIVIDER ── */
+.tear{
+  position:relative;height:48px;overflow:hidden;margin-top:-1px;
+}
+.tear svg{display:block;width:100%;height:48px}
+
+/* ── SECTIONS ── */
+.section-wrap{padding:5rem 5vw}
+.section-wrap.dark{background:var(--ink);color:var(--cream)}
+.section-wrap.mid{background:var(--cream-mid)}
+
+.section-header{
+  display:flex;align-items:baseline;gap:1.5rem;margin-bottom:3rem;
+  border-bottom:2px solid var(--ink);
+  padding-bottom:1rem;
+}
+.section-header.light{border-bottom-color:rgba(255,255,255,0.15)}
+.section-count{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:5rem;line-height:1;
+  color:var(--gold);
+  opacity:0.25;
+  letter-spacing:-0.02em;
+}
+
+/* ── EVENT CARDS ── */
+.events-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:2rem;
+}
+
+.event-card{
+  background:var(--white);
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-card);
+  transition:transform 0.35s var(--ease),box-shadow 0.35s var(--ease);
+  display:contain;flex-direction:column;
+
+.card-img{
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:#e8e0d0;
+  position:relative;
+}
+.card-img img{width:100%;height:120%;object-fit:fit;transition:transform 0.6s var(--ease)}
+.event-card:hover .card-img img{transform:scale(1.06)}
+.card-badge{
+  position:absolute;top:16px;left:10px;
+  background:var(--gold);color:var(--ink);
+  font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.35rem 0.9rem;border-radius:60px;
+}
+
+.card-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;gap:0.75rem}
+
+.card-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.8rem;letter-spacing:0.05em;
+  line-height:1.05;
+  color:var(--ink);
+}
+
+.card-meta{display:flex;flex-direction:column;gap:0.35rem}
+.meta-row{
+  display:flex;align-items:center;gap:0.6rem;
+  font-size:0.85rem;color:var(--muted);
+}
+.meta-icon{font-size:1rem}
+
+.price-rack{
+  background:var(--cream);
+  border-radius:var(--r-md);
+  padding:1rem 1.1rem;
+  display:flex;justify-content:space-between;
+  gap:0.5rem;
+  margin-top:auto;
+}
+.price-item{display:flex;flex-direction:column;align-items:center;gap:0.15rem}
+.price-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted)}
+.price-val{font-size:1.1rem;font-weight:700;color:var(--ink)}
+.price-val.vip{color:var(--gold-dk)}
+
+.card-actions{display:flex;gap:0.75rem;margin-top:0.5rem}
+.btn-ticket{
+  flex:1;padding:0.85rem;
+  background:var(--ink);color:white;
+  border:none;border-radius:60px;
+  font-weight:700;font-size:0.9rem;cursor:pointer;
+  transition:background 0.2s,transform 0.2s var(--ease);
+  display:flex;align-items:center;justify-content:center;gap:0.4rem;
+}
+.btn-ticket:hover{background:var(--gold);color:var(--ink);transform:scale(1.02)}
+.btn-info{
+  padding:0.85rem 1.2rem;
+  background:transparent;color:var(--muted);
+  border:1.5px solid var(--border);border-radius:60px;
+  font-size:0.85rem;font-weight:600;cursor:pointer;
+  transition:border-color 0.2s,color 0.2s;
+  white-space:nowrap;
+}
+.btn-info:hover{border-color:var(--ink);color:var(--ink)}
+
+.card-expand{
+  display:none;
+  font-size:0.88rem;color:var(--muted);
+  line-height:1.6;
+  padding-top:0.75rem;border-top:1px solid var(--border);
+  margin-top:0.25rem;
+  animation:slideIn 0.2s var(--ease);
+}
+.card-expand.open{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── VIDEOS ── */
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:1.5rem;
+}
+.video-card{
+  background:var(--ink-soft);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.3s var(--ease),box-shadow 0.3s;
+}
+.video-card:hover{transform:scale(1.02);box-shadow:0 12px 32px rgba(0,0,0,0.4)}
+.video-thumb{position:relative;aspect-ratio:16/9;overflow:hidden}
+.video-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s var(--ease)}
+.video-card:hover .video-thumb img{transform:scale(1.04)}
+.play-btn{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:60px;height:60px;border-radius:50%;
+  background:rgba(240,165,0,0.9);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;color:var(--ink);
+  transition:transform 0.2s var(--ease),background 0.2s;
+  box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+.video-card:hover .play-btn{transform:translate(-50%,-50%) scale(1.12);background:var(--gold)}
+.video-info{padding:1rem 1.2rem}
+.video-title{font-weight:600;color:white;margin-bottom:0.25rem;font-size:0.95rem}
+.video-sub{font-size:0.82rem;color:rgba(255,255,255,0.5)}
+
+/* ── GALLERY ── */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1rem;
+}
+.gal-item{
+  aspect-ratio:1;border-radius:var(--r-md);overflow:hidden;
+  cursor:pointer;position:relative;
+  box-shadow:var(--shadow-card);
+}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s var(--ease)}
+.gal-item:hover img{transform:scale(1.08)}
+.gal-cap{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(10,10,12,0.85));
+  color:white;font-size:0.82rem;font-weight:500;
+  padding:2rem 0.9rem 0.75rem;
+  transform:translateY(100%);transition:transform 0.3s var(--ease);
+}
+.gal-item:hover .gal-cap{transform:translateY(0)}
+
+/* ── TESTIMONIALS ── */
+.quote-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1.5rem;
+}
+.quote-card{
+  background:var(--ink-soft);
+  border-radius:var(--r-lg);
+  padding:1.75rem;
+  border:1px solid rgba(240,165,0,0.12);
+  position:relative;
+}
+.quote-mark{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:5rem;line-height:0.6;
+  color:var(--gold);opacity:0.25;
+  position:absolute;top:1.2rem;left:1.5rem;
+}
+.quote-text{
+  color:rgba(255,255,255,0.85);
+  font-size:1rem;line-height:1.65;
+  padding-top:1.5rem;
+  position:relative;
+}
+.quote-author{
+  margin-top:1.25rem;
+  font-weight:700;color:var(--gold);
+  font-size:0.9rem;letter-spacing:0.06em;text-transform:uppercase;
+}
+
+/* ── CONTACT ── */
+.contact-inner{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;
+  align-items:start;
+}
+.contact-detail{
+  display:flex;align-items:center;gap:0.9rem;
+  padding:1.1rem 1.3rem;
+  background:var(--cream-mid);
+  border-radius:var(--r-md);
+  border:1px solid var(--border);
+  font-size:0.92rem;
+  color:var(--ink);
+  font-weight:500;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.contact-detail:hover{border-color:var(--gold);transform:translateX(4px)}
+.contact-icon{font-size:1.4rem;width:36px;text-align:center}
+.contact-items{display:flex;flex-direction:column;gap:0.75rem}
+.contact-big-text{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  letter-spacing:0.05em;
+  line-height:1.05;
+  color:var(--ink);
+}
+
+/* ── LIGHTBOX ── */
+.lightbox{
+  display:none;position:fixed;inset:0;z-index:2000;
+  background:rgba(10,10,12,0.97);
+  align-items:center;justify-content:center;
+  flex-direction:column;
+}
+.lightbox.on{display:flex;animation:fadeIn 0.2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.lb-close{
+  position:absolute;top:1.5rem;right:1.5rem;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,0.1);border:none;
+  color:white;font-size:1.5rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;
+}
+.lb-close:hover{background:rgba(255,255,255,0.2)}
+.lb-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,0.1);border:none;
+  color:white;font-size:1.4rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s;
+}
+.lb-nav:hover{background:rgba(240,165,0,0.3)}
+.lb-prev{left:1.5rem}.lb-next{right:1.5rem}
+#lbContent img,#lbContent iframe{max-width:90vw;max-height:82vh;border-radius:var(--r-md);display:block}
+
+/* ── TICKET MODAL ── */
+.modal-wrap{
+  display:none;position:fixed;inset:0;z-index:1500;
+  background:rgba(10,10,12,0.92);
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+}
+.modal-wrap.on{display:flex;animation:fadeIn 0.2s}
+.modal-box{
+  background:white;
+  max-width:580px;width:92%;
+  border-radius:var(--r-xl);
+  padding:2.5rem 2.5rem 3rem;
+  position:relative;
+  max-height:92svh;overflow-y:auto;
+  animation:slideUp 0.3s var(--ease);
+}
+@keyframes slideUp{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{
+  position:absolute;top:1.25rem;right:1.25rem;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--cream);border:none;cursor:pointer;
+  font-size:1.2rem;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s;
+}
+.modal-close:hover{background:var(--cream-mid)}
+
+.event-chip{
+  background:var(--cream);
+  border-radius:var(--r-md);
+  padding:1rem 1.2rem;
+  margin-bottom:1.75rem;
+  border:1px solid var(--border);
+}
+.event-chip-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.05em;color:var(--ink)}
+.event-chip-meta{font-size:0.82rem;color:var(--muted);margin-top:0.2rem}
+
+.steps{display:flex;gap:8px;margin-bottom:2rem}
+.step-dot{
+  flex:1;height:4px;border-radius:4px;
+  background:var(--border);transition:background 0.3s;
+}
+.step-dot.active{background:var(--gold)}
+.step-dot.done{background:var(--success)}
+
+.field-group{margin-bottom:1.25rem}
+.field-group label{font-size:0.8rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.5rem}
+.field-wrap{position:relative}
+.field-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+.field-wrap input,.field-wrap select{
+  width:100%;padding:0.875rem 1rem 0.875rem 2.6rem;
+  border:1.5px solid var(--border);border-radius:60px;
+  font-family:inherit;font-size:0.95rem;
+  background:white;color:var(--ink);
+  transition:border-color 0.2s,box-shadow 0.2s;
+  -webkit-appearance:none;
+}
+.field-wrap input:focus,.field-wrap select:focus{
+  outline:none;border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(240,165,0,0.15);
+}
+.field-error{color:var(--error);font-size:0.78rem;margin-top:0.4rem;display:none;padding-left:1rem}
+
+.total-display{
+  background:var(--ink);color:white;
+  border-radius:var(--r-md);padding:1.1rem 1.4rem;
+  display:flex;justify-content:space-between;align-items:center;
+  margin:1.5rem 0;
+}
+.total-label{font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;opacity:0.6}
+.total-amount{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.04em;color:var(--gold)}
+
+.btn-cta{
+  width:100%;padding:1rem;
+  background:var(--gold);color:var(--ink);
+  border:none;border-radius:60px;
+  font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;
+  transition:background 0.2s,transform 0.15s var(--ease);
+  display:flex;align-items:center;justify-content:center;gap:0.5rem;
+}
+.btn-cta:hover{background:var(--gold-lt);transform:scale(1.01)}
+.btn-cta.secondary{background:var(--cream);color:var(--ink);border:1.5px solid var(--border)}
+.btn-cta.secondary:hover{background:var(--cream-mid)}
+
+.review-card{
+  background:var(--cream);border-radius:var(--r-md);
+  padding:1.4rem;border:1px solid var(--border);
+  font-size:0.9rem;line-height:1.7;
+}
+.review-row{display:flex;justify-content:space-between;padding:0.3rem 0}
+.review-divider{height:1px;background:var(--border);margin:0.6rem 0}
+
+.payment-loader{text-align:center;padding:2rem}
+.spinner{
+  width:44px;height:44px;
+  border:3px solid var(--border);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  margin:0 auto 1.5rem;
+  animation:spin 0.7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── TOAST ── */
+.toast-stack{position:fixed;top:1.5rem;right:1.5rem;z-index:3000;display:flex;flex-direction:column;gap:0.6rem}
+.toast{
+  background:var(--ink);color:white;
+  padding:0.8rem 1.4rem;border-radius:60px;
+  font-size:0.88rem;font-weight:500;
+  border-left:4px solid var(--gold);
+  box-shadow:var(--shadow-float);
+  animation:slideToast 0.3s var(--ease);
+}
+.toast.err{border-left-color:var(--error)}
+@keyframes slideToast{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ── BACK TO TOP ── */
+.btt{
+  position:fixed;bottom:2rem;right:2rem;z-index:500;
+  width:48px;height:48px;border-radius:50%;
+  background:var(--ink);color:var(--gold);
+  border:1.5px solid rgba(240,165,0,0.3);
+  font-size:1.3rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;
+  transition:opacity 0.25s,visibility 0.25s,transform 0.2s var(--ease);
+  box-shadow:var(--shadow-float);
+}
+.btt.show{opacity:1;visibility:visible}
+.btt:hover{transform:translateY(-3px)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--ink);
+  color:rgba(255,255,255,0.4);
+  text-align:center;
+  padding:2.5rem;
+  font-size:0.82rem;
+  letter-spacing:0.04em;
+  border-top:1px solid rgba(240,165,0,0.12);
+}
+footer span{color:var(--gold);opacity:0.6}
+
+/* ── LOADER SKELETON ── */
+.skeleton{
+  background:linear-gradient(90deg,var(--cream-mid) 25%,var(--border) 50%,var(--cream-mid) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.4s infinite;
+  border-radius:var(--r-sm);
+}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* ── MOBILE NAV ── */
+@media(max-width:768px){
+  #hamburger{display:flex;align-items:center;justify-content:center}
+  .nav-links{
+    position:fixed;top:0;right:-300px;width:280px;height:100vh;
+    background:rgba(10,10,12,0.98);backdrop-filter:blur(20px);
+    flex-direction:column;
+    padding:6rem 2rem 2rem;
+    gap:0.25rem;
+    transition:right 0.35s var(--ease);
+    z-index:950;border-left:1px solid rgba(240,165,0,0.2);
+  }
+  .nav-links.open{right:0}
+  .nav-links a{font-size:1.1rem;padding:0.85rem 0;border-bottom:1px solid rgba(255,255,255,0.06);border-radius:0}
+  .contact-inner{grid-template-columns:1fr}
+  .events-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:500px){
+  .hero-cta-row{flex-direction:column;align-items:center}
+  .modal-box{padding:1.75rem 1.5rem 2.5rem}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+}
+</style>
 </head>
-
 <body>
-    <header class="page-header">
-        <img src="https://i.postimg.cc/FKCPHGym/logo-(1).png" alt="Night of Laughter Logo" class="header-logo" loading="eager">
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-icon" aria-label="Menu">☰</label>
-        <nav class="nav-menu">
-            <a href="#featured"> Featured</a>
-            <a href="#upcoming"> Upcoming</a>
-            <a href="#videos"> Highlights</a>
-            <a href="#gallery"> Gallery</a>
-            <a href="#testimonials"> Buzz</a>
-            <a href="#contact"> Contact</a>
-        </nav>
-    </header>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>NIGHT OF LAUGHTER</h1>
-            <p>Happily after, everything to us is a laughing matter 😂</p>
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <a href="#top"><img src="https://i.postimg.cc/FKCPHGym/logo-(1).png" alt="Night of Laughter" class="logo-img"></a>
+  <button id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <ul class="nav-links" id="navLinks" role="list">
+    <li><a href="#featured">Featured</a></li>
+    <li><a href="#upcoming">Upcoming</a></li>
+    <li><a href="#videos">Highlights</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#testimonials">Buzz</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top" aria-label="Night of Laughter hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Zambia's Premier Comedy Experience</div>
+    <h1 class="display">Night of<br>Laughter</h1>
+    <p class="hero-sub">Happily after — everything to us is a laughing matter</p>
+    <div class="hero-cta-row">
+      <a href="#featured" class="btn-hero btn-gold">🎟 Get Tickets</a>
+      <a href="#videos" class="btn-hero btn-ghost">▶ Watch Highlights</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- TICKET TEAR -->
+<div class="tear" aria-hidden="true" style="background:var(--cream)">
+  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0 L0 24 Q30 48 60 24 Q90 0 120 24 Q150 48 180 24 Q210 0 240 24 Q270 48 300 24 Q330 0 360 24 Q390 48 420 24 Q450 0 480 24 Q510 48 540 24 Q570 0 600 24 Q630 48 660 24 Q690 0 720 24 Q750 48 780 24 Q810 0 840 24 Q870 48 900 24 Q930 0 960 24 Q990 48 1020 24 Q1050 0 1080 24 Q1110 48 1140 24 Q1170 0 1200 24 Q1230 48 1260 24 Q1290 0 1320 24 Q1350 48 1380 24 Q1410 0 1440 24 L1440 0 Z" fill="#0a0a0c"/>
+  </svg>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<!-- FEATURED -->
+<section class="section-wrap dark" id="featured">
+  <div class="section-header light">
+    <div class="section-count" aria-hidden="true">01</div>
+    <h2 class="section-title" style="color:var(--cream)">Featured Comedy</h2>
+  </div>
+  <div class="events-grid" id="featuredGrid">
+    <div class="skeleton" style="height:480px;border-radius:40px"></div>
+    <div class="skeleton" style="height:480px;border-radius:40px"></div>
+  </div>
+</section>
+
+<!-- UPCOMING -->
+<section class="section-wrap" id="upcoming">
+  <div class="section-header">
+    <div class="section-count" aria-hidden="true">02</div>
+    <h2 class="section-title">Upcoming Shows</h2>
+  </div>
+  <div class="events-grid" id="upcomingGrid">
+    <div class="skeleton" style="height:480px;border-radius:40px"></div>
+    <div class="skeleton" style="height:480px;border-radius:40px"></div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section class="section-wrap dark" id="videos">
+  <div class="section-header light">
+    <div class="section-count" aria-hidden="true">03</div>
+    <h2 class="section-title" style="color:var(--cream)">Comedy Highlights</h2>
+  </div>
+  <div class="video-grid" id="videoGrid"></div>
+</section>
+
+<!-- GALLERY -->
+<section class="section-wrap mid" id="gallery">
+  <div class="section-header">
+    <div class="section-count" aria-hidden="true">04</div>
+    <h2 class="section-title">Event Gallery</h2>
+  </div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-wrap dark" id="testimonials">
+  <div class="section-header light">
+    <div class="section-count" aria-hidden="true">05</div>
+    <h2 class="section-title" style="color:var(--cream)">What They Say</h2>
+  </div>
+  <div class="quote-grid">
+    <div class="quote-card">
+      <div class="quote-mark" aria-hidden="true">"</div>
+      <p class="quote-text">Night of Laughter brings the best crowds — digital tickets, no paper, no fuss.</p>
+      <div class="quote-author">Chingliz</div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-mark" aria-hidden="true">"</div>
+      <p class="quote-text">Packed houses, smooth entry. Instant tickets are a game changer.</p>
+      <div class="quote-author">Ba Emma</div>
+    </div>
+    <div class="quote-card">
+      <div class="quote-mark" aria-hidden="true">"</div>
+      <p class="quote-text">Zambia's comedy revolution starts right here on this stage.</p>
+      <div class="quote-author">Smoke &amp; Juss</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section-wrap" id="contact">
+  <div class="contact-inner">
+    <div>
+      <p style="font-size:0.8rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem">Get in touch</p>
+      <h2 class="contact-big-text">Let's make<br>them laugh.</h2>
+      <p style="margin-top:1rem;color:var(--muted);max-width:340px">Questions, bookings, or partnerships — we'd love to hear from you.</p>
+    </div>
+    <div class="contact-items">
+      <div class="contact-detail">
+        <span class="contact-icon">📞</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Phone (10am–4pm)</div>
+          <div>+260 973 299 759</div>
         </div>
-    </section>
-
-    <div class="toast-container" id="toastContainer"></div>
-
-    <section class="section" id="featured">
-        <h2> Featured Comedy</h2>
-        <div class="event-grid" id="featuredGrid"><div class="loader" style="margin:2rem auto; width:50px; height:50px;"></div></div>
-    </section>
-
-    <section class="section" id="upcoming">
-        <h2>Upcoming shows</h2>
-        <div class="event-grid" id="upcomingGrid"><div class="loader" style="margin:2rem auto;"></div></div>
-    </section>
-
-    <section id="videos" class="video-section">
-        <h2>🎥 Latest Comedy Highlights</h2>
-        <div class="video-grid" id="videoGrid"></div>
-    </section>
-
-    <section id="gallery" class="gallery-section">
-        <h2>📸 Event Gallery</h2>
-        <div class="gallery-grid" id="galleryGrid"></div>
-    </section>
-
-    <section id="testimonials" class="testimonials">
-        <h2>What comedians say</h2>
-        <div style="background:#fefce8; padding:1.5rem; border-radius:32px;">
-            <p style="font-size:1.2rem; font-weight:500;">"Night of Laughter brings the best crowds — digital tickets, no paper, no fuss." — <strong>Chingliz</strong></p>
-            <p style="margin-top:1rem; font-style:italic;">"Packed houses, smooth entry. Instant tickets are a game changer." — <strong>Ba Emma</strong></p>
-            <p style="margin-top:1rem;">"Zambia's comedy revolution starts here!" — <strong>Smoke & Juss</strong></p>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-icon">✉️</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Email</div>
+          <div>chingliz89@gmail.com</div>
         </div>
-    </section>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-icon">📱</span>
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Socials</div>
+          <div>@nightoflaughter_zm</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="contact" class="contact">
-        <h2>Contact & Bookings</h2>
-        <p> +260 973299759 (10am–4pm)</p>
-        <p> chingliz89@gmail.com</p>
-        <p> Follow us on socials @nightoflaughter_zm</p>
-    </section>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+  <button class="lb-close" onclick="closeLB()" aria-label="Close">×</button>
+  <button class="lb-nav lb-prev" onclick="navLB(-1)" aria-label="Previous">‹</button>
+  <button class="lb-nav lb-next" onclick="navLB(1)" aria-label="Next">›</button>
+  <div id="lbContent"></div>
+</div>
 
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-        <span class="lightbox-prev" onclick="changeLightbox(-1)">&#10094;</span>
-        <span class="lightbox-next" onclick="changeLightbox(1)">&#10095;</span>
-        <div class="lightbox-content" id="lightboxContent"></div>
+<!-- TICKET MODAL -->
+<div class="modal-wrap" id="ticketModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+
+    <div class="event-chip" id="eventChip">
+      <div class="event-chip-name" id="chipName"></div>
+      <div class="event-chip-meta" id="chipMeta"></div>
     </div>
 
-    <!-- TICKET MODAL ENHANCED -->
-    <div class="form-modal" id="ticketModal">
-        <div class="form-container">
-            <span class="form-close" onclick="closeTicketModal()">&times;</span>
-            <div id="modalEventSummary" style="background:#fef9e6; padding:16px; border-radius:28px; margin-bottom:20px;">
-                <div><strong> <span id="modalEventName">ALL OUT COMEDY TOUR</span></strong></div>
-                <div><span id="modalEventDate">March 27, 2026</span> · <span id="modalEventTime">19:30</span></div>
-                <div> <span id="modalEventVenue">Lowenthal Theatre, Ndola</span></div>
-            </div>
-            <div class="progress">
-                <div class="progress-step active" id="step1"></div>
-                <div class="progress-step" id="step2"></div>
-                <div class="progress-step" id="step3"></div>
-            </div>
-            <div id="formSection">
-                <div style="font-weight:800; margin-bottom:20px;">Your Details</div>
-                <div class="form-group"><label>Full Name *</label><div class="input-wrapper"><span class="input-icon">👤</span><input type="text" id="fullName" placeholder="John Mulenga"></div><div class="error-message" id="nameError" style="display:none;color:#ef4444;">Full name required</div></div>
-                <div class="form-group"><label>Email Address *</label><div class="input-wrapper"><span class="input-icon">📧</span><input type="email" id="email" placeholder="hello@example.com"></div><div class="error-message" id="emailError" style="display:none;">Valid email needed</div></div>
-                <div class="form-group"><label>WhatsApp Number *</label><div class="input-wrapper"><span class="input-icon">📱</span><input type="tel" id="phone" placeholder="097 123 4567"></div><div class="error-message" id="phoneError" style="display:none;">Valid number (9+ digits)</div></div>
-                <div class="form-group"><label>Ticket Type</label><select id="ticketType"><option value="">Select ticket type</option><option value="Single">Single</option><option value="Double">Double</option><option value="VIP">VIP</option></select><div class="error-message" id="ticketTypeError" style="display:none;">Select ticket type</div></div>
-                <div class="form-group"><label>Number of Tickets (max 10)</label><input type="number" id="numberOfTickets" min="1" max="10" value="1"><div class="error-message" id="ticketsError" style="display:none;">1-10 tickets only</div></div>
-                <div class="price-card"><div><div class="price-label">Total Amount</div><div class="price-breakdown" id="priceBreakdown">Select ticket type</div></div><div class="price-amount" id="totalPrice">ZMW 0</div></div>
-                <button class="btn-primary" id="continueBtn">Continue to Review →</button>
-            </div>
-            <div id="summarySection" class="hidden" style="display:none;">
-                <div style="font-weight:800; margin-bottom:20px;">Review Order</div>
-                <div style="background:#f8fafc; padding:1.2rem; border-radius:28px;"><div>👤 <strong><span id="s_fullName"></span></strong></div><div>📧 <span id="s_email"></span></div><div>📱 <span id="s_phone"></span></div><div style="margin-top:12px; padding-top:12px; border-top:1px solid #e2e8f0;">🎫 <strong><span id="s_ticketType"></span></strong> × <span id="s_numberOfTickets"></span></div><div style="font-size:1.3rem; margin-top:12px;">💰 Total: <strong id="s_totalPrice" style="color:var(--gold-dark);"></strong></div></div>
-                <div style="display:flex; gap:12px; margin-top:24px;"><button class="btn-outline" style="flex:1; background:#e2e8f0; border:none; border-radius:60px;" onclick="goBackToForm()">← Edit</button><button class="btn-primary" style="flex:1;" id="confirmPayBtn">Confirm & Pay →</button></div>
-            </div>
-            <div id="paymentSection" class="hidden" style="display:none; text-align:center; padding:30px;"><div class="loader" style="border-top-color:var(--gold); margin:auto;"></div><p style="margin-top:20px;">Redirecting to secure payment gateway...</p></div>
-        </div>
+    <div class="steps" id="stepDots">
+      <div class="step-dot active" id="dot1"></div>
+      <div class="step-dot" id="dot2"></div>
+      <div class="step-dot" id="dot3"></div>
     </div>
 
-    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-    <footer>NIGHT OF LAUGHTER © 2025 · by cmk web solutions · Laugh louder, live better</footer>
+    <!-- STEP 1: FORM -->
+    <div id="step1Panel">
+      <h3 id="modalTitle" style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;margin-bottom:1.5rem">Your Details</h3>
 
-    <script>
-        (function(){
-            const CONFIG = {
-                SHEETBEST_API: "https://sheetdb.io/api/v1/sh60n2rxqi0zo",
-                SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxauAcbMKy0kDX4-QDSRV3PBclv_tJCJpQ7WGkel5iOeyaWpUbo96IZ9RBOUSCMq2IvFw/exec',
-                PAYMENT_URL: ""
-            };
-            
-            const YOUTUBE_VIDEOS = [
-                { id: "Vd2TRJRQAxk", title: "Chingliz - Unfiltered", description: "Full house, endless laughter", thumbnail: "https://img.youtube.com/vi/Vd2TRJRQAxk/hqdefault.jpg" },
-                { id: "cluxU57wDYw", title: "Ba Emma's Roast Session", description: "Crowd goes wild", thumbnail: "https://img.youtube.com/vi/cluxU57wDYw/hqdefault.jpg" }
-            ];
-            
-            const GALLERY_IMAGES = [
-                { url: "https://i.postimg.cc/L6J9YnQR/DEW-1.jpg", thumb: "https://i.postimg.cc/L6J9YnQR/DEW-1.jpg", caption: "Night of Laughter energy" },
-                { url: "https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg", thumb: "https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg", caption: "Audience roar" },
-                { url: "https://i.postimg.cc/KvCZnxCj/DEW-22.jpg", thumb: "https://i.postimg.cc/KvCZnxCj/DEW-22.jpg", caption: "Comedy gold" },
-                { url: "https://i.postimg.cc/8CmNQWcv/DEW-17.jpg", thumb: "https://i.postimg.cc/8CmNQWcv/DEW-17.jpg", caption: "Electric atmosphere" },
-                { url: "https://i.postimg.cc/zX4Jn86s/DEW-26.jpg", thumb: "https://i.postimg.cc/zX4Jn86s/DEW-26.jpg", caption: "On stage magic" },
-                { url: "https://i.postimg.cc/wT1qy74q/DEW-30.jpg", thumb: "https://i.postimg.cc/wT1qy74q/DEW-30.jpg", caption: "Special guest" }
-            ];
-            
-            let lightboxItems = [], currentLightbox = 0, selectedEvent = null;
-            
-            function showToast(msg, type="info"){ const t=document.getElementById('toastContainer'), d=document.createElement('div'); d.className=`toast ${type}`; d.innerHTML=`${type==='success'?'✅':type==='error'?'❌':'🎭'} ${msg}`; t.appendChild(d); setTimeout(()=>d.remove(),3800); }
-            
-            function escapeHTML(str){ if(!str) return ''; return String(str).replace(/[&<>]/g, m=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
-            
-            window.toggleDesc = (id) => document.getElementById(id)?.classList.toggle('show');
-            
-            function setupMobileMenu(){
-                const toggle=document.getElementById('menu-toggle'), links=document.querySelectorAll('.nav-menu a');
-                links.forEach(link=>link.addEventListener('click',(e)=>{ const target=link.getAttribute('href'); if(target&&target!='#'){ e.preventDefault(); document.querySelector(target)?.scrollIntoView({behavior:'smooth'}); } if(toggle) toggle.checked=false; }));
-                document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&toggle?.checked) toggle.checked=false; });
-            }
-            
-            function renderMedia(){
-                lightboxItems=[];
-                YOUTUBE_VIDEOS.forEach(v=>lightboxItems.push({type:'video',id:v.id}));
-                document.getElementById('videoGrid').innerHTML=YOUTUBE_VIDEOS.map((v,i)=>`<div class="video-card" onclick="openLightbox(${i})"><div class="video-thumbnail"><img src="${v.thumbnail}" loading="lazy"><div class="play-button">▶</div></div><div style="padding:1rem;"><h3>${escapeHTML(v.title)}</h3><p style="color:#475569;">${escapeHTML(v.description)}</p></div></div>`).join('');
-                const start=lightboxItems.length;
-                GALLERY_IMAGES.forEach(img=>lightboxItems.push({type:'image',url:img.url,caption:img.caption}));
-                document.getElementById('galleryGrid').innerHTML=GALLERY_IMAGES.map((img,idx)=>`<div class="gallery-item" onclick="openLightbox(${start+idx})"><img src="${img.thumb}" loading="lazy"><div class="gallery-caption">${escapeHTML(img.caption)}</div></div>`).join('');
-            }
-            
-            window.openLightbox=(idx)=>{ currentLightbox=idx; updateLightbox(); document.getElementById('lightbox').classList.add('active'); document.body.style.overflow='hidden'; };
-            window.closeLightbox=()=>{ document.getElementById('lightbox').classList.remove('active'); document.body.style.overflow=''; };
-            window.changeLightbox=(dir)=>{ currentLightbox=(currentLightbox+dir+lightboxItems.length)%lightboxItems.length; updateLightbox(); };
-            function updateLightbox(){ const item=lightboxItems[currentLightbox], container=document.getElementById('lightboxContent'); container.innerHTML=''; if(item.type==='image'){ const img=document.createElement('img'); img.src=item.url; container.appendChild(img); } else if(item.type==='video'){ const ifr=document.createElement('iframe'); ifr.src=`https://www.youtube.com/embed/${item.id}?autoplay=1`; ifr.allow='autoplay; fullscreen'; ifr.width='80%'; ifr.height='60%'; container.appendChild(ifr); } }
-            
-            function renderEventCard(ev,idx){
-                const name=ev.name||'Comedy Special', date=ev.date||'TBA', time=ev.time||'19:00', venue=ev.venue||'Lusaka', img=ev.image||'https://i.postimg.cc/Rh0W4dZr/Zed-Laugh-Festival-2025-193.jpg', desc=ev.description||'Laugh till you drop!', descId=`desc_${Date.now()}_${idx}`;
-                const single=parseInt(ev.single)||0, double=parseInt(ev.double)||0, vip=parseInt(ev.vip)||0;
-                let priceBox='<div class="price-box">';
-                if(single) priceBox+=`<div class="price-line"><span>🎟️ Single</span> <strong class="early-bird">K${single}</strong></div>`;
-                if(double) priceBox+=`<div class="price-line"><span>👥 Double</span> <strong class="standard">K${double}</strong></div>`;
-                if(vip) priceBox+=`<div class="price-line"><span>👑 VIP</span> <strong class="vip">K${vip}</strong></div>`;
-                if(!single&&!double&&!vip) priceBox+='<div>Prices at gate</div>';
-                priceBox+='</div>';
-                const eventData={
-    name,
-    date,
-    time,
-    venue,
-    single,
-    double,
-    vip,
-    payment_link: ev.payment_link || ""
-};
-                const jsonEv=JSON.stringify(eventData).replace(/"/g,'&quot;');
-                return `<div class="event-card"><div class="event-thumb"><img src="${img}" loading="lazy" alt="${name}"></div><div class="event-content"><div class="event-title">${escapeHTML(name)}</div><div class="event-detail"><span class="detail-label">Date</span> ${date} · ${time}</div><div class="event-detail"><span class="detail-label">Venue</span> ${escapeHTML(venue)}</div>${priceBox}<div class="btn-group"><button class="btn" onclick='buyTicketHandler(${jsonEv})'>🎟️ Buy Tickets</button><button class="btn btn-info" onclick="toggleDesc('${descId}')">ℹ️ More</button></div><div id="${descId}" class="more-desc"><p>${escapeHTML(desc)}</p></div></div></div>`;
-            }
-            
-            async function fetchEvents(){
-                try{
-                    const res=await fetch(CONFIG.SHEETBEST_API);
-                    if(!res.ok) throw new Error();
-                    let raw=await res.json();
-                    const events=raw.map(e=>{ let norm={}; Object.keys(e).forEach(k=>norm[k.toLowerCase()]=e[k]); return norm; });
-                    const featured=events.filter(e=>e.type&&e.type.toLowerCase().includes('featured'));
-                    const upcoming=events.filter(e=>!e.type||!e.type.toLowerCase().includes('featured'));
-                    document.getElementById('featuredGrid').innerHTML=featured.length?featured.map((e,i)=>renderEventCard(e,i)).join(''):'<p style="padding:2rem;">🌟 Featured shows loading soon</p>';
-                    document.getElementById('upcomingGrid').innerHTML=upcoming.length?upcoming.map((e,i)=>renderEventCard(e,i)).join(''):'<p style="padding:2rem;">📆 Next events coming up</p>';
-                }catch(e){
-                    const fallback=[{name:"ALL OUT COMEDY TOUR",date:"March 27, 2026",time:"19:30",venue:"Lowenthal Theatre, Ndola",single:180,double:250,vip:400,description:"Chingliz, Ba Emma, Smoke & Juss"},{name:"LUSAKA LAUGH FEST",date:"April 15, 2026",time:"20:00",venue:"Mulungushi Centre",single:200,double:300,vip:500}];
-                    document.getElementById('featuredGrid').innerHTML=fallback.map((e,i)=>renderEventCard(e,i)).join('');
-                    document.getElementById('upcomingGrid').innerHTML='<p>Check back for more shows!</p>';
-                }
-            }
-            
-            window.buyTicketHandler=(event)=>{
-                selectedEvent=event;
-                document.getElementById('modalEventName').innerText=event.name;
-                document.getElementById('modalEventDate').innerText=event.date||'TBA';
-                document.getElementById('modalEventTime').innerText=event.time||'19:00';
-                document.getElementById('modalEventVenue').innerText=event.venue||'Venue TBA';
-                const select=document.getElementById('ticketType');
-                const opts=[{val:'Single',price:event.single},{val:'Double',price:event.double},{val:'VIP',price:event.vip}];
-                for(let i=1;i<=3;i++){ let opt=select.options[i]; if(opt&&opts[i-1].price>0){ opt.dataset.price=opts[i-1].price; opt.text=`${opts[i-1].val} - ZMW ${opts[i-1].price}`; opt.disabled=false; opt.style.display='block'; }else if(opt){ opt.style.display='none'; } }
-                select.value='';
-                updatePriceDisplay();
-                document.getElementById('ticketModal').classList.add('active');
-                document.body.style.overflow='hidden';
-                resetModalForm();
-                showToast(`🎟️ Booking for ${event.name}`, 'success');
-            };
-            
-            function resetModalForm(){ document.getElementById('formSection').style.display='block'; document.getElementById('summarySection').style.display='none'; document.getElementById('paymentSection').style.display='none'; document.getElementById('fullName').value=''; document.getElementById('email').value=''; document.getElementById('phone').value=''; document.getElementById('numberOfTickets').value='1'; document.getElementById('step1').classList.add('active'); document.getElementById('step2').classList.remove('active','completed'); document.getElementById('step3').classList.remove('active','completed'); updatePriceDisplay(); }
-            
-            function updatePriceDisplay(){ const select=document.getElementById('ticketType'); const opt=select.options[select.selectedIndex]; const price=opt?.dataset?.price?parseInt(opt.dataset.price):0; const qty=parseInt(document.getElementById('numberOfTickets').value)||1; const total=price*qty; document.getElementById('priceBreakdown').innerText=price?`${qty} × ${opt.value} @ ZMW ${price}`:'Select ticket type'; document.getElementById('totalPrice').innerText=`ZMW ${total}`; }
-            
-            function validateForm(){ let valid=true; const name=document.getElementById('fullName').value.trim(); if(name.length<2){ document.getElementById('nameError').style.display='block'; valid=false;}else document.getElementById('nameError').style.display='none';
-            const email=document.getElementById('email').value; if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ document.getElementById('emailError').style.display='block'; valid=false;}else document.getElementById('emailError').style.display='none';
-            const phone=document.getElementById('phone').value.replace(/\s/g,''); if(phone.length<9){ document.getElementById('phoneError').style.display='block'; valid=false;}else document.getElementById('phoneError').style.display='none';
-            const ticket=document.getElementById('ticketType').value; if(!ticket){ document.getElementById('ticketTypeError').style.display='block'; valid=false;}else document.getElementById('ticketTypeError').style.display='none';
-            const qty=parseInt(document.getElementById('numberOfTickets').value); if(isNaN(qty)||qty<1||qty>10){ document.getElementById('ticketsError').style.display='block'; valid=false;}else document.getElementById('ticketsError').style.display='none';
-            return valid; }
-            const order = {
+      <div class="field-group">
+        <label for="fName">Full Name</label>
+        <div class="field-wrap"><span class="field-icon">👤</span><input type="text" id="fName" placeholder="John Mulenga" autocomplete="name"></div>
+        <div class="field-error" id="fNameErr">Full name is required</div>
+      </div>
 
-fullName:
-document.getElementById('fullName').value,
+      <div class="field-group">
+        <label for="fEmail">Email Address</label>
+        <div class="field-wrap"><span class="field-icon">📧</span><input type="email" id="fEmail" placeholder="hello@example.com" autocomplete="email"></div>
+        <div class="field-error" id="fEmailErr">A valid email is required</div>
+      </div>
 
-email:
-document.getElementById('email').value,
+      <div class="field-group">
+        <label for="fPhone">WhatsApp Number</label>
+        <div class="field-wrap"><span class="field-icon">📱</span><input type="tel" id="fPhone" placeholder="097 123 4567" autocomplete="tel"></div>
+        <div class="field-error" id="fPhoneErr">Enter a valid number (9+ digits)</div>
+      </div>
 
-phone:
-document.getElementById('phone').value,
+      <div class="field-group">
+        <label for="fType">Ticket Type</label>
+        <div class="field-wrap"><span class="field-icon">🎟</span><select id="fType"><option value="">Select type</option></select></div>
+        <div class="field-error" id="fTypeErr">Please select a ticket type</div>
+      </div>
 
-ticketType:
-document.getElementById('ticketType').value,
+      <div class="field-group">
+        <label for="fQty">Number of Tickets <span style="font-weight:400;text-transform:none;letter-spacing:0">(max 10)</span></label>
+        <div class="field-wrap"><span class="field-icon">🔢</span><input type="number" id="fQty" min="1" max="10" value="1"></div>
+        <div class="field-error" id="fQtyErr">Enter a number between 1 and 10</div>
+      </div>
 
-quantity:
-document.getElementById('numberOfTickets').value,
+      <div class="total-display">
+        <div>
+          <div class="total-label">Total</div>
+          <div id="priceBreak" style="font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:0.15rem">Select a ticket type</div>
+        </div>
+        <div class="total-amount" id="totalAmt">ZMW 0</div>
+      </div>
 
-eventName:
-selectedEvent?.name || "",
+      <button class="btn-cta" onclick="goReview()">Continue to Review →</button>
+    </div>
 
-eventTime:
-selectedEvent?.time || "",
+    <!-- STEP 2: REVIEW -->
+    <div id="step2Panel" style="display:none">
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.06em;margin-bottom:1.5rem">Review Order</h3>
+      <div class="review-card">
+        <div class="review-row"><span style="color:var(--muted)">Name</span><strong id="rv_name"></strong></div>
+        <div class="review-row"><span style="color:var(--muted)">Email</span><span id="rv_email"></span></div>
+        <div class="review-row"><span style="color:var(--muted)">Phone</span><span id="rv_phone"></span></div>
+        <div class="review-divider"></div>
+        <div class="review-row"><span style="color:var(--muted)">Tickets</span><strong id="rv_type"></strong></div>
+        <div class="review-row"><span style="color:var(--muted)">Quantity</span><span id="rv_qty"></span></div>
+        <div class="review-divider"></div>
+        <div class="review-row"><span style="font-weight:700">Total</span><strong id="rv_total" style="color:var(--gold-dk);font-size:1.15rem"></strong></div>
+      </div>
+      <div style="display:flex;gap:0.75rem;margin-top:1.5rem">
+        <button class="btn-cta secondary" onclick="goBack()" style="flex:1">← Edit</button>
+        <button class="btn-cta" onclick="confirmPay()" style="flex:1">Confirm & Pay →</button>
+      </div>
+    </div>
 
-eventDate:
-selectedEvent?.date || "",
+    <!-- STEP 3: PROCESSING -->
+    <div id="step3Panel" style="display:none">
+      <div class="payment-loader">
+        <div class="spinner"></div>
+        <p style="font-weight:600;margin-bottom:0.5rem">Redirecting to payment…</p>
+        <p style="font-size:0.85rem;color:var(--muted)">You'll be taken to our secure payment gateway.</p>
+      </div>
+    </div>
 
-venue:
-selectedEvent?.venue || "",
+  </div>
+</div>
 
-total:
-document.getElementById('totalPrice').innerText,
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
-receipt:
-'NOL-' +
-Math.random()
-.toString(36)
-.substring(2,10)
-.toUpperCase(),
+<footer>
+  <p>Night of Laughter &copy; 2025 &nbsp;·&nbsp; <span>by CMK Web Solutions</span> &nbsp;·&nbsp; Laugh louder, live better</p>
+</footer>
 
-qr:
-''
+<script>
+(function(){
+'use strict';
 
-};
-            
-            window.goToSummary=()=>{ if(!validateForm()){ showToast('Please correct the form fields','error'); return; } document.getElementById('s_fullName').innerText=document.getElementById('fullName').value; document.getElementById('s_email').innerText=document.getElementById('email').value; document.getElementById('s_phone').innerText=document.getElementById('phone').value; const sel=document.getElementById('ticketType'); document.getElementById('s_ticketType').innerText=sel.options[sel.selectedIndex].text; document.getElementById('s_numberOfTickets').innerText=document.getElementById('numberOfTickets').value; document.getElementById('s_totalPrice').innerText=document.getElementById('totalPrice').innerText; document.getElementById('step1').classList.add('completed'); document.getElementById('step2').classList.add('active'); document.getElementById('formSection').style.display='none'; document.getElementById('summarySection').style.display='block'; };
-            window.goBackToForm=()=>{ document.getElementById('step1').classList.remove('completed'); document.getElementById('step2').classList.remove('active'); document.getElementById('step1').classList.add('active'); document.getElementById('summarySection').style.display='none'; document.getElementById('formSection').style.display='block'; };
-           window.confirmPayment=async()=>{
-
-if(!validateForm()) return;
-
-/* UI SWITCH */
-
-document.getElementById('summarySection').style.display='none';
-document.getElementById('paymentSection').style.display='block';
-
-document.getElementById('step2').classList.add('completed');
-document.getElementById('step3').classList.add('active');
-
-
-/* GET EVENT DATA FROM MODAL */
-
-const eventName =
-document.getElementById("modalEventName").innerText;
-
-const eventDate =
-document.getElementById("modalEventDate").innerText;
-
-const eventTime =
-document.getElementById("modalEventTime").innerText;
-
-const venue =
-document.getElementById("modalEventVenue").innerText;
-
-
-/* GENERATE RECEIPT */
-
-const receipt =
-"NOL-" +
-Math.random()
-.toString(36)
-.substring(2,10)
-.toUpperCase();
-
-
-/* CREATE ORDER */
-
-const order={
-
-timestamp:new Date().toISOString(),
-
-fullName:
-document.getElementById('fullName').value,
-
-email:
-document.getElementById('email').value,
-
-phone:
-document.getElementById('phone').value,
-
-ticketType:
-document.getElementById('ticketType').value,
-
-quantity:
-document.getElementById('numberOfTickets').value,
-
-eventName:eventName,
-
-eventTime:eventTime,
-
-eventDate:eventDate,
-
-venue:venue,
-
-total:
-document
-.getElementById('totalPrice')
-.innerText
-.replace("ZMW","")
-.trim(),
-
-receipt:receipt,
-
-qr:''
-
+const CFG={
+  API:"https://sheetdb.io/api/v1/sh60n2rxqi0zo",
+  GS:'https://script.google.com/macros/s/AKfycbxauAcbMKy0kDX4-QDSRV3PBclv_tJCJpQ7WGkel5iOeyaWpUbo96IZ9RBOUSCMq2IvFw/exec',
+  PAY:""
 };
 
+const VIDEOS=[
+  {id:"Vd2TRJRQAxk",title:"Chingliz — Unfiltered",sub:"Full house, endless laughter"},
+  {id:"cluxU57wDYw",title:"Ba Emma's Roast Session",sub:"The crowd goes absolutely wild"}
+];
 
-/* SEND TO GOOGLE SHEET */
+const GALLERY=[
+  {url:"https://i.postimg.cc/L6J9YnQR/DEW-1.jpg",cap:"Night of Laughter energy"},
+  {url:"https://i.postimg.cc/ZRYZTRvj/DEW-11.jpg",cap:"Audience roar"},
+  {url:"https://i.postimg.cc/KvCZnxCj/DEW-22.jpg",cap:"Comedy gold"},
+  {url:"https://i.postimg.cc/8CmNQWcv/DEW-17.jpg",cap:"Electric atmosphere"},
+  {url:"https://i.postimg.cc/zX4Jn86s/DEW-26.jpg",cap:"On stage magic"},
+  {url:"https://i.postimg.cc/wT1qy74q/DEW-30.jpg",cap:"Special guest"}
+];
 
-try{
+let lbItems=[],lbIdx=0,currentEvent=null;
 
-const fd=new FormData();
+/* ── UTILITIES ── */
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(msg,type='info'){
+  const c=document.getElementById('toastStack'),d=document.createElement('div');
+  d.className='toast'+(type==='error'?' err':'');
+  d.textContent=(type==='success'?'✓ ':type==='error'?'✗ ':'')+ msg;
+  c.appendChild(d);
+  setTimeout(()=>{d.style.opacity='0';d.style.transition='opacity 0.3s';setTimeout(()=>d.remove(),350)},3500);
+}
 
-Object.entries(order)
-.forEach(([k,v])=>fd.append(k,v));
+/* ── HEADER SCROLL ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('siteHeader').classList.toggle('scrolled',scrollY>60);
+  document.getElementById('btt').classList.toggle('show',scrollY>500);
+},{passive:true});
 
-await fetch(CONFIG.SCRIPT_URL,{
-method:'POST',
-body:fd,
-mode:'no-cors'
+/* ── HAMBURGER ── */
+const burger=document.getElementById('hamburger'),nav=document.getElementById('navLinks');
+burger.addEventListener('click',()=>{
+  const open=nav.classList.toggle('open');
+  burger.setAttribute('aria-expanded',open);
+  document.body.style.overflow=open?'hidden':'';
 });
+nav.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=a.getAttribute('href');
+    if(t&&t.startsWith('#')){e.preventDefault();document.querySelector(t)?.scrollIntoView({behavior:'smooth'})}
+    nav.classList.remove('open');burger.setAttribute('aria-expanded','false');document.body.style.overflow='';
+  });
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')nav.classList.remove('open')});
 
-showToast('Redirecting to secure payment...','success');
+/* ── RENDER EVENTS ── */
+function renderCard(ev,idx,dark){
+  const n=ev.name||'Comedy Special',date=ev.date||'TBA',time=ev.time||'19:00',
+    venue=ev.venue||'Lusaka',img=ev.image||'https://i.postimg.cc/Rh0W4dZr/Zed-Laugh-Festival-2025-193.jpg',
+    desc=ev.description||'A night you won\'t forget.',
+    s=parseInt(ev.single)||0,d=parseInt(ev.double)||0,v=parseInt(ev.vip)||0;
 
-setTimeout(()=>{
+  const prices=[];
+  if(s) prices.push(`<div class="price-item"><div class="price-label">Single</div><div class="price-val">K${s}</div></div>`);
+  if(d) prices.push(`<div class="price-item"><div class="price-label">Double</div><div class="price-val">K${d}</div></div>`);
+  if(v) prices.push(`<div class="price-item"><div class="price-label">VIP</div><div class="price-val vip">K${v}</div></div>`);
 
-const paymentUrl =
-selectedEvent?.payment_link ||
-CONFIG.PAYMENT_URL;
+  const ed=JSON.stringify({name:n,date,time,venue,single:s,double:d,vip:v,payment_link:ev.payment_link||''}).replace(/'/g,'&#39;').replace(/"/g,'&quot;');
+  const xid='x'+Date.now()+idx;
 
-window.location.href = paymentUrl;
-
-},1200);
-
+  return `<article class="event-card">
+    <div class="card-img">
+      <img src="${esc(img)}" alt="${esc(n)}" loading="lazy">
+      ${ev.type&&ev.type.toLowerCase().includes('featured')?'<div class="card-badge">Featured</div>':''}
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">${esc(n)}</h3>
+      <div class="card-meta">
+        <div class="meta-row"><span class="meta-icon">📅</span>${esc(date)} · ${esc(time)}</div>
+        <div class="meta-row"><span class="meta-icon">📍</span>${esc(venue)}</div>
+      </div>
+      ${prices.length?`<div class="price-rack">${prices.join('')}</div>`:'<div style="font-size:0.82rem;color:var(--muted)">Prices announced soon</div>'}
+      <div class="card-actions">
+        <button class="btn-ticket" onclick='openModal(${ed})'>🎟 Buy Tickets</button>
+        <button class="btn-info" onclick="toggleExpand('${xid}')">Info ↓</button>
+      </div>
+      <div class="card-expand" id="${xid}">${esc(desc)}</div>
+    </div>
+  </article>`;
 }
 
-catch(e){
-
-showToast(
-'Payment redirection error, try again',
-'error'
-);
-
-document.getElementById('paymentSection').style.display='none';
-
-document.getElementById('summarySection').style.display='block';
-
-}
-
+window.toggleExpand=id=>{
+  const el=document.getElementById(id);if(!el)return;
+  el.classList.toggle('open');
 };
-            window.closeTicketModal=()=>{ document.getElementById('ticketModal').classList.remove('active'); document.body.style.overflow=''; };
-            
-            document.addEventListener('DOMContentLoaded',()=>{ fetchEvents(); renderMedia(); setupMobileMenu(); const backBtn=document.getElementById('backToTop'); window.addEventListener('scroll',()=>backBtn.classList.toggle('visible',window.scrollY>400)); document.getElementById('continueBtn')?.addEventListener('click',goToSummary); document.getElementById('confirmPayBtn')?.addEventListener('click',confirmPayment); document.getElementById('ticketType')?.addEventListener('change',updatePriceDisplay); document.getElementById('numberOfTickets')?.addEventListener('input',updatePriceDisplay); window.onclick=(e)=>{ if(e.target===document.getElementById('ticketModal')) closeTicketModal(); if(e.target===document.getElementById('lightbox')) closeLightbox(); }; updatePriceDisplay(); });
-        })();
-    </script>
+
+async function loadEvents(){
+  try{
+    const r=await fetch(CFG.API);
+    if(!r.ok) throw new Error();
+    const raw=await r.json();
+    const evs=raw.map(e=>{const n={};Object.keys(e).forEach(k=>n[k.toLowerCase()]=e[k]);return n;});
+    const feat=evs.filter(e=>e.type?.toLowerCase().includes('featured'));
+    const up=evs.filter(e=>!e.type?.toLowerCase().includes('featured'));
+    document.getElementById('featuredGrid').innerHTML=feat.length?feat.map((e,i)=>renderCard(e,i,true)).join(''):'<p style="color:rgba(255,255,255,0.5);padding:2rem">Featured shows coming soon</p>';
+    document.getElementById('upcomingGrid').innerHTML=up.length?up.map((e,i)=>renderCard(e,i,false)).join(''):'<p style="color:var(--muted);padding:2rem">More shows announced soon</p>';
+  }catch{
+    const fb=[{name:"ALL OUT COMEDY TOUR",date:"March 27, 2026",time:"19:30",venue:"Lowenthal Theatre, Ndola",single:180,double:250,vip:400,description:"Chingliz, Ba Emma, and Smoke & Juss on one stage.",type:"featured"},{name:"LUSAKA LAUGH FEST",date:"April 15, 2026",time:"20:00",venue:"Mulungushi Conference Centre",single:200,double:300,vip:500,description:"The biggest laugh fest Lusaka has ever seen."}];
+    document.getElementById('featuredGrid').innerHTML=fb.filter(e=>e.type?.includes('featured')).map((e,i)=>renderCard(e,i,true)).join('');
+    document.getElementById('upcomingGrid').innerHTML=fb.filter(e=>!e.type?.includes('featured')).map((e,i)=>renderCard(e,i,false)).join('');
+  }
+}
+
+/* ── VIDEOS & GALLERY ── */
+function renderMedia(){
+  lbItems=[];
+  VIDEOS.forEach(v=>lbItems.push({type:'video',id:v.id}));
+  document.getElementById('videoGrid').innerHTML=VIDEOS.map((v,i)=>`
+    <div class="video-card" onclick="openLB(${i})" tabindex="0" role="button" aria-label="Play ${esc(v.title)}">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" loading="lazy" alt="${esc(v.title)}">
+        <div class="play-btn" aria-hidden="true">▶</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">${esc(v.title)}</div>
+        <div class="video-sub">${esc(v.sub)}</div>
+      </div>
+    </div>`).join('');
+
+  const base=lbItems.length;
+  GALLERY.forEach(g=>lbItems.push({type:'image',url:g.url,cap:g.cap}));
+  document.getElementById('galleryGrid').innerHTML=GALLERY.map((g,i)=>`
+    <div class="gal-item" onclick="openLB(${base+i})" tabindex="0" role="button" aria-label="${esc(g.cap)}">
+      <img src="${g.url}" loading="lazy" alt="${esc(g.cap)}">
+      <div class="gal-cap">${esc(g.cap)}</div>
+    </div>`).join('');
+}
+
+/* ── LIGHTBOX ── */
+window.openLB=idx=>{lbIdx=idx;renderLB();document.getElementById('lightbox').classList.add('on');document.body.style.overflow='hidden'};
+window.closeLB=()=>{document.getElementById('lightbox').classList.remove('on');document.body.style.overflow='';document.getElementById('lbContent').innerHTML=''};
+window.navLB=d=>{lbIdx=(lbIdx+d+lbItems.length)%lbItems.length;renderLB()};
+function renderLB(){
+  const it=lbItems[lbIdx],c=document.getElementById('lbContent');c.innerHTML='';
+  if(it.type==='image'){const img=document.createElement('img');img.src=it.url;img.alt=it.cap||'';c.appendChild(img)}
+  else{const f=document.createElement('iframe');f.src=`https://www.youtube.com/embed/${it.id}?autoplay=1`;f.allow='autoplay;fullscreen';f.width='840';f.height='472';f.style.maxWidth='90vw';f.style.maxHeight='80vh';c.appendChild(f)}
+}
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===document.getElementById('lightbox'))closeLB()});
+document.addEventListener('keydown',e=>{if(!document.getElementById('lightbox').classList.contains('on'))return;if(e.key==='Escape')closeLB();if(e.key==='ArrowLeft')navLB(-1);if(e.key==='ArrowRight')navLB(1)});
+
+/* ── TICKET MODAL ── */
+function calcPrice(){
+  const sel=document.getElementById('fType');
+  const opt=sel.options[sel.selectedIndex];
+  const price=opt?.dataset?.price?parseInt(opt.dataset.price):0;
+  const qty=Math.max(1,Math.min(10,parseInt(document.getElementById('fQty').value)||1));
+  const total=price*qty;
+  document.getElementById('priceBreak').textContent=price?`${qty} × ${opt.value.split(' -')[0]} @ ZMW ${price}`:'Select a ticket type';
+  document.getElementById('totalAmt').textContent=`ZMW ${total}`;
+  return total;
+}
+
+window.openModal=function(ev){
+  currentEvent=ev;
+  document.getElementById('chipName').textContent=ev.name||'Comedy Special';
+  document.getElementById('chipMeta').textContent=`${ev.date||'TBA'} · ${ev.time||''} · ${ev.venue||''}`;
+
+  const sel=document.getElementById('fType');
+  while(sel.options.length>1) sel.remove(1);
+  [{val:'Single',price:ev.single},{val:'Double',price:ev.double},{val:'VIP',price:ev.vip}].forEach(t=>{
+    if(t.price>0){const o=document.createElement('option');o.value=t.val;o.text=`${t.val}  —  ZMW ${t.price}`;o.dataset.price=t.price;sel.appendChild(o);}
+  });
+
+  ['fName','fEmail','fPhone'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fQty').value=1;
+  sel.value='';
+  calcPrice();
+  showStep(1);
+  document.getElementById('ticketModal').classList.add('on');
+  document.body.style.overflow='hidden';
+  toast(`Booking: ${ev.name}`,'success');
+};
+window.closeModal=()=>{document.getElementById('ticketModal').classList.remove('on');document.body.style.overflow=''};
+document.getElementById('ticketModal').addEventListener('click',e=>{if(e.target===document.getElementById('ticketModal'))closeModal()});
+document.getElementById('fType').addEventListener('change',calcPrice);
+document.getElementById('fQty').addEventListener('input',calcPrice);
+
+function showStep(n){
+  ['step1Panel','step2Panel','step3Panel'].forEach((id,i)=>document.getElementById(id).style.display=i+1===n?'block':'none');
+  ['dot1','dot2','dot3'].forEach((id,i)=>{
+    const d=document.getElementById(id);
+    d.className='step-dot'+(i+1<n?' done':i+1===n?' active':'');
+  });
+}
+
+function validate(){
+  let ok=true;
+  const checks=[
+    ['fName',v=>v.trim().length>=2,'Full name is required'],
+    ['fEmail',v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),'A valid email is required'],
+    ['fPhone',v=>v.replace(/\s/g,'').length>=9,'Enter a valid number (9+ digits)'],
+    ['fType',v=>v!=='','Please select a ticket type'],
+    ['fQty',v=>{const n=parseInt(v);return n>=1&&n<=10},'Enter a number between 1 and 10']
+  ];
+  checks.forEach(([id,fn,msg])=>{
+    const el=document.getElementById(id),err=document.getElementById(id.replace('f','f')+'Err')||document.getElementById(id+'Err');
+    const valid=fn(el.value);
+    el.style.borderColor=valid?'':(ok=false,'#c0392b');
+    if(err) err.style.display=valid?'none':'block';
+  });
+  return ok;
+}
+
+window.goReview=()=>{
+  if(!validate()){toast('Please fix the highlighted fields','error');return}
+  const sel=document.getElementById('fType');
+  document.getElementById('rv_name').textContent=document.getElementById('fName').value;
+  document.getElementById('rv_email').textContent=document.getElementById('fEmail').value;
+  document.getElementById('rv_phone').textContent=document.getElementById('fPhone').value;
+  document.getElementById('rv_type').textContent=sel.options[sel.selectedIndex].text;
+  document.getElementById('rv_qty').textContent=document.getElementById('fQty').value+' ticket(s)';
+  document.getElementById('rv_total').textContent=document.getElementById('totalAmt').textContent;
+  showStep(2);
+};
+window.goBack=()=>showStep(1);
+
+window.confirmPay=async()=>{
+  showStep(3);
+  const receipt='NOL-'+Math.random().toString(36).substring(2,10).toUpperCase();
+  const order={
+    timestamp:new Date().toISOString(),
+    fullName:document.getElementById('fName').value,
+    email:document.getElementById('fEmail').value,
+    phone:document.getElementById('fPhone').value,
+    ticketType:document.getElementById('fType').value,
+    quantity:document.getElementById('fQty').value,
+    eventName:currentEvent?.name||'',
+    eventDate:currentEvent?.date||'',
+    eventTime:currentEvent?.time||'',
+    venue:currentEvent?.venue||'',
+    total:document.getElementById('totalAmt').textContent.replace('ZMW','').trim(),
+    receipt,qr:''
+  };
+  try{
+    const fd=new FormData();
+    Object.entries(order).forEach(([k,v])=>fd.append(k,v));
+    await fetch(CFG.GS,{method:'POST',body:fd,mode:'no-cors'});
+    toast('Order recorded — redirecting…','success');
+    setTimeout(()=>{window.location.href=currentEvent?.payment_link||CFG.PAY;},1400);
+  }catch{
+    toast('Redirect failed — please try again','error');
+    showStep(2);
+  }
+};
+
+/* ── INIT ── */
+loadEvents();
+renderMedia();
+})();
+</script>
 </body>
 </html>
